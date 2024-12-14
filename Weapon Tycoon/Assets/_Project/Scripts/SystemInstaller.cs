@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using Playgama;
+using Playgama.Modules.Advertisement;
+using Playgama.Modules.Platform;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,6 +35,12 @@ namespace _Project.Scripts
 
         private void Awake()
         {
+
+            string a = "a";
+            string ba = "b" + a;
+
+            a = "b";
+            
             var glockFactory = new GlockFactory(_glockPrefab);
             var akFactory = new AkFactory(_akPrefab);
             var boxFactory = new BoxFactory(_boxPrefab);
@@ -50,6 +60,38 @@ namespace _Project.Scripts
             akFactory.EntityReturned += _pipe.ProductConsumed;
             
             _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory);
+
+            Bridge.platform.SendMessage(PlatformMessage.GameReady);
+            
+            Debug.Log(Bridge.platform.name);
+            
+            Bridge.advertisement.ShowInterstitial();
+            Bridge.advertisement.interstitialStateChanged += OnInterstitialStateChanged;
         }
+
+        private void OnDestroy()
+        {
+            Bridge.advertisement.interstitialStateChanged -= OnInterstitialStateChanged;
+        }
+
+        private void OnInterstitialStateChanged(InterstitialState state)
+        {
+            switch (state)
+            {
+                case InterstitialState.Loading:
+                    Debug.Log("Loading");
+                    break;
+                case InterstitialState.Opened:
+                    Debug.Log("Opened");
+                    break;
+                case InterstitialState.Closed:
+                    Debug.Log("Closed");
+                    break;
+                case InterstitialState.Failed:
+                    Debug.Log("Failed");
+                    break;
+            }
+        }
+        
     }
 }
