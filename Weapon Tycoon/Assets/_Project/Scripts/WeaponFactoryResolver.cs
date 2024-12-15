@@ -24,6 +24,9 @@ namespace _Project.Scripts
                 case ShotgunSpawner:
                     spawner.Resolve(_factories[typeof(ShotgunFactory)]);
                     break;
+                case RifleSpawner:
+                    spawner.Resolve(_factories[typeof(RifleFactory)]);
+                    break;
             }
         }
     }

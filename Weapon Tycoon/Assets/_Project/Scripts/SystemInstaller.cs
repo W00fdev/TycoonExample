@@ -10,17 +10,20 @@ using Playgama.Modules.Advertisement;
 using Playgama.Modules.Platform;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts
 {
     public class SystemInstaller : MonoBehaviour
     {
         [Header("Weapon factory prefabs")]
-        [SerializeField] private WeaponView _glockPrefab;
-        [SerializeField] private WeaponView _akPrefab;
+        [SerializeField] private WeaponView _pistolPrefab;
+        [SerializeField] private WeaponView _shotgunPrefab;
+        [SerializeField] private WeaponView _riflePrefab;
 
         [Header("Utilities factory prefabs")]
         [SerializeField] private PooledView _boxPrefab;
+        [SerializeField] private PooledView _longBoxPrefab;
         [SerializeField] private PooledView _moneyTextPrefab;
         
         [Header("Controllers")]
@@ -35,21 +38,19 @@ namespace _Project.Scripts
 
         private void Awake()
         {
-
-            string a = "a";
-            string ba = "b" + a;
-
-            a = "b";
+            var glockFactory = new PistolFactory(_pistolPrefab);
+            var shotgunFactory = new ShotgunFactory(_shotgunPrefab);
+            var rifleFactory = new RifleFactory(_riflePrefab);
             
-            var glockFactory = new PistolFactory(_glockPrefab);
-            var akFactory = new ShotgunFactory(_akPrefab);
             var boxFactory = new BoxFactory(_boxPrefab);
+            var longBoxFactory = new BoxFactory(_longBoxPrefab);
             var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
             
             _weaponFactories = new()
             {
                 { typeof(PistolFactory), glockFactory },
-                { typeof(ShotgunFactory), akFactory },
+                { typeof(ShotgunFactory), shotgunFactory },
+                { typeof(RifleFactory), rifleFactory },
             };
 
             _bankStorage = new BankStorage(0);
@@ -57,9 +58,10 @@ namespace _Project.Scripts
             
             _pipe.Initialize(_bankStorage, _walletStorage);
             glockFactory.EntityReturned += _pipe.ProductConsumed;
-            akFactory.EntityReturned += _pipe.ProductConsumed;
+            shotgunFactory.EntityReturned += _pipe.ProductConsumed;
+            rifleFactory.EntityReturned += _pipe.ProductConsumed;
             
-            _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory);
+            _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory, longBoxFactory);
 
 #if  !UNITY_EDITOR
             Bridge.platform.SendMessage(PlatformMessage.GameReady);
