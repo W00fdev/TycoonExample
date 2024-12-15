@@ -1,5 +1,7 @@
 ﻿using System;
 using _Project.Scripts.CurrencyModule;
+using _Project.Scripts.Data;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,13 +11,15 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public class BoxFactory : CustomPool
     {
-        private readonly PooledView _prefab;
+        protected readonly StorageService _storageService;
+        protected PooledView _prefab;
 
         public Action<PooledView> BoxReturned;
         
-        public BoxFactory(PooledView prefab) : base()
+        public BoxFactory(StorageService storageService) : base()
         {
-            _prefab = prefab;
+            _storageService = storageService;
+            _prefab = _storageService.GetBoxView(BoxStorage.BoxType.Box);
         }
 
         [Button]

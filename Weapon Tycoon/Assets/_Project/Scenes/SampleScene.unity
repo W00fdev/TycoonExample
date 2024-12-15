@@ -25349,11 +25349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed90804ab5a458f91ad979f7bc2e170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pistolPrefab: {fileID: 3081342741869250728, guid: 56508650a0f5f5c49af4c69805a462fc, type: 3}
-  _shotgunPrefab: {fileID: 3081342741869250728, guid: 7461d4a6a09920940ba16f71637c4e4f, type: 3}
-  _riflePrefab: {fileID: 3081342741869250728, guid: d6034b7db301bce41aa9f0094138ccfa, type: 3}
-  _boxPrefab: {fileID: 5539331115590963458, guid: cd3ff55d6b3b5e8458928ebcbd8dca2a, type: 3}
-  _longBoxPrefab: {fileID: 1977596164484847134, guid: d9ce3a56411c4e840a7d466317d4407c, type: 3}
   _moneyTextPrefab: {fileID: 4525344155091115298, guid: 4c2ecd546ffb0bb4cb70b54f378b26b9, type: 3}
   _upgradeController: {fileID: 1167107452}
   _pipe: {fileID: 1480677069}

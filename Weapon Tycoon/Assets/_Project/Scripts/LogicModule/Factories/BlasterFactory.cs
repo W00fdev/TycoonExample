@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.CurrencyModule;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,13 +10,14 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public abstract class BlasterFactory : CustomPool
     {
-        private readonly WeaponView _prefab;
-
+        protected readonly StorageService _storageService;
+        protected WeaponView _prefab;
+        
         public Action<IEntity> EntityReturned;
         
-        public BlasterFactory(WeaponView prefab) : base()
+        public BlasterFactory(StorageService storageService) : base()
         {
-            _prefab = prefab;
+            _storageService = storageService;
         }
 
         [Button]

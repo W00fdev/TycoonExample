@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.CurrencyModule.Presenters;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using Playgama;
@@ -16,14 +17,7 @@ namespace _Project.Scripts
 {
     public class SystemInstaller : MonoBehaviour
     {
-        [Header("Weapon factory prefabs")]
-        [SerializeField] private WeaponView _pistolPrefab;
-        [SerializeField] private WeaponView _shotgunPrefab;
-        [SerializeField] private WeaponView _riflePrefab;
-
         [Header("Utilities factory prefabs")]
-        [SerializeField] private PooledView _boxPrefab;
-        [SerializeField] private PooledView _longBoxPrefab;
         [SerializeField] private PooledView _moneyTextPrefab;
         
         [Header("Controllers")]
@@ -38,14 +32,15 @@ namespace _Project.Scripts
 
         private void Awake()
         {
-            var glockFactory = new PistolFactory(_pistolPrefab);
-            var shotgunFactory = new ShotgunFactory(_shotgunPrefab);
-            var rifleFactory = new RifleFactory(_riflePrefab);
+            StorageService storageService = new StorageService();
+            var glockFactory = new PistolFactory(storageService);
+            var shotgunFactory = new ShotgunFactory(storageService);
+            var rifleFactory = new RifleFactory(storageService);
             
-            var boxFactory = new BoxFactory(_boxPrefab);
-            var longBoxFactory = new BoxFactory(_longBoxPrefab);
+            var boxFactory = new BoxFactory(storageService);
+            var longBoxFactory = new LongBoxFactory(storageService);
             var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
-            
+
             _weaponFactories = new()
             {
                 { typeof(PistolFactory), glockFactory },
