@@ -7,22 +7,22 @@ namespace _Project.Scripts
 {
     public class WeaponFactoryResolver
     {
-        private readonly Dictionary<Type, WeaponFactory> _factories;
+        private readonly Dictionary<Type, BlasterFactory> _factories;
 
-        public WeaponFactoryResolver(Dictionary<Type, WeaponFactory> factories)
+        public WeaponFactoryResolver(Dictionary<Type, BlasterFactory> factories)
         {
             _factories = factories;
         }
 
-        public void Resolve(WeaponSpawner spawner)
+        public void Resolve(BlasterSpawner spawner)
         {
             switch (spawner)
             {
-                case GlockSpawner:
-                    spawner.Resolve(_factories[typeof(GlockFactory)]);
+                case PistolSpawner:
+                    spawner.Resolve(_factories[typeof(PistolFactory)]);
                     break;
-                case AkSpawner:
-                    spawner.Resolve(_factories[typeof(AkFactory)]);
+                case ShotgunSpawner:
+                    spawner.Resolve(_factories[typeof(ShotgunFactory)]);
                     break;
             }
         }

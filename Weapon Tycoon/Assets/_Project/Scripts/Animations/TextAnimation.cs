@@ -14,21 +14,20 @@ public class TextAnimation : MonoBehaviour
     [SerializeField] private float _distance;
     [SerializeField] private float _duration;
     
-    private void OnEnable()
+    private void EndAnimation()
+    {
+        if (_pooled != null)
+            _pooled.ReturnToPool();
+    }
+
+    public void Play()
     {
         var color = _graphic.color;
         color.a = 1f;
         _graphic.color = color;
 
         Tween.Alpha(_graphic, 0f, _duration);
-        Tween.LocalPositionY(transform, _distance, _duration)
+        Tween.PositionY(transform, transform.position.y +  _distance, _duration)
             .OnComplete(EndAnimation);
-        
-    }
-
-    private void EndAnimation()
-    {
-        if (_pooled != null)
-            _pooled.ReturnToPool();
     }
 }

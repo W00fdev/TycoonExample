@@ -21,12 +21,10 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             UpdateView();
         }
 
-        private void UpdateView() => _view.UpdateCurrency(_storage.Money.ToString());
+        private void UpdateView() => _view.UpdateCurrency($"$ {_storage.Money.ToString()}");
 
         public void ProductConsumed(IEntity entity)
         {
-            Debug.Log($"Consumed : {entity}");
-            
             _storage.AddCurrency(entity.Entity.Price);
             UpdateView();
         }

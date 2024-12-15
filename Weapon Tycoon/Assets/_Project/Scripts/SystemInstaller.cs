@@ -28,7 +28,7 @@ namespace _Project.Scripts
         [SerializeField] private CurrencyPipe _pipe;
 
         [Header("Debug only")]
-        [ShowInInspector] private Dictionary<Type, WeaponFactory> _weaponFactories;
+        [ShowInInspector] private Dictionary<Type, BlasterFactory> _weaponFactories;
 
         [Space] [ShowInInspector] private BankStorage _bankStorage;
         [Space] [ShowInInspector] private WalletStorage _walletStorage;
@@ -41,15 +41,15 @@ namespace _Project.Scripts
 
             a = "b";
             
-            var glockFactory = new GlockFactory(_glockPrefab);
-            var akFactory = new AkFactory(_akPrefab);
+            var glockFactory = new PistolFactory(_glockPrefab);
+            var akFactory = new ShotgunFactory(_akPrefab);
             var boxFactory = new BoxFactory(_boxPrefab);
             var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
             
             _weaponFactories = new()
             {
-                { typeof(GlockFactory), glockFactory },
-                { typeof(AkFactory), akFactory },
+                { typeof(PistolFactory), glockFactory },
+                { typeof(ShotgunFactory), akFactory },
             };
 
             _bankStorage = new BankStorage(0);
@@ -61,17 +61,21 @@ namespace _Project.Scripts
             
             _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory);
 
+#if  !UNITY_EDITOR
             Bridge.platform.SendMessage(PlatformMessage.GameReady);
-            
+
             Debug.Log(Bridge.platform.name);
             
             Bridge.advertisement.ShowInterstitial();
             Bridge.advertisement.interstitialStateChanged += OnInterstitialStateChanged;
+#endif
         }
 
         private void OnDestroy()
         {
+#if  !UNITY_EDITOR
             Bridge.advertisement.interstitialStateChanged -= OnInterstitialStateChanged;
+#endif
         }
 
         private void OnInterstitialStateChanged(InterstitialState state)

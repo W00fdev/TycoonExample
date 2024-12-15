@@ -48,7 +48,7 @@ namespace _Project.Scripts
         private void EnableSpawnerButton(int nextUpgradeLevel)
         {
             _spawnerButtons[nextUpgradeLevel].gameObject.SetActive(true);
-            _spawnerButtons[nextUpgradeLevel].SetText($"{_spawnerDatas[nextUpgradeLevel].BuyPrice}$");
+            _spawnerButtons[nextUpgradeLevel].SetText($"$ {_spawnerDatas[nextUpgradeLevel].BuyPrice}");
         }
     }
 }

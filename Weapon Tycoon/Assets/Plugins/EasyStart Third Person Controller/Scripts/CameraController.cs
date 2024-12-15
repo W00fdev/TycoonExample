@@ -13,7 +13,8 @@ using UnityEngine;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
-
+    [SerializeField] private Camera _camera;
+    
     [Tooltip("Enable to move the camera by holding the right mouse button. Does not work with joysticks.")]
     public bool clickToMoveCamera = false;
     [Tooltip("Enable zoom in/out when scrolling the mouse wheel. Does not work with joysticks.")]
@@ -33,7 +34,6 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-
         player = GameObject.FindWithTag("Player").transform;
         offsetDistanceY = transform.position.y;
 
@@ -43,11 +43,9 @@ public class CameraController : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
         }
-
     }
 
-
-    void Update()
+    void LateUpdate()
     {
 
         // Follow player - camera offset
@@ -55,7 +53,7 @@ public class CameraController : MonoBehaviour
 
         // Set camera zoom when mouse wheel is scrolled
         if( canZoom && Input.GetAxis("Mouse ScrollWheel") != 0 )
-            Camera.main.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 2;
+            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 2;
         // You can use Mathf.Clamp to set limits on the field of view
 
         // Checker for right click to move camera

@@ -8,9 +8,7 @@ namespace _Project.Scripts.LogicModule.Views
     public class WeaponView : PooledView, IEntity
     {
         [SerializeField] private ValuableEntity _entity;
-        [SerializeField] private ConveyorMovable _movable;
 
         public ValuableEntity Entity => _entity;
-        public ConveyorMovable Movable => _movable;
     }
 }

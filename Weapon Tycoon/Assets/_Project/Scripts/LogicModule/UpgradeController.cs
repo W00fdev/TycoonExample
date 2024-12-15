@@ -10,7 +10,7 @@ namespace _Project.Scripts
 {
     public sealed class UpgradeController : MonoBehaviour
     {
-        [SerializeField] private List<WeaponSpawner> _spawners;
+        [SerializeField] private List<BlasterSpawner> _spawners;
         
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
@@ -20,7 +20,7 @@ namespace _Project.Scripts
 
         public int UpgradeLevel => _upgradeLevel;
         
-        public void Initialize(Dictionary<Type, WeaponFactory> factories,
+        public void Initialize(Dictionary<Type, BlasterFactory> factories,
             BoxFactory boxFactory, MoneyTextFactory moneyTextFactory)
         {
             _boxFactory = boxFactory;
@@ -29,7 +29,7 @@ namespace _Project.Scripts
             _resolver = new WeaponFactoryResolver(factories);
         }
 
-        public WeaponSpawner Next(WeaponSpawnerData spawnerData)
+        public BlasterSpawner Next(WeaponSpawnerData spawnerData)
         {
             if (_upgradeLevel >= _spawners.Count)
                 return null;
