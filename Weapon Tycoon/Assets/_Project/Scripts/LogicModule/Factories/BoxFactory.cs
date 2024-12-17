@@ -11,15 +11,13 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public class BoxFactory : CustomPool
     {
-        protected readonly StorageService _storageService;
         protected PooledView _prefab;
 
         public Action<PooledView> BoxReturned;
         
-        public BoxFactory(StorageService storageService) : base()
+        public BoxFactory(StorageService service)
         {
-            _storageService = storageService;
-            _prefab = _storageService.GetBoxView(BoxStorage.BoxType.Box);
+            _prefab = StorageService.GetBoxView(BoxStorage.BoxType.Box);
         }
 
         [Button]

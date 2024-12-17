@@ -8,6 +8,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
     public class BankPresenter : MonoBehaviour
     {
         [SerializeField] private BankView _view;
+        [SerializeField] private CashStacksView _cashStacksView;
 
         private CurrencyPipe _pipe;
         private BankStorage _storage;
@@ -21,7 +22,11 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             UpdateView();
         }
 
-        private void UpdateView() => _view.UpdateCurrency($"$ {_storage.Money.ToString()}");
+        private void UpdateView()
+        {
+            _view.UpdateCurrency($"$ {_storage.Money.ToString()}");
+            _cashStacksView.UpdateCurrency(_storage.Money);
+        }
 
         public void ProductConsumed(IEntity entity)
         {

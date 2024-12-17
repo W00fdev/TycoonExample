@@ -10,14 +10,12 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public abstract class BlasterFactory : CustomPool
     {
-        protected readonly StorageService _storageService;
         protected WeaponView _prefab;
         
         public Action<IEntity> EntityReturned;
         
-        public BlasterFactory(StorageService storageService) : base()
+        public BlasterFactory(StorageService service) : base()
         {
-            _storageService = storageService;
         }
 
         [Button]

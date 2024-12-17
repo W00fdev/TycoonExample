@@ -14,7 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: 3e93967a0531bd246ac4aa1d8d10fa0a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 4c2ecd546ffb0bb4cb70b54f378b26b9
+    m_Address: MoneyTextView
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56508650a0f5f5c49af4c69805a462fc
+    m_Address: Pistol1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7461d4a6a09920940ba16f71637c4e4f
+    m_Address: Shotgun1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd3ff55d6b3b5e8458928ebcbd8dca2a
+    m_Address: Box
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6034b7db301bce41aa9f0094138ccfa
+    m_Address: Rifle1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9ce3a56411c4e840a7d466317d4407c
+    m_Address: LongBox
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1384777afe89e454580d83bb9d164413, type: 2}
   m_SchemaSet:

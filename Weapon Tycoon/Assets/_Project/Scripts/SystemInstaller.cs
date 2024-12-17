@@ -32,13 +32,12 @@ namespace _Project.Scripts
 
         private void Awake()
         {
-            StorageService storageService = new StorageService();
-            var glockFactory = new PistolFactory(storageService);
-            var shotgunFactory = new ShotgunFactory(storageService);
-            var rifleFactory = new RifleFactory(storageService);
+            var glockFactory = new PistolFactory(null);
+            var shotgunFactory = new ShotgunFactory(null);
+            var rifleFactory = new RifleFactory(null);
             
-            var boxFactory = new BoxFactory(storageService);
-            var longBoxFactory = new LongBoxFactory(storageService);
+            var boxFactory = new BoxFactory(null);
+            var longBoxFactory = new LongBoxFactory(null);
             var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
 
             _weaponFactories = new()

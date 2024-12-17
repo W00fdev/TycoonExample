@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Level2Weapons
+  m_EditorClassIdentifier: 
+  m_GroupName: Level2Weapons
+  m_GUID: cd98d2246b0bdef4b833802b3f65d765
+  m_SerializeEntries: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1384777afe89e454580d83bb9d164413, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 31631ecb661d5b9418c6fc91db95f5d9, type: 2}
+    - {fileID: 11400000, guid: 24294fc40517ec948af3221f39a0474b, type: 2}

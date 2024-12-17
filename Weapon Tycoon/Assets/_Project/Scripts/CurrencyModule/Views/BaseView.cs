@@ -8,6 +8,6 @@ namespace _Project.Scripts.CurrencyModule.Views
     {
         [SerializeField] private TMP_Text _amountText;
 
-        public void UpdateCurrency(string amount) => _amountText.text = amount;
+        public virtual void UpdateCurrency(string amount) => _amountText.text = amount;
     }
 }

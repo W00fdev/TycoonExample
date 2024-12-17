@@ -3,7 +3,10 @@
 
 public class ThirdPersonController : MonoBehaviour
 {
-
+    public string IdleTriggerName;
+    public string JumpTriggerName;
+    public string RunTriggerName;
+    
     public Camera MainCamera;
     
     public float velocity = 5f;
@@ -12,8 +15,6 @@ public class ThirdPersonController : MonoBehaviour
     public float gravity = 9.8f;
 
     float jumpElapsedTime = 0;
-
-    // Player states
 
     // Inputs
     [SerializeField] float inputHorizontal;
@@ -27,44 +28,55 @@ public class ThirdPersonController : MonoBehaviour
     Animator animator;
     CharacterController cc;
 
+    private int _idleTriggerHash;
+    private int _jumpTriggerHash;
+    private int _runTriggerHash;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         
         _isIdling = true;
+
+        _idleTriggerHash = Animator.StringToHash(IdleTriggerName);
+        _jumpTriggerHash = Animator.StringToHash(JumpTriggerName);
+        _runTriggerHash = Animator.StringToHash(RunTriggerName);
     }
 
     void Update()
     {
-        // Input checkers
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
         inputJump = Input.GetAxisRaw("Jump") == 1f;
-        // Unfortunately GetAxis does not work with GetKeyDown, so inputs must be taken individually
 
-        // Run and Crouch animation
-        // If dont have animator component, this block wont run
         if (cc.isGrounded && _isIdling == false && isJumping == false && _isRunning == false
                           && inputVertical == 0 && inputHorizontal == 0)
         {
             _isIdling = true;
-            animator.SetTrigger("Idle");
+
+            var animatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (animatorStateInfo.IsName("Idle") == false
+                && animatorStateInfo.IsName("Dwarf Idle") == false
+                && animatorStateInfo.IsName("Sad Idle") == false
+                && animatorStateInfo.IsName("Warrior Idle") == false)
+            {
+                animator.SetTrigger(_idleTriggerHash);
+            }
         }
 
-        // Jump animation
-        // Handle can jump or not
         if (inputJump && cc.isGrounded && isJumping == false)
         {
             isJumping = true;
             _isIdling = false;
             _isRunning = false;
-            animator.SetTrigger("Jump");
-            // Disable crounching when jumping
-            //isCrouching = false; 
+            
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") == false)
+                animator.SetTrigger(_jumpTriggerHash);
         }
         else if (cc.isGrounded)
         {
+            jumpElapsedTime = 0f;
             isJumping = false;
         }
 
@@ -125,7 +137,7 @@ public class ThirdPersonController : MonoBehaviour
                 if (_isRunning == false)
                 {
                     if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slow Run") == false)
-                        animator.SetTrigger("Run");
+                        animator.SetTrigger(_runTriggerHash);
                     
                     _isRunning = true;
                 }
