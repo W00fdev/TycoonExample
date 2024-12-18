@@ -30,10 +30,7 @@ namespace _Project.Scripts.LogicModule.Factories
                 return item;
             }
             
-            var position = new Vector3(- 50 + UnityEngine.Random.value * 100, - 50 + UnityEngine.Random.value * 100,
-                - 50 + UnityEngine.Random.value * 100);
-            
-            var weaponView = GameObject.Instantiate(_prefab, position, UnityEngine.Random.rotation);
+            var weaponView = GameObject.Instantiate(_prefab);
             weaponView.ViewReturner += ReturnToItemsList;
          
             return weaponView;
@@ -41,18 +38,12 @@ namespace _Project.Scripts.LogicModule.Factories
 
         private void ReturnToItemsList(PooledView pooled)
         {
+            if (pooled is IEntity entity)
+                EntityReturned?.Invoke(entity);
+            
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
-
-            if (pooled is WeaponView view)
-            {
-                if (view is IEntity entity)
-                {
-                    Debug.Log(1);
-                    EntityReturned?.Invoke(entity);
-                }
-            }
-
+            
         }
     }
 }

@@ -29,20 +29,18 @@ namespace _Project.Scripts.LogicModule.Factories
                 return item;
             }
             
-            var position = new Vector3(- 50 + UnityEngine.Random.value * 100, - 50 + UnityEngine.Random.value * 100,
-                - 50 + UnityEngine.Random.value * 100);
-            
-            var weaponView = GameObject.Instantiate(_prefab, position, UnityEngine.Random.rotation);
-            weaponView.ViewReturner += ReturnToItemsList;
+            var pooledView = GameObject.Instantiate(_prefab);
+            pooledView.ViewReturner += ReturnToItemsList;
          
-            return weaponView;
+            return pooledView;
         }
 
         private void ReturnToItemsList(PooledView pooled)
         {
+            MoneyReturned?.Invoke(pooled);
+            
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
-            MoneyReturned?.Invoke(pooled);
         }
     }
 }

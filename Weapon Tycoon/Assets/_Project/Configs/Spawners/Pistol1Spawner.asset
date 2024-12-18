@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pistol1Spawner
   m_EditorClassIdentifier: 
   Product: {fileID: 11400000, guid: 85bdd09ddd95ee147abc19550e069c4d, type: 2}
-  Speed: 0.6
+  Speed: 0.5
   BuyPrice: 0

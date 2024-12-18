@@ -24,7 +24,6 @@ namespace _Project.Scripts.Components
         
         [SerializeField] protected ParticleSystem _particles;
 
-        [SerializeField] private float _speedInPercents;
         [SerializeField] private int _movablesCapacity;
         
         [ShowInInspector] private List<PooledView> _movableBoxes;
@@ -35,12 +34,16 @@ namespace _Project.Scripts.Components
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
 
+        private float _speedInPercents;
+        
         public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, WeaponSpawnerData spawnerData)
         {
             _boxFactory = boxFactory;
             _moneyTextFactory = moneyTextFactory;
             _spawnerData = spawnerData;
-
+            _speedInPercents = _spawnerData.Speed / 3f;
+            
+            
             _movableBoxes = new (_movablesCapacity);
             _movableBlasters = new (_movablesCapacity);
         }
@@ -110,6 +113,8 @@ namespace _Project.Scripts.Components
 
         private void ConsumeWeapon(PooledView weapon)
         {
+            weapon.ViewReturner -= ConsumeWeapon;
+            
             _movableBlasters.Remove(weapon);
             SpawnText((WeaponView)weapon);
         }

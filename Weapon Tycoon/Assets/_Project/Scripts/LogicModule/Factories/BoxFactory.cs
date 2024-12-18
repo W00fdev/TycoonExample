@@ -17,7 +17,7 @@ namespace _Project.Scripts.LogicModule.Factories
         
         public BoxFactory(StorageService service)
         {
-            _prefab = StorageService.GetBoxView(BoxStorage.BoxType.Box);
+            StorageService.GetBoxView(BoxStorage.BoxType.Box, (x) => _prefab = x);
         }
 
         [Button]
@@ -32,10 +32,7 @@ namespace _Project.Scripts.LogicModule.Factories
                 return item;
             }
             
-            var position = new Vector3(- 50 + UnityEngine.Random.value * 100, - 50 + UnityEngine.Random.value * 100,
-                - 50 + UnityEngine.Random.value * 100);
-            
-            var weaponView = GameObject.Instantiate(_prefab, position, UnityEngine.Random.rotation);
+            var weaponView = GameObject.Instantiate(_prefab);
             weaponView.ViewReturner += ReturnToItemsList;
          
             return weaponView;
@@ -43,9 +40,10 @@ namespace _Project.Scripts.LogicModule.Factories
 
         private void ReturnToItemsList(PooledView pooled)
         {
+            BoxReturned?.Invoke(pooled);
+            
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
-            BoxReturned?.Invoke(pooled);
         }
     }
 }

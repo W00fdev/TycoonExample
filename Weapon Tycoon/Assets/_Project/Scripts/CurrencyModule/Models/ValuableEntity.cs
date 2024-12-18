@@ -7,6 +7,5 @@ namespace _Project.Scripts.CurrencyModule.Models
     public class ValuableEntity : ScriptableObject
     {
         public int Price;
-        public RarityType Rarity;
     }
 }

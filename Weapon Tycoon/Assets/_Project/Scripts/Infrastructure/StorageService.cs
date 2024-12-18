@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Data;
 using _Project.Scripts.LogicModule.Views;
 using UnityEngine;
@@ -16,18 +17,16 @@ namespace _Project.Scripts.Infrastructure
             // _boxStorage = Resources.Load<BoxStorage>(AssetPath.StoragesPath + "BoxStorage");
         }
 
-        public static WeaponView GetWeaponView(WeaponStorage.WeaponType type)
+        public static void GetWeaponView(WeaponStorage.WeaponType type, Action<WeaponView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
-            asyncOperationHandle.WaitForCompletion();
-            return asyncOperationHandle.Result.GetComponent<WeaponView>();
+            asyncOperationHandle.Completed += (x) => onComplete?.Invoke(x.Result.GetComponent<WeaponView>()); 
         }
 
-        public static PooledView GetBoxView(BoxStorage.BoxType type)
+        public static void GetBoxView(BoxStorage.BoxType type, Action<PooledView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
-            asyncOperationHandle.WaitForCompletion();
-            return asyncOperationHandle.Result.GetComponent<PooledView>();
+            asyncOperationHandle.Completed += (x) => onComplete?.Invoke(x.Result.GetComponent<PooledView>()); 
         }
     }
 }
