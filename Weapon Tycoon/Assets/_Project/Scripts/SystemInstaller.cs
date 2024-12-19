@@ -25,10 +25,10 @@ namespace _Project.Scripts
         [SerializeField] private CurrencyPipe _pipe;
 
         [Header("Debug only")]
-        [ShowInInspector] private Dictionary<Type, BlasterFactory> _weaponFactories;
+        [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
 
-        [Space] [ShowInInspector] private BankStorage _bankStorage;
-        [Space] [ShowInInspector] private WalletStorage _walletStorage;
+        [Space] [ShowInInspector, ReadOnly] private BankStorage _bankStorage;
+        [Space] [ShowInInspector, ReadOnly] private WalletStorage _walletStorage;
 
         private void Awake()
         {

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cfffe4498c499aa7ed3ed9f9078c66, type: 3}
   m_Name: Shotgun1Spawner
   m_EditorClassIdentifier: 
+  SpawnerName: Shotgun 1 Spawner
   Product: {fileID: 11400000, guid: f114cfc0d93bb2d4286aea06ab520825, type: 2}
-  Speed: 0.5
-  BuyPrice: 10
+  SpawnerSpeed: 0.7
+  BuyPrice: 30

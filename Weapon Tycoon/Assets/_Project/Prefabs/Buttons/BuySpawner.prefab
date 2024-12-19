@@ -1686,6 +1686,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3671133611716242706}
   - component: {fileID: 9207306892448188362}
+  - component: {fileID: 2009826579301204454}
   - component: {fileID: 5307414732497061815}
   - component: {fileID: 7295922919532033053}
   - component: {fileID: 8913980683574015266}
@@ -1731,6 +1732,18 @@ MonoBehaviour:
   _speedText: {fileID: 4517610334333556519}
   _productPriceText: {fileID: 4185878042071526201}
   _spawnerPriceText: {fileID: 7627451196425482141}
+--- !u!114 &2009826579301204454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060586370520643241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984377b9d8a640ae87b60f91ec0c84b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5307414732497061815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,6 +1778,19 @@ MonoBehaviour:
       - m_Target: {fileID: 5307414732497061815}
         m_TargetAssemblyTypeName: _Project.Scripts.Animations.ButtonAnimation, Assembly-CSharp
         m_MethodName: PushButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2009826579301204454}
+        m_TargetAssemblyTypeName: _Project.Scripts.Components.ButtonSpawnerBuyer,
+          Assembly-CSharp
+        m_MethodName: BuySpawner
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1926,7 +1952,6 @@ GameObject:
   - component: {fileID: 6420483701940006499}
   - component: {fileID: 2657053071596018882}
   - component: {fileID: 7627451196425482141}
-  - component: {fileID: 6443140337824224419}
   m_Layer: 11
   m_Name: Price Text (TMP)
   m_TagString: Untagged
@@ -2054,19 +2079,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &6443140337824224419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8419078293769892547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5888dd92b38e4f639abaf4a9184a957f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _amountText: {fileID: 7627451196425482141}
 --- !u!1 &8430421313123382026
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ namespace _Project.Scripts
     {
         [SerializeField] private List<SpawnerData> _spawnerDatas;
         [SerializeField] private List<SpawnerBuyerInfoView> _spawnerButtons;
+        [SerializeField] private List<SpawnerUpgraderInfoView> _upgradePriceButtons;
+        [SerializeField] private List<SpawnerUpgraderInfoView> _upgradeSpeedButtons;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private UpgradeController _upgradeController;
 
@@ -26,11 +28,15 @@ namespace _Project.Scripts
         private void OnEnable()
         {
             EventBus.BuyNextSpawnerPressed += TryBuyNext;
+            EventBus.BuySpawnerUpgradePricePressed += TryBuyPriceUpgrade;
+            EventBus.BuySpawnerUpgradeSpeedPressed += TryBuySpeedUpgrade;
         }
-        
+
         private void OnDisable()
         {
             EventBus.BuyNextSpawnerPressed -= TryBuyNext;
+            EventBus.BuySpawnerUpgradePricePressed -= TryBuyPriceUpgrade;
+            EventBus.BuySpawnerUpgradeSpeedPressed -= TryBuySpeedUpgrade;
         }
 
         public void TryBuyNext()
@@ -44,13 +50,25 @@ namespace _Project.Scripts
             if (_currencyPipe.SpentCash(spawnerData.BuyPrice) == false)
                 return;
             
-            //SetDisableSpawnerButton(upgradeLevel);
-            _spawnerButtons[upgradeLevel].gameObject.SetActive(false);
+            EnableUpgraderButtons(upgradeLevel);
             _upgradeController.Next(spawnerData);
             
             int nextUpgradeLevel = _upgradeController.UpgradeLevel;
             if (_spawnerButtons.Count > nextUpgradeLevel && _spawnerDatas.Count > nextUpgradeLevel)
                 EnableSpawnerButton(nextUpgradeLevel);
+        }
+
+        private void EnableUpgraderButtons(int upgradeLevel)
+        {
+            _spawnerButtons[upgradeLevel].gameObject.SetActive(false);
+            
+            var upgradePriceButton = _upgradePriceButtons[upgradeLevel];
+            var upgradeSpeedButton = _upgradeSpeedButtons[upgradeLevel];
+            upgradePriceButton.gameObject.SetActive(true);
+            upgradeSpeedButton.gameObject.SetActive(true);
+            
+            //upgradePriceButton.UpdateInfo();
+            //upgradeSpeedButton.UpdateInfo();
         }
 
         private void SetDisableSpawnerButton(int upgradeLevel)
@@ -68,6 +86,14 @@ namespace _Project.Scripts
                 spawnerPrice:   data.ProductPrice.ToHeaderMoneyFormat(),
                 speed:          data.SpawnerSpeed.ToSpeedFormat(),
                 productPrice:   data.ProductPrice.ToString());
+        }
+        
+        private void TryBuySpeedUpgrade(int spawnerIndex)
+        {
+        }
+
+        private void TryBuyPriceUpgrade(int spawnerIndex)
+        {
         }
     }
 }
