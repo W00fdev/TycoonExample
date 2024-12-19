@@ -1,5 +1,4 @@
-﻿using _Project.Scripts.Models;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Scripts.CurrencyModule.Models
 {

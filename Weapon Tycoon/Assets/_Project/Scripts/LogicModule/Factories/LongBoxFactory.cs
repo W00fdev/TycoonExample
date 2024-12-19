@@ -7,7 +7,7 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         public LongBoxFactory(StorageService service) : base(service)
         {
-            StorageService.GetBoxView(BoxStorage.BoxType.LongBox, (x) => _prefab = x);
+            StorageService.GetBoxView(BoxType.LongBox, (x) => _prefab = x);
         }
     }
 }

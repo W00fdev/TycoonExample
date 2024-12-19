@@ -29,20 +29,19 @@ namespace _Project.Scripts.Components
         [ShowInInspector] private List<PooledView> _movableBoxes;
         [ShowInInspector] private List<PooledView> _movableBlasters;
         
-        private WeaponSpawnerData _spawnerData;
+        private SpawnerData _spawnerData;
         private BlasterFactory _blasterFactory;
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
 
         private float _speedInPercents;
         
-        public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, WeaponSpawnerData spawnerData)
+        public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
         {
             _boxFactory = boxFactory;
             _moneyTextFactory = moneyTextFactory;
             _spawnerData = spawnerData;
             _speedInPercents = _spawnerData.Speed / 3f;
-            
             
             _movableBoxes = new (_movablesCapacity);
             _movableBlasters = new (_movablesCapacity);
@@ -116,7 +115,7 @@ namespace _Project.Scripts.Components
             weapon.ViewReturner -= ConsumeWeapon;
             
             _movableBlasters.Remove(weapon);
-            SpawnText((WeaponView)weapon);
+            SpawnText((BlasterView)weapon);
         }
 
         public void SpawnText(IEntity entity)

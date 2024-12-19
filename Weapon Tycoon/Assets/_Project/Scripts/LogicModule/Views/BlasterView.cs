@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.LogicModule.Views
 {
-    public class WeaponView : PooledView, IEntity
+    public class BlasterView : PooledView, IEntity
     {
         [SerializeField] private ValuableEntity _entity;
 

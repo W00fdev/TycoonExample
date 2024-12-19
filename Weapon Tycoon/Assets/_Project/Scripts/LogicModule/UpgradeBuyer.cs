@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using _Project.Scripts.Animations;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.CurrencyModule.Presenters;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Views;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,7 +12,7 @@ namespace _Project.Scripts
 {
     public sealed class UpgradeBuyer : MonoBehaviour
     {
-        [SerializeField] private List<WeaponSpawnerData> _spawnerDatas;
+        [SerializeField] private List<SpawnerData> _spawnerDatas;
         [SerializeField] private List<MoneyTextView> _spawnerButtons;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private UpgradeController _upgradeController;
@@ -18,6 +20,16 @@ namespace _Project.Scripts
         private void Start()
         {
             EnableSpawnerButton(0);
+        }
+
+        private void OnEnable()
+        {
+            EventBus.BuyNextSpawnerPressed += TryBuyNext;
+        }
+        
+        private void OnDisable()
+        {
+            EventBus.BuyNextSpawnerPressed -= TryBuyNext;
         }
 
         public void TryBuyNext()
@@ -31,7 +43,8 @@ namespace _Project.Scripts
             if (_currencyPipe.SpentCash(spawnerData.BuyPrice) == false)
                 return;
             
-            SetDisableSpawnerButton(upgradeLevel);
+            //SetDisableSpawnerButton(upgradeLevel);
+            _spawnerButtons[upgradeLevel].gameObject.SetActive(false);
             _upgradeController.Next(spawnerData);
             
             int nextUpgradeLevel = _upgradeController.UpgradeLevel;

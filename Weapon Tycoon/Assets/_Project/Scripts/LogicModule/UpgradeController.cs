@@ -13,12 +13,11 @@ namespace _Project.Scripts
     {
         [SerializeField] private List<BlasterSpawner> _spawners;
         
-        
         private BoxFactory _longBoxFactory;
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
         
-        private WeaponFactoryResolver _resolver;
+        private BlasterFactoryResolver _resolver;
         private int _upgradeLevel;
 
         public int UpgradeLevel => _upgradeLevel;
@@ -31,10 +30,10 @@ namespace _Project.Scripts
             _longBoxFactory = longBoxFactory;
             _moneyTextFactory = moneyTextFactory;
             
-            _resolver = new WeaponFactoryResolver(factories);
+            _resolver = new BlasterFactoryResolver(factories);
         }
 
-        public BlasterSpawner Next(WeaponSpawnerData spawnerData)
+        public BlasterSpawner Next(SpawnerData spawnerData)
         {
             if (_upgradeLevel >= _spawners.Count)
                 return null;

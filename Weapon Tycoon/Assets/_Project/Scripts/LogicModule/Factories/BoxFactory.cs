@@ -17,7 +17,7 @@ namespace _Project.Scripts.LogicModule.Factories
         
         public BoxFactory(StorageService service)
         {
-            StorageService.GetBoxView(BoxStorage.BoxType.Box, (x) => _prefab = x);
+            StorageService.GetBoxView(BoxType.Box, (x) => _prefab = x);
         }
 
         [Button]

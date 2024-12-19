@@ -5,11 +5,11 @@ using _Project.Scripts.LogicModule.Factories;
 
 namespace _Project.Scripts
 {
-    public class WeaponFactoryResolver
+    public class BlasterFactoryResolver
     {
         private readonly Dictionary<Type, BlasterFactory> _factories;
 
-        public WeaponFactoryResolver(Dictionary<Type, BlasterFactory> factories)
+        public BlasterFactoryResolver(Dictionary<Type, BlasterFactory> factories)
         {
             _factories = factories;
         }

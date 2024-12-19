@@ -5,8 +5,9 @@ namespace _Project.Scripts.Infrastructure
 {
     public static class EventBus
     {
-        public static event Action<IEntity> EntityConsumed;
-        public static event Action BuyNextSpawnerPressed;
-        
+        public static Action<IEntity> EntityConsumed;
+        public static Action BuyNextSpawnerPressed;
+        public static Action<int> BuySpawnerUpgradeSpeedPressed;
+        public static Action<int> BuySpawnerUpgradePricePressed;
     }
 }

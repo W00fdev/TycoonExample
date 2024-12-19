@@ -51,10 +51,6 @@ namespace _Project.Scripts
             _walletStorage = new WalletStorage(0);
             
             _pipe.Initialize(_bankStorage, _walletStorage);
-            glockFactory.EntityReturned += _pipe.ProductConsumed;
-            shotgunFactory.EntityReturned += _pipe.ProductConsumed;
-            rifleFactory.EntityReturned += _pipe.ProductConsumed;
-            
             _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory, longBoxFactory);
 
 #if  !UNITY_EDITOR

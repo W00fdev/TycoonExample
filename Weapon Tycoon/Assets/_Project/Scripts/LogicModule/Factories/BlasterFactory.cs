@@ -10,9 +10,7 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public abstract class BlasterFactory : CustomPool
     {
-        protected WeaponView _prefab;
-        
-        public Action<IEntity> EntityReturned;
+        protected BlasterView _prefab;
         
         public BlasterFactory(StorageService service) : base()
         {
@@ -39,11 +37,10 @@ namespace _Project.Scripts.LogicModule.Factories
         private void ReturnToItemsList(PooledView pooled)
         {
             if (pooled is IEntity entity)
-                EntityReturned?.Invoke(entity);
+                EventBus.EntityConsumed?.Invoke(entity);
             
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
-            
         }
     }
 }

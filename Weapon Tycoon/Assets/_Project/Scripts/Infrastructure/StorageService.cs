@@ -8,22 +8,13 @@ namespace _Project.Scripts.Infrastructure
 {
     public class StorageService
     {
-        // private readonly WeaponStorage _weaponStorage;
-        // private readonly BoxStorage _boxStorage;
-        
-        public StorageService()
-        {
-            // _weaponStorage = Resources.Load<WeaponStorage>(AssetPath.StoragesPath + "WeaponStorage");
-            // _boxStorage = Resources.Load<BoxStorage>(AssetPath.StoragesPath + "BoxStorage");
-        }
-
-        public static void GetWeaponView(WeaponStorage.WeaponType type, Action<WeaponView> onComplete)
+        public static void GetWeaponView(BlasterType type, Action<BlasterView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
-            asyncOperationHandle.Completed += (x) => onComplete?.Invoke(x.Result.GetComponent<WeaponView>()); 
+            asyncOperationHandle.Completed += (x) => onComplete?.Invoke(x.Result.GetComponent<BlasterView>()); 
         }
 
-        public static void GetBoxView(BoxStorage.BoxType type, Action<PooledView> onComplete)
+        public static void GetBoxView(BoxType type, Action<PooledView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
             asyncOperationHandle.Completed += (x) => onComplete?.Invoke(x.Result.GetComponent<PooledView>()); 

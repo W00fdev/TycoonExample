@@ -10,7 +10,7 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         public RifleFactory(StorageService service) : base(service)
         {
-            StorageService.GetWeaponView(WeaponStorage.WeaponType.Rifle1, (x) => _prefab = x);
+            StorageService.GetWeaponView(BlasterType.Rifle1, (x) => _prefab = x);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace _Project.Scripts.LogicModule.Views
     {
         public Action<PooledView> ViewReturner { get; set; }
         
-        public void ReturnToPool()
+        public virtual void ReturnToPool()
         {
             ViewReturner?.Invoke(this);
         }
