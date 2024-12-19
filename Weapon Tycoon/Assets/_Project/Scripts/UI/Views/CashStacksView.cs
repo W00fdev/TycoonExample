@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Project.Scripts.CurrencyModule.Views
+namespace _Project.Scripts.UI.Views
 {
     public class CashStacksView : MonoBehaviour
     {

@@ -1,8 +1,7 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace _Project.Scripts.CurrencyModule.Views
+namespace _Project.Scripts.UI.Views
 {
     public abstract class BaseView : MonoBehaviour
     {

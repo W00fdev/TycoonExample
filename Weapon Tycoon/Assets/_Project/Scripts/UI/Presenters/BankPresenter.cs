@@ -1,5 +1,5 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
-using _Project.Scripts.CurrencyModule.Views;
+using _Project.Scripts.UI.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

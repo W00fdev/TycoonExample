@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 6121403588398205183}
   - component: {fileID: 2243009960760376434}
   m_Layer: 11
-  m_Name: Text (TMP)
+  m_Name: Name Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1685,8 +1685,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3671133611716242706}
+  - component: {fileID: 9207306892448188362}
   - component: {fileID: 5307414732497061815}
-  - component: {fileID: 8006956033842815899}
   - component: {fileID: 7295922919532033053}
   - component: {fileID: 8913980683574015266}
   - component: {fileID: 8404022326785700306}
@@ -1715,6 +1715,22 @@ Transform:
   - {fileID: 6028286279311628483}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &9207306892448188362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060586370520643241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf72f22cce574a1fa643213deacf58bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: {fileID: 2243009960760376434}
+  _speedText: {fileID: 4517610334333556519}
+  _productPriceText: {fileID: 4185878042071526201}
+  _spawnerPriceText: {fileID: 7627451196425482141}
 --- !u!114 &5307414732497061815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,20 +1747,6 @@ MonoBehaviour:
   _duration: 0.1
   _easeType: 14
   _pushedLocalPosition: {x: -0, y: -0.232, z: 0}
---- !u!114 &8006956033842815899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8060586370520643241}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9563a9d78c4b472aa0b2f06b8a4c7b89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 7627451196425482141}
-  _textAnimation: {fileID: 0}
 --- !u!114 &7295922919532033053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,18 +1765,6 @@ MonoBehaviour:
       - m_Target: {fileID: 5307414732497061815}
         m_TargetAssemblyTypeName: _Project.Scripts.Animations.ButtonAnimation, Assembly-CSharp
         m_MethodName: PushButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
-        m_MethodName: TryBuyNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,21 +15,25 @@ namespace _Project.Scripts.Components
 {
     public abstract class BlasterSpawner : MonoBehaviour
     {
+        [SerializeField] private SpawnerInfoView _infoView;
+        
         [SerializeField] private Vector3 _defaultWeaponRotation;
         [SerializeField] private Vector3 _defaultBoxRotation;
-        
+
+        #region SpawnPoints
         [SerializeField] protected Transform _boxSpawnPoint;
         [SerializeField] protected Transform _boxEndPoint;
         [SerializeField] protected Transform _blasterSpawnPoint;
         [SerializeField] protected Transform _blasterEndPoint;
         [SerializeField] protected Transform _moneyTextSpawnPoint;
+        #endregion
         
         [SerializeField] protected ParticleSystem _particles;
 
+        [Header("Debug only")]
         [SerializeField] private int _movablesCapacity;
-        
-        [ShowInInspector] private List<PooledView> _movableBoxes;
-        [ShowInInspector] private List<PooledView> _movableBlasters;
+        [ShowInInspector, ReadOnly] private List<PooledView> _movableBoxes;
+        [ShowInInspector, ReadOnly] private List<PooledView> _movableBlasters;
         
         private SpawnerData _spawnerData;
         private BlasterFactory _blasterFactory;
@@ -35,16 +41,33 @@ namespace _Project.Scripts.Components
         private MoneyTextFactory _moneyTextFactory;
 
         private float _speedInPercents;
-        
+        private WaitForSeconds _waiter;
+
         public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
         {
             _boxFactory = boxFactory;
             _moneyTextFactory = moneyTextFactory;
             _spawnerData = spawnerData;
-            _speedInPercents = _spawnerData.Speed / 3f;
+            _speedInPercents = _spawnerData.SpawnerSpeed / 3f;
             
             _movableBoxes = new (_movablesCapacity);
             _movableBlasters = new (_movablesCapacity);
+            
+            _infoView.Initialize(spawnerData.SpawnerName);
+            _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
+        }
+
+        private void OnDestroy()
+        {
+            _spawnerData.SpawnerDataChanged += UpgradeSpawner;
+        }
+
+        private void UpgradeSpawner()
+        {
+            _waiter = new WaitForSeconds(1f / _spawnerData.SpawnerSpeed);
+            _speedInPercents = _spawnerData.SpawnerSpeed / 3f;
+            
+            _infoView.UpdateInfo(_spawnerData.SpawnerSpeed.ToSpeedFormat(), _spawnerData.ProductPrice.ToString());
         }
 
         public virtual void Resolve(BlasterFactory blasterFactory)
@@ -128,11 +151,11 @@ namespace _Project.Scripts.Components
         
         IEnumerator SpawnTimer()
         {
-            var waiter = new WaitForSeconds(1f / _spawnerData.Speed);
+            _waiter = new WaitForSeconds(1f / _spawnerData.SpawnerSpeed);
             
             while (true)
             {
-                yield return waiter;
+                yield return _waiter;
                 SpawnBox();
             }
         }

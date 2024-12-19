@@ -4,7 +4,8 @@ using _Project.Scripts.Animations;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.Infrastructure;
-using _Project.Scripts.LogicModule.Views;
+using _Project.Scripts.UI.Views;
+using _Project.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,7 +14,7 @@ namespace _Project.Scripts
     public sealed class UpgradeBuyer : MonoBehaviour
     {
         [SerializeField] private List<SpawnerData> _spawnerDatas;
-        [SerializeField] private List<MoneyTextView> _spawnerButtons;
+        [SerializeField] private List<SpawnerBuyerInfoView> _spawnerButtons;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private UpgradeController _upgradeController;
 
@@ -60,8 +61,13 @@ namespace _Project.Scripts
 
         private void EnableSpawnerButton(int nextUpgradeLevel)
         {
+            var data = _spawnerDatas[nextUpgradeLevel];
             _spawnerButtons[nextUpgradeLevel].gameObject.SetActive(true);
-            _spawnerButtons[nextUpgradeLevel].SetText($"$ {_spawnerDatas[nextUpgradeLevel].BuyPrice}");
+            _spawnerButtons[nextUpgradeLevel].Initialize(
+                spawnerName:    data.SpawnerName,
+                spawnerPrice:   data.ProductPrice.ToHeaderMoneyFormat(),
+                speed:          data.SpawnerSpeed.ToSpeedFormat(),
+                productPrice:   data.ProductPrice.ToString());
         }
     }
 }

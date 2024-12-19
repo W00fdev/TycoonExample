@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.CurrencyModule.Views
+﻿namespace _Project.Scripts.UI.Views
 {
     public class WalletView : BaseView
     {
