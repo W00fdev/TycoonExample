@@ -18,9 +18,9 @@ namespace _Project.Scripts
         private MoneyTextFactory _moneyTextFactory;
         
         private BlasterFactoryResolver _resolver;
-        private int _upgradeLevel;
+        private int _spawnerLevel;
 
-        public int UpgradeLevel => _upgradeLevel;
+        public int SpawnerLevel => _spawnerLevel;
         
         public void Initialize(Dictionary<Type, BlasterFactory> factories,
             BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, BoxFactory longBoxFactory)
@@ -35,10 +35,10 @@ namespace _Project.Scripts
 
         public BlasterSpawner Next(SpawnerData spawnerData)
         {
-            if (_upgradeLevel >= _spawners.Count)
+            if (_spawnerLevel >= _spawners.Count)
                 return null;
             
-            var spawner = _spawners[_upgradeLevel++];
+            var spawner = _spawners[_spawnerLevel++];
             spawner.gameObject.SetActive(true);
             var boxFactory = (spawner is RifleSpawner) ? _longBoxFactory : _boxFactory;
             spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);

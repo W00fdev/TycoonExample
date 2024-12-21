@@ -1,15 +1,25 @@
 using _Project.Scripts.Infrastructure;
 using UnityEngine;
 
-namespace _Project.Scripts.Components
+namespace _Project.Scripts.Components.Buttons
 {
-    public class ButtonUpgradedPrice : MonoBehaviour
+    public class ButtonUpgradedPrice : MonoBehaviour, IButtonUpgrader
     {
         [SerializeField] private int _spawnerIndex;
 
+        private bool _isDisabled;
+        
         public void BuyUpgrade()
         {
+            if (_isDisabled)
+                return;
+                
             EventBus.BuySpawnerUpgradePricePressed?.Invoke(_spawnerIndex);
+        }
+
+        public void DisableButton()
+        {
+            _isDisabled = true;
         }
     }
 }

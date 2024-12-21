@@ -40,7 +40,7 @@ namespace _Project.Scripts.Components
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
 
-        private float _speedInPercents;
+        [SerializeField, ReadOnly] private float _speedInPercents;
         private WaitForSeconds _waiter;
 
         public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)

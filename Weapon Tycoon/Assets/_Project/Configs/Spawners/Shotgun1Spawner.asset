@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnerName: Shotgun 1 Spawner
   Product: {fileID: 11400000, guid: f114cfc0d93bb2d4286aea06ab520825, type: 2}
-  SpawnerSpeed: 0.7
+  SpawnerSpeed: 23.11
   BuyPrice: 30
