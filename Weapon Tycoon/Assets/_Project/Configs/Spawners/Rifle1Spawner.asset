@@ -15,4 +15,5 @@ MonoBehaviour:
   SpawnerName: Rifle 1 Spawner
   Product: {fileID: 11400000, guid: fff4823a44b05984c849fb67daf652cc, type: 2}
   SpawnerSpeed: 0.5
+  ProductPrice: 50
   BuyPrice: 100

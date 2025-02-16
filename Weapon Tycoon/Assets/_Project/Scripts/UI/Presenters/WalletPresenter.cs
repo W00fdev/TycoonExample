@@ -1,5 +1,7 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
+using _Project.Scripts.Utils;
 using UnityEngine;
 
 namespace _Project.Scripts.CurrencyModule.Presenters
@@ -34,6 +36,6 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             return false;
         }
         
-        private void UpdateView() => _view.UpdateCurrency($"$ {_storage.Money.ToString()}");
+        private void UpdateView() => _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
     }
 }

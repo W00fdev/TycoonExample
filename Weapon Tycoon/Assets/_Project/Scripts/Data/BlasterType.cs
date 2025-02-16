@@ -9,6 +9,6 @@ namespace _Project.Scripts.Data
 {
     public enum BlasterType
     {
-        Pistol1, Shotgun1, Rifle1, Sniper1
+        Pistol1View, Shotgun1View, Rifle1View, Sniper1
     }
 }

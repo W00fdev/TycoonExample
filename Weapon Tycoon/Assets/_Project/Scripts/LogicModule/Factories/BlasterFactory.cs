@@ -11,9 +11,11 @@ namespace _Project.Scripts.LogicModule.Factories
     public abstract class BlasterFactory : CustomPool
     {
         protected BlasterView _prefab;
+        protected StorageService _storageService;
         
         public BlasterFactory(StorageService service) : base()
         {
+            _storageService = new();
         }
 
         [Button]

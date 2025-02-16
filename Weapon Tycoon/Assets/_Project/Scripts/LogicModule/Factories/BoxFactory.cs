@@ -12,7 +12,7 @@ namespace _Project.Scripts.LogicModule.Factories
     public class BoxFactory : CustomPool
     {
         protected PooledView _prefab;
-
+        
         public Action<PooledView> BoxReturned;
         
         public BoxFactory(StorageService service)

@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.UI.Models;
 
 namespace _Project.Scripts.CurrencyModule
 {

@@ -4,6 +4,7 @@ using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.UI.Models;
+using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
 using UnityEngine;
@@ -86,6 +87,8 @@ namespace _Project.Scripts.LogicModule
         private void EnableSpawnerButton(int nextUpgradeLevel)
         {
             var data = _spawnerDatas[nextUpgradeLevel];
+            data.Initialize();
+            
             _spawnerButtons[nextUpgradeLevel].gameObject.SetActive(true);
             _spawnerButtons[nextUpgradeLevel].Initialize(
                 spawnerName:    data.SpawnerName,
@@ -105,7 +108,7 @@ namespace _Project.Scripts.LogicModule
 
             if (speedUpgrade == null)
             {
-                upgradeSpeedButton.UpdateInfo("max", "max");
+                //upgradeSpeedButton.UpdateInfo("max", "max");
                 if (upgradeSpeedButton.TryGetComponent(out IButtonUpgrader upgrader))
                     upgrader.DisableButton();
             }
@@ -113,7 +116,8 @@ namespace _Project.Scripts.LogicModule
             {
                 upgradeSpeedButton.UpdateInfo(speedUpgrade.BuyPrice.ToHeaderMoneyFormat(), speedUpgrade.Speed.ToSpeedFormat());
             }
-            
+
+
             _spawnerDatas[spawnerIndex].SpawnerSpeed = newSpeed;
             _spawnerDatas[spawnerIndex].SpawnerDataChanged?.Invoke();
         }
@@ -130,7 +134,7 @@ namespace _Project.Scripts.LogicModule
 
             if (priceUpgrade == null)
             {
-                upgradePriceButton.UpdateInfo("max", "max");
+                //upgradePriceButton.UpdateInfo("max", "max");
                 if (upgradePriceButton.TryGetComponent(out IButtonUpgrader upgrader))
                     upgrader.DisableButton();
             }

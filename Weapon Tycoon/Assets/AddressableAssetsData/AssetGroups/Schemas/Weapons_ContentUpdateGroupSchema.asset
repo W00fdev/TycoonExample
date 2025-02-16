@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1cfffe4498c499aa7ed3ed9f9078c66, type: 3}
-  m_Name: Pistol1Spawner
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Weapons_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  SpawnerName: Pistol 1 Entity
-  Product: {fileID: 11400000, guid: 85bdd09ddd95ee147abc19550e069c4d, type: 2}
-  SpawnerSpeed: 0.5
-  ProductPrice: 10
-  BuyPrice: 0
+  m_Group: {fileID: 11400000, guid: cbb38b67447311a4fb7e4016e0785baa, type: 2}
+  m_StaticContent: 0

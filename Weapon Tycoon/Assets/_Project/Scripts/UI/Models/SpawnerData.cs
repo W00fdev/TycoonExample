@@ -1,25 +1,25 @@
-﻿using System;
-using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _Project.Scripts.CurrencyModule.Models
+namespace _Project.Scripts.UI.Models
 {
-    [CreateAssetMenu(fileName = "Spawner", menuName = "Config/Spawners")]
-    public class SpawnerData : ScriptableObject
+    [Serializable]
+    public class SpawnerData
     {
-        public string SpawnerName;
-        public ValuableEntity Product;
-        public float SpawnerSpeed;
-        public int BuyPrice;
+        [SerializeField] private SpawnerConfig _config;
 
-        public Action SpawnerDataChanged;
+        [HideInInspector] public float SpawnerSpeed;
+        [HideInInspector] public int ProductPrice;
         
-        [ShowInInspector, ReadOnly]
-        public int ProductPrice
+        public Action SpawnerDataChanged;
+
+        public int BuyPrice => _config.BuyPrice;
+        public string SpawnerName => _config.SpawnerName;
+        
+        public void Initialize()
         {
-            get => Product.Price;
-            set => Product.Price = value;
+            SpawnerSpeed = _config.SpawnerSpeed;
+            ProductPrice = _config.ProductPrice;
         }
     }
 }

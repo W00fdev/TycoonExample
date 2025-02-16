@@ -4,6 +4,7 @@ using _Project.Scripts.Components;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using _Project.Scripts.UI.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

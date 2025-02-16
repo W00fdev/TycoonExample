@@ -1,5 +1,7 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
+using _Project.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -24,13 +26,13 @@ namespace _Project.Scripts.CurrencyModule.Presenters
 
         private void UpdateView()
         {
-            _view.UpdateCurrency($"$ {_storage.Money.ToString()}");
+            _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
             _cashStacksView.UpdateCurrency(_storage.Money);
         }
 
-        public void ProductConsumed(IEntity entity)
+        public void BankIncome(int income)
         {
-            _storage.AddCurrency(entity.Entity.Price);
+            _storage.AddCurrency(income);
             UpdateView();
         }
 

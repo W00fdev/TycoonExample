@@ -6,11 +6,13 @@ using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using _Project.Scripts.UI.Presenters;
 using Playgama;
 using Playgama.Modules.Advertisement;
 using Playgama.Modules.Platform;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Serialization;
 
 namespace _Project.Scripts
@@ -18,7 +20,7 @@ namespace _Project.Scripts
     public class SystemInstaller : MonoBehaviour
     {
         [Header("Utilities factory prefabs")]
-        [SerializeField] private PooledView _moneyTextPrefab;
+        [SerializeField] private AssetReferenceGameObject _moneyTextPrefab;
         
         [Header("Controllers")]
         [SerializeField] private UpgradeController _upgradeController;
@@ -32,13 +34,16 @@ namespace _Project.Scripts
 
         private void Awake()
         {
+            var handle = _moneyTextPrefab.LoadAssetAsync();
+            handle.WaitForCompletion();
+            
             var glockFactory = new PistolFactory(null);
             var shotgunFactory = new ShotgunFactory(null);
             var rifleFactory = new RifleFactory(null);
             
             var boxFactory = new BoxFactory(null);
             var longBoxFactory = new LongBoxFactory(null);
-            var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
+            var moneyTextFactory = new MoneyTextFactory(handle.Result.GetComponent<MoneyTextView>());
 
             _weaponFactories = new()
             {
@@ -69,7 +74,7 @@ namespace _Project.Scripts
             Bridge.advertisement.interstitialStateChanged -= OnInterstitialStateChanged;
 #endif
         }
-
+        
         private void OnInterstitialStateChanged(InterstitialState state)
         {
             switch (state)

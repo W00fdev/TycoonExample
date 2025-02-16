@@ -1,9 +1,9 @@
-﻿using System;
-using _Project.Scripts.CurrencyModule.Models;
+﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.Infrastructure;
 using UnityEngine;
 
-namespace _Project.Scripts.CurrencyModule.Presenters
+namespace _Project.Scripts.UI.Presenters
 {
     public class CurrencyPipe : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             _bankPresenter.Initialize(bankStorage, this);
             _walletPresenter.Initialize(walletStorage, this);
             
-            EventBus.EntityConsumed += ProductConsumed;
+            EventBus.BankIncome += BankIncome;
         }
 
         public void Cashout(int bankMoney) 
@@ -25,7 +25,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
         public bool SpentCash(int amount)
             => _walletPresenter.SpentCash(amount);
 
-        private void ProductConsumed(IEntity entity) 
-            => _bankPresenter.ProductConsumed(entity);
+        private void BankIncome(int income) 
+            => _bankPresenter.BankIncome(income);
     }
 }

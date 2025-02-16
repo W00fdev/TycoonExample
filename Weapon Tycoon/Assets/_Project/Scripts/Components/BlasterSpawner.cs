@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using _Project.Scripts.UI.Models;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
 using Sirenix.OdinInspector;
@@ -53,13 +55,16 @@ namespace _Project.Scripts.Components
             _movableBoxes = new (_movablesCapacity);
             _movableBlasters = new (_movablesCapacity);
             
+            //spawnerData.Initialize();
             _infoView.Initialize(spawnerData.SpawnerName);
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
+            
+            _spawnerData.SpawnerDataChanged += UpgradeSpawner;
         }
 
         private void OnDestroy()
         {
-            _spawnerData.SpawnerDataChanged += UpgradeSpawner;
+            _spawnerData.SpawnerDataChanged -= UpgradeSpawner;
         }
 
         private void UpgradeSpawner()
@@ -136,16 +141,17 @@ namespace _Project.Scripts.Components
         private void ConsumeWeapon(PooledView weapon)
         {
             weapon.ViewReturner -= ConsumeWeapon;
-            
             _movableBlasters.Remove(weapon);
-            SpawnText((BlasterView)weapon);
+
+            EventBus.BankIncome.Invoke(_spawnerData.ProductPrice);
+            SpawnText();
         }
 
-        public void SpawnText(IEntity entity)
+        private void SpawnText()
         {
             var moneyText = _moneyTextFactory.Next();
             moneyText.transform.position = _moneyTextSpawnPoint.position;
-            ((MoneyTextView)moneyText).SetText($"+{entity.Entity.Price}$");
+            ((MoneyTextView)moneyText).SetText($"+{_spawnerData.ProductPrice.ToHeaderMoneyFormat()}");
             ((MoneyTextView)moneyText).PlayTextAnimation();
         }
         
