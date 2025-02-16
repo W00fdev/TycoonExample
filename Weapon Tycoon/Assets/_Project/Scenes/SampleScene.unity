@@ -5084,6 +5084,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 0360cc9ab6dcf8a4b94b4008d2a8c88b, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 0360cc9ab6dcf8a4b94b4008d2a8c88b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a3389edb1b050e84fbade2418e7a3455, type: 2}
@@ -13766,14 +13770,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnerDatas:
   - _config: {fileID: 11400000, guid: 80615ed9762a8a14b8cdc9ef86c8e77e, type: 2}
-    SpawnerSpeed: 0
-    ProductPrice: 0
   - _config: {fileID: 11400000, guid: b065a51cfa7f3f94f9ee2f5ac9037b25, type: 2}
-    SpawnerSpeed: 0
-    ProductPrice: 0
   - _config: {fileID: 11400000, guid: 774fdadb87b456144bb166405d269bf7, type: 2}
-    SpawnerSpeed: 0
-    ProductPrice: 0
   _spawnerUpgrades:
   - _data: {fileID: 11400000, guid: ce4286b34af5c374d8bf35dbb7217647, type: 2}
   - _data: {fileID: 11400000, guid: 29ace659af5ecb04f89e457addda04b9, type: 2}

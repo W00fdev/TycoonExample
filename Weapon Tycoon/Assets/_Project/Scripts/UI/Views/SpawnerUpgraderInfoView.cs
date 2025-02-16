@@ -17,5 +17,11 @@ namespace _Project.Scripts.UI.Views
             _upgradePriceText.text = upgradePrice;
             _upgradeValueText.text = upgradeValue;
         }
+        
+        public void SetBeforeInfo(string upgradeValue)
+            => _beforeValueText.text = upgradeValue;
+
+        public void EnableSelf()
+            => gameObject.SetActive(true);
     }
 }

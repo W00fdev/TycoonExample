@@ -8,7 +8,7 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public class ShotgunFactory : BlasterFactory
     {
-        public ShotgunFactory(StorageService service) : base(service)
+        public ShotgunFactory() : base()
         {
             StorageService.GetWeaponView(BlasterType.Shotgun1View, (x) => _prefab = x);
         }

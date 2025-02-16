@@ -13,9 +13,7 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         protected PooledView _prefab;
         
-        public Action<PooledView> BoxReturned;
-        
-        public BoxFactory(StorageService service)
+        public BoxFactory()
         {
             StorageService.GetBoxView(BoxType.Box, (x) => _prefab = x);
         }
@@ -40,8 +38,6 @@ namespace _Project.Scripts.LogicModule.Factories
 
         private void ReturnToItemsList(PooledView pooled)
         {
-            BoxReturned?.Invoke(pooled);
-            
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
         }

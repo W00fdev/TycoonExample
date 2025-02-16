@@ -18,12 +18,12 @@ namespace _Project.Scripts.Infrastructure
         //private AssetPath _assetPath;
         
         // Addressables
-        public static void GetWeaponView(BlasterType type, Action<BlasterView> onComplete)
+        public static void GetWeaponView(BlasterType type, Action<PooledView> onComplete)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
             handle.Completed += (x) =>
             {
-                onComplete?.Invoke(x.Result.GetComponent<BlasterView>());
+                onComplete?.Invoke(x.Result.GetComponent<PooledView>());
             };
         }
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3575198905733023099}
-  - component: {fileID: -1868508243599385444}
+  - component: {fileID: 2423949192588907120}
   m_Layer: 7
   m_Name: Sniper_1_View
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 927849574660784388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1868508243599385444
+--- !u!114 &2423949192588907120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +42,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1520196407616454764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dccf19e28f8b46ce948ecd629c6a1a5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 894a86d8024e4d02a28099f723f53206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity: {fileID: 11400000, guid: f114cfc0d93bb2d4286aea06ab520825, type: 2}
 --- !u!1001 &822710919004563183
 PrefabInstance:
   m_ObjectHideFlags: 0

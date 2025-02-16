@@ -61,21 +61,30 @@ namespace _Project.Scripts.LogicModule
 
         private void EnableUpgraderButtons(int spawnerIndex)
         {
-            _spawnerButtons[spawnerIndex].gameObject.SetActive(false);
+            _spawnerButtons[spawnerIndex].DisableSelf();
             
-            var upgradePriceButton = _upgradePriceButtons[spawnerIndex];
-            var upgradeSpeedButton = _upgradeSpeedButtons[spawnerIndex];
-            upgradePriceButton.gameObject.SetActive(true);
-            upgradeSpeedButton.gameObject.SetActive(true);
+            var priceButton = _upgradePriceButtons[spawnerIndex];
+            var speedButton = _upgradeSpeedButtons[spawnerIndex];
+            EnableButtons();
+            UpdateTextButtons(priceButton, speedButton);
+            return;
 
-            var data = _spawnerDatas[spawnerIndex];
-            upgradePriceButton.UpdateInfo(0.ToHeaderMoneyFormat(), data.ProductPrice.ToString());
-            upgradeSpeedButton.UpdateInfo(0.ToHeaderMoneyFormat(), data.SpawnerSpeed.ToSpeedFormat());
+            void EnableButtons( )
+            {
+                priceButton.EnableSelf();
+                speedButton.EnableSelf();
+            }
+            void UpdateTextButtons(SpawnerUpgraderInfoView priceInfo, SpawnerUpgraderInfoView speedInfo)
+            {
+                var data = _spawnerDatas[spawnerIndex];
+                priceInfo.SetBeforeInfo(data.ProductPrice.ToString());
+                speedInfo.SetBeforeInfo(data.SpawnerSpeed.ToSpeedFormat());
 
-            var priceUpgrade = _spawnerUpgrades[spawnerIndex].PriceUpgrade;
-            var speedUpgrade = _spawnerUpgrades[spawnerIndex].SpeedUpgrade;
-            upgradePriceButton.UpdateInfo(priceUpgrade.BuyPrice.ToHeaderMoneyFormat(), priceUpgrade.ProductPrice.ToString());
-            upgradeSpeedButton.UpdateInfo(speedUpgrade.BuyPrice.ToHeaderMoneyFormat(), speedUpgrade.Speed.ToSpeedFormat());
+                var priceUpgrade = _spawnerUpgrades[spawnerIndex].PriceUpgrade;
+                var speedUpgrade = _spawnerUpgrades[spawnerIndex].SpeedUpgrade;
+                priceInfo.UpdateInfo(priceUpgrade.BuyPrice.ToHeaderMoneyFormat(), priceUpgrade.ProductPrice.ToString());
+                speedInfo.UpdateInfo(speedUpgrade.BuyPrice.ToHeaderMoneyFormat(), speedUpgrade.Speed.ToSpeedFormat());
+            }
         }
 
         private void SetDisableSpawnerButton(int upgradeLevel)
@@ -96,7 +105,8 @@ namespace _Project.Scripts.LogicModule
                 speed:          data.SpawnerSpeed.ToSpeedFormat(),
                 productPrice:   data.ProductPrice.ToString());
         }
-        
+
+        // Generic must be here, but no!
         private void BuySpeedUpgrade(int spawnerIndex)
         {
             var speedUpgradeData = _spawnerUpgrades[spawnerIndex].SpeedUpgrade;
@@ -121,6 +131,7 @@ namespace _Project.Scripts.LogicModule
             _spawnerDatas[spawnerIndex].UpdateSpeed(speed);
         }
 
+        // Generic must be here, but no!
         private void BuyPriceUpgrade(int spawnerIndex)
         {
             var priceUpgrade = _spawnerUpgrades[spawnerIndex].PriceUpgrade;

@@ -37,12 +37,12 @@ namespace _Project.Scripts
             var handle = _moneyTextPrefab.LoadAssetAsync();
             handle.WaitForCompletion();
             
-            var glockFactory = new PistolFactory(null);
-            var shotgunFactory = new ShotgunFactory(null);
-            var rifleFactory = new RifleFactory(null);
+            var glockFactory = new PistolFactory();
+            var shotgunFactory = new ShotgunFactory();
+            var rifleFactory = new RifleFactory();
             
-            var boxFactory = new BoxFactory(null);
-            var longBoxFactory = new LongBoxFactory(null);
+            var boxFactory = new BoxFactory();
+            var longBoxFactory = new LongBoxFactory();
             var moneyTextFactory = new MoneyTextFactory(handle.Result.GetComponent<MoneyTextView>());
 
             _weaponFactories = new()

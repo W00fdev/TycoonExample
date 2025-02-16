@@ -17,5 +17,8 @@ namespace _Project.Scripts.UI.Views
             _productPriceText.text = productPrice;
             _speedText.text = speed;
         }
+
+        public void DisableSelf()
+            => gameObject.SetActive(false);
     }
 }
