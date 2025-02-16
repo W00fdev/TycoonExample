@@ -8,18 +8,33 @@ namespace _Project.Scripts.UI.Models
     {
         [SerializeField] private SpawnerConfig _config;
 
-        [HideInInspector] public float SpawnerSpeed;
-        [HideInInspector] public int ProductPrice;
+        private float _spawnerSpeed;
+        private int _productPrice;
         
-        public Action SpawnerDataChanged;
+        public float SpawnerSpeed => _spawnerSpeed;
+        public int ProductPrice => _productPrice;
+        
+        public event Action SpawnerDataChanged;
 
         public int BuyPrice => _config.BuyPrice;
         public string SpawnerName => _config.SpawnerName;
         
         public void Initialize()
         {
-            SpawnerSpeed = _config.SpawnerSpeed;
-            ProductPrice = _config.ProductPrice;
+            _spawnerSpeed = _config.SpawnerSpeed;
+            _productPrice = _config.ProductPrice;
+        }
+
+        public void UpdateSpeed(float speed)
+        {
+            _spawnerSpeed = speed;
+            SpawnerDataChanged?.Invoke();
+        }
+        
+        public void UpdatePrice(int price)
+        {
+            _productPrice = price;
+            SpawnerDataChanged?.Invoke();
         }
     }
 }

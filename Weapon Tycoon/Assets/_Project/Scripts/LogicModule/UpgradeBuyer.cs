@@ -99,14 +99,15 @@ namespace _Project.Scripts.LogicModule
         
         private void BuySpeedUpgrade(int spawnerIndex)
         {
-            if (_currencyPipe.SpentCash(_spawnerUpgrades[spawnerIndex].SpeedUpgrade.BuyPrice) == false)
+            var speedUpgradeData = _spawnerUpgrades[spawnerIndex].SpeedUpgrade;
+            if (_currencyPipe.SpentCash(speedUpgradeData.BuyPrice) == false)
                 return;
             
-            var newSpeed = _spawnerUpgrades[spawnerIndex].SpeedUpgrade.Speed;
+            var speed = speedUpgradeData.Speed;
             var upgradeSpeedButton = _upgradeSpeedButtons[spawnerIndex];
-            var speedUpgrade = _spawnerUpgrades[spawnerIndex].NextSpeedUpgrade();
+            var nextSpeedUpgrade = _spawnerUpgrades[spawnerIndex].NextSpeedUpgrade();
 
-            if (speedUpgrade == null)
+            if (nextSpeedUpgrade == null)
             {
                 //upgradeSpeedButton.UpdateInfo("max", "max");
                 if (upgradeSpeedButton.TryGetComponent(out IButtonUpgrader upgrader))
@@ -114,25 +115,23 @@ namespace _Project.Scripts.LogicModule
             }
             else
             {
-                upgradeSpeedButton.UpdateInfo(speedUpgrade.BuyPrice.ToHeaderMoneyFormat(), speedUpgrade.Speed.ToSpeedFormat());
+                upgradeSpeedButton.UpdateInfo(nextSpeedUpgrade.BuyPrice.ToHeaderMoneyFormat(), nextSpeedUpgrade.Speed.ToSpeedFormat());
             }
 
-
-            _spawnerDatas[spawnerIndex].SpawnerSpeed = newSpeed;
-            _spawnerDatas[spawnerIndex].SpawnerDataChanged?.Invoke();
+            _spawnerDatas[spawnerIndex].UpdateSpeed(speed);
         }
 
         private void BuyPriceUpgrade(int spawnerIndex)
         {
-            if (_currencyPipe.SpentCash(_spawnerUpgrades[spawnerIndex].PriceUpgrade.BuyPrice) == false)
+            var priceUpgrade = _spawnerUpgrades[spawnerIndex].PriceUpgrade;
+            if (_currencyPipe.SpentCash(priceUpgrade.BuyPrice) == false)
                 return;
             
-            var newPrice = _spawnerUpgrades[spawnerIndex].PriceUpgrade.ProductPrice;
-            
+            var price = priceUpgrade.ProductPrice;
             var upgradePriceButton = _upgradePriceButtons[spawnerIndex];
-            var priceUpgrade = _spawnerUpgrades[spawnerIndex].NextPriceUpgrade();
+            var nextPriceUpgrade = _spawnerUpgrades[spawnerIndex].NextPriceUpgrade();
 
-            if (priceUpgrade == null)
+            if (nextPriceUpgrade == null)
             {
                 //upgradePriceButton.UpdateInfo("max", "max");
                 if (upgradePriceButton.TryGetComponent(out IButtonUpgrader upgrader))
@@ -140,11 +139,10 @@ namespace _Project.Scripts.LogicModule
             }
             else
             {
-                upgradePriceButton.UpdateInfo(priceUpgrade.BuyPrice.ToHeaderMoneyFormat(), priceUpgrade.ProductPrice.ToString());
+                upgradePriceButton.UpdateInfo(nextPriceUpgrade.BuyPrice.ToHeaderMoneyFormat(), nextPriceUpgrade.ProductPrice.ToString());
             }
             
-            _spawnerDatas[spawnerIndex].ProductPrice = newPrice;
-            _spawnerDatas[spawnerIndex].SpawnerDataChanged?.Invoke();
+            _spawnerDatas[spawnerIndex].UpdatePrice(price);
         }
     }
 }
