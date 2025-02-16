@@ -18,7 +18,7 @@ namespace _Project.Scripts.Infrastructure
         //private AssetPath _assetPath;
         
         // Addressables
-        public static void GetWeaponView(BlasterType type, Action<PooledView> onComplete)
+        public void GetWeaponView(BlasterType type, Action<PooledView> onComplete)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
             handle.Completed += (x) =>
@@ -27,7 +27,7 @@ namespace _Project.Scripts.Infrastructure
             };
         }
 
-        public static void GetBoxView(BoxType type, Action<PooledView> onComplete)
+        public void GetBoxView(BoxType type, Action<PooledView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
             asyncOperationHandle.Completed += (x) =>

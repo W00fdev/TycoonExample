@@ -13,9 +13,9 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         protected PooledView _prefab;
         
-        public BoxFactory()
+        public BoxFactory(StorageService storageService)
         {
-            StorageService.GetBoxView(BoxType.Box, (x) => _prefab = x);
+            storageService.GetBoxView(BoxType.Box, (x) => _prefab = x);
         }
 
         [Button]

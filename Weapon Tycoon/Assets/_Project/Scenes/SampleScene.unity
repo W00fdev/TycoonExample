@@ -5678,7 +5678,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1084870591412318680}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3cd5a2751fa479a9bcf2776037e0734, type: 3}
   m_Name: 
@@ -22676,12 +22676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed90804ab5a458f91ad979f7bc2e170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moneyTextPrefab:
-    m_AssetGUID: 4c2ecd546ffb0bb4cb70b54f378b26b9
-    m_SubObjectName: 
-    m_SubObjectGUID: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  _moneyTextPrefab: {fileID: 4525344155091115298, guid: 4c2ecd546ffb0bb4cb70b54f378b26b9, type: 3}
   _upgradeController: {fileID: 1167107452}
   _pipe: {fileID: 1480677069}
 --- !u!4 &1434094290
@@ -33299,6 +33294,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1480502426}
     m_Modifications:
+    - target: {fileID: 3152770890247695422, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6136062359215735447, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
       propertyPath: m_Name
       value: Spawner_0_2

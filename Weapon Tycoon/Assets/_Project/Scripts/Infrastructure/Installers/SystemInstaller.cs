@@ -20,7 +20,7 @@ namespace _Project.Scripts
     public class SystemInstaller : MonoBehaviour
     {
         [Header("Utilities factory prefabs")]
-        [SerializeField] private AssetReferenceGameObject _moneyTextPrefab;
+        [SerializeField] private MoneyTextView _moneyTextPrefab;
         
         [Header("Controllers")]
         [SerializeField] private UpgradeController _upgradeController;
@@ -34,16 +34,14 @@ namespace _Project.Scripts
 
         private void Awake()
         {
-            var handle = _moneyTextPrefab.LoadAssetAsync();
-            handle.WaitForCompletion();
+            var storageService = new StorageService();
+            var glockFactory = new PistolFactory(storageService);
+            var shotgunFactory = new ShotgunFactory(storageService);
+            var rifleFactory = new RifleFactory(storageService);
             
-            var glockFactory = new PistolFactory();
-            var shotgunFactory = new ShotgunFactory();
-            var rifleFactory = new RifleFactory();
-            
-            var boxFactory = new BoxFactory();
-            var longBoxFactory = new LongBoxFactory();
-            var moneyTextFactory = new MoneyTextFactory(handle.Result.GetComponent<MoneyTextView>());
+            var boxFactory = new BoxFactory(storageService);
+            var longBoxFactory = new LongBoxFactory(storageService);
+            var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
 
             _weaponFactories = new()
             {
