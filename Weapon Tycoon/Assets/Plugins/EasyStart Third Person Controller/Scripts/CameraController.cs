@@ -28,14 +28,16 @@ public class CameraController : MonoBehaviour
 
     float mouseX;
     float mouseY;
-    float offsetDistanceY;
+    public float offsetDistanceY;
+    public float offsetDistanceX = 0;
+    public float distance;
 
     Transform player;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
-        offsetDistanceY = transform.position.y;
+        //offsetDistanceX = transform.position.x - player.position.x;
 
         // Lock and hide cursor with option isn't checked
         if ( ! clickToMoveCamera )
@@ -47,10 +49,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-
         // Follow player - camera offset
-        transform.position = player.position + new Vector3(0, offsetDistanceY, 0);
-
         // Set camera zoom when mouse wheel is scrolled
         if( canZoom && Input.GetAxis("Mouse ScrollWheel") != 0 )
             _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 2;
@@ -69,5 +68,10 @@ public class CameraController : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
 
+        var position = transform.rotation * new Vector3(offsetDistanceX, 0, -distance);
+        position += player.position;
+        position += Vector3.up * offsetDistanceY;
+        
+        transform.position = position;
     }
 }
