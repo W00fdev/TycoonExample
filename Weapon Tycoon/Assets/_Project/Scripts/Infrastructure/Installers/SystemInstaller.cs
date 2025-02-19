@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Infrastructure.Data;
+﻿using System.Collections;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.SaveLoad;
 using _Project.Scripts.Utils;
 using Playgama.Modules.Advertisement;
@@ -13,6 +14,9 @@ namespace _Project.Scripts.Infrastructure.Installers
         
         [SerializeField] private GameObject _loadingFader;
         
+        private readonly WaitForSeconds _timerProgressSave = new WaitForSeconds(3);
+        private ISaveLoadService _saveLoadService;
+        
         private void Start()
         {
             _loadingFader.SetActive(true);
@@ -23,10 +27,10 @@ namespace _Project.Scripts.Infrastructure.Installers
         private void CreateOrLoadData()
         {
             ISaveLoadService cacheSaveLoad = new CacheSaveLoad();
-            var cloudSaveLoad = new CloudSaveLoad(cacheSaveLoad);
+            _saveLoadService = new CloudSaveLoad(cacheSaveLoad);
             
-            if (cloudSaveLoad.HasKey(Constants.PlayerDataKey))
-                cloudSaveLoad.Load<PlayerData>(Constants.PlayerDataKey, OnDataLoaded);
+            if (_saveLoadService.HasKey(Constants.PlayerDataKey))
+                _saveLoadService.Load<PlayerData>(Constants.PlayerDataKey, OnDataLoaded);
             else
                 OnDataLoaded(new PlayerData());
         }
@@ -34,14 +38,27 @@ namespace _Project.Scripts.Infrastructure.Installers
         private void OnDataLoaded(PlayerData data)
         {
             var storage  = new StorageService();
-            _battleInstaller.Initialize(storage);
-            _uiInstaller.Initialize();
-
             PersistentProgress.Instance = data;
-            
             Debug.Log("Data: " + JsonUtility.ToJson(data));
             
+            _uiInstaller.Initialize();
+            _battleInstaller.Initialize(storage);
+
+            StartCoroutine(TimerProgressSave());
+            
+            
             _loadingFader.SetActive(false);
+        }
+
+        IEnumerator TimerProgressSave()
+        {
+            while (true)
+            {
+                yield return _timerProgressSave;
+                _saveLoadService.Save(Constants.PlayerDataKey, PersistentProgress.Instance);
+                
+                Debug.Log("Was saved: " + JsonUtility.ToJson(PersistentProgress.Instance));
+            }
         }
     }
 }

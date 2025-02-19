@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
@@ -19,23 +20,28 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             UpdateView();
         }
 
-        public void AddCash(int amount)
+        public void AddCash(long amount)
         {
             _storage.AddCurrency(amount);
             UpdateView();
         }
 
-        public bool SpentCash(int amount)
+        public bool SpentCash(long amount)
         {
             if (_storage.SpendMoney(amount))
             {
                 UpdateView();
+                
                 return true;
             }
 
             return false;
         }
         
-        private void UpdateView() => _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
+        private void UpdateView()
+        {
+            _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
+            PersistentProgress.Instance.MoneyWallet = _storage.Money;
+        }
     }
 }

@@ -6,12 +6,12 @@ namespace _Project.Scripts.CurrencyModule.Models
     [Serializable]
     public class WalletStorage : Currency
     {
-        public WalletStorage(int money) : base(money)
+        public WalletStorage(long money) : base(money)
         {
         }
     
         [Button("Spend Money")]
-        public bool SpendMoney(int amount)
+        public bool SpendMoney(long amount)
         {
             if (_money >= amount)
             {

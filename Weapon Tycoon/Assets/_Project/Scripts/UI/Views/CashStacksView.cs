@@ -10,7 +10,7 @@ namespace _Project.Scripts.UI.Views
 
         private int _prevActiveStacks = 13;
         
-        public void UpdateCurrency(int amount)
+        public void UpdateCurrency(long amount)
         {
             int activeStacksCount = CalculateCountOfStacks(amount);
             
@@ -23,7 +23,7 @@ namespace _Project.Scripts.UI.Views
             _prevActiveStacks = activeStacksCount;
         }
 
-        private int CalculateCountOfStacks(int amount)
+        private int CalculateCountOfStacks(long amount)
         {
             return amount switch
             {

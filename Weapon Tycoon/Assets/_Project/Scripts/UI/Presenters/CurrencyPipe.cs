@@ -19,13 +19,13 @@ namespace _Project.Scripts.UI.Presenters
             EventBus.BankIncome += BankIncome;
         }
 
-        public void Cashout(int bankMoney) 
+        public void Cashout(long bankMoney) 
             => _walletPresenter.AddCash(bankMoney);
 
-        public bool SpentCash(int amount)
+        public bool SpentCash(long amount)
             => _walletPresenter.SpentCash(amount);
 
-        private void BankIncome(int income) 
+        private void BankIncome(long income) 
             => _bankPresenter.BankIncome(income);
     }
 }

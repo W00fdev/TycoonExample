@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
@@ -28,9 +29,11 @@ namespace _Project.Scripts.CurrencyModule.Presenters
         {
             _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
             _cashStacksView.UpdateCurrency(_storage.Money);
+
+            PersistentProgress.Instance.MoneyBank = _storage.Money;
         }
 
-        public void BankIncome(int income)
+        public void BankIncome(long income)
         {
             _storage.AddCurrency(income);
             UpdateView();

@@ -19,6 +19,18 @@ namespace _Project.Scripts.Utils
             return Mathf.RoundToInt(value * 10f).ToString();
         }
         
+        public static string ToHeaderMoneyFormat(this long money)
+        {
+            if (money < 10000)
+                return $"$ {money}";
+            else if (money < 1000000)
+                return $"$ {money / 1000}k";
+            else if (money < 100000000)
+                return $"$ {money / 1000000}m";
+            
+            return $"$ {money}";
+        }
+        
         public static string ToHeaderMoneyFormat(this int money)
         {
             if (money < 10000)
@@ -29,6 +41,17 @@ namespace _Project.Scripts.Utils
                 return $"$ {money / 1000000}m";
             
             return $"$ {money}";
+        }
+
+        public static string GetSpawnerName(int spawnerIndex)
+        {
+            return spawnerIndex switch
+            {
+                0 => Constants.Pistol1FactoryName,
+                1 => Constants.Shotgun1FactoryName,
+                2 => Constants.Rifle1FactoryName,
+                _ => throw new ArgumentException("Invalid spawner index")
+            };
         }
 
         [Conditional("DEBUG_MODE")]

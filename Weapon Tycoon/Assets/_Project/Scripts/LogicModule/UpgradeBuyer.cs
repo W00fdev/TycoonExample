@@ -1,8 +1,7 @@
 ﻿using _Project.Scripts.Animations;
 using _Project.Scripts.Components;
-using _Project.Scripts.CurrencyModule.Models;
-using _Project.Scripts.CurrencyModule.Presenters;
 using _Project.Scripts.Infrastructure;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Models;
 using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
@@ -12,30 +11,57 @@ using UnityEngine.Serialization;
 
 namespace _Project.Scripts.LogicModule
 {
-    public sealed class UpgradeBuyer : MonoBehaviour
+    public class UpgradeBuyer : MonoBehaviour
     {
         [SerializeField] private SpawnerData[] _spawnerDatas;
-        [SerializeField] private SpawnerUpgrader[] _spawnerUpgrades;
         [SerializeField] private SpawnerBuyerInfoView[] _spawnerButtons;
         [SerializeField] private SpawnerUpgraderInfoView[] _upgradeButtons;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private UpgradeController _upgradeController;
-
-        private void Start()
+        
+        public void Initialize()
         {
-            EnableSpawnerButton(0);
+            int spawners = PersistentProgress.Instance.Spawners;
+            if (spawners == 0)
+                EnableSpawnerButton(0);
+            else
+                LoadSpawners(spawners);
         }
 
-        private void OnEnable()
+        public void LoadSpawners(int spawnersCount)
         {
-            EventBus.BuyNextSpawnerPressed += TryBuyNext;
-            EventBus.BuySpawnerUpgradePressed += BuyUpgrade;
+            var upgrades = PersistentProgress.Instance.SpawnerUpgrade;
+            int index;
+            for (index = 0; index < spawnersCount; index++)
+                LoadSpawner(index < upgrades.Count ? upgrades[index] : null, index);
+            
+            if (_spawnerButtons.Length > index && _spawnerDatas.Length > index)
+                EnableSpawnerButton(index);
         }
 
-        private void OnDisable()
+        private void LoadSpawner(SpawnerUpgradeDTO data, int spawnerIndex)
         {
-            EventBus.BuyNextSpawnerPressed -= TryBuyNext;
-            EventBus.BuySpawnerUpgradePressed -= BuyUpgrade;
+            if (_spawnerDatas.Length <= spawnerIndex)
+                return;
+            
+            var spawnerData = _spawnerDatas[spawnerIndex];
+            spawnerData.Initialize();
+            
+            if (data != null)
+                spawnerData.SetData(data);
+            
+            if (spawnerData.UpgradeIndex >= spawnerData.TotalUpgradesCount)
+            {
+                if (_upgradeButtons[spawnerIndex].TryGetComponent(out IButtonUpgrader upgrader))
+                    upgrader.DisableButton();
+            }
+            else
+            {
+                _upgradeButtons[spawnerIndex].SetPriceInfo(spawnerData.NextUpgradePrice.ToHeaderMoneyFormat());
+            }
+            
+            EnableUpgraderButton(spawnerIndex);
+            _upgradeController.Next(spawnerData);
         }
 
         public void TryBuyNext()
@@ -48,7 +74,7 @@ namespace _Project.Scripts.LogicModule
             var spawnerData = _spawnerDatas[spawnerIndex];
             if (_currencyPipe.SpentCash(spawnerData.BuyPrice) == false)
                 return;
-            
+
             EnableUpgraderButton(spawnerIndex);
             _upgradeController.Next(spawnerData);
             
@@ -62,8 +88,8 @@ namespace _Project.Scripts.LogicModule
             _spawnerButtons[spawnerIndex].DisableSelf();
             _upgradeButtons[spawnerIndex].EnableSelf();
             
-            var upgrade = _spawnerUpgrades[spawnerIndex].Upgrade;
-            _upgradeButtons[spawnerIndex].SetPriceInfo(upgrade.BuyPrice.ToHeaderMoneyFormat());
+            var upgradePrice = _spawnerDatas[spawnerIndex].NextUpgradePrice;
+            _upgradeButtons[spawnerIndex].SetPriceInfo(upgradePrice.ToHeaderMoneyFormat());
         }
 
         private void SetDisableSpawnerButton(int upgradeLevel)
@@ -79,7 +105,7 @@ namespace _Project.Scripts.LogicModule
             
             _spawnerButtons[nextUpgradeLevel].gameObject.SetActive(true);
             _spawnerButtons[nextUpgradeLevel].Initialize(
-                spawnerName:    data.SpawnerName,
+                Utils.Utils.GetSpawnerName(nextUpgradeLevel),
                 spawnerPrice:   data.BuyPrice.ToHeaderMoneyFormat(),
                 speed:          data.SpawnerSpeed.ToSpeedFormat(),
                 productPrice:   data.ProductPrice.ToString());
@@ -87,13 +113,12 @@ namespace _Project.Scripts.LogicModule
 
         private void BuyUpgrade(int spawnerIndex)
         {
-            var upgradeData = _spawnerUpgrades[spawnerIndex].Upgrade;
-            if (_currencyPipe.SpentCash(upgradeData.BuyPrice) == false)
+            var upgradeData = _spawnerDatas[spawnerIndex];
+            if (_currencyPipe.SpentCash(upgradeData.NextUpgradePrice) == false)
                 return;
          
-            var speed = upgradeData.Speed;
-            var price = upgradeData.ProductPrice;
-            var nextUpgrade = _spawnerUpgrades[spawnerIndex].NextUpgrade();
+            var nextUpgrade = _spawnerDatas[spawnerIndex].ApplyNextUpgrade();
+            PersistentProgress.Instance.UpdateSpawnerUpgrade(_spawnerDatas[spawnerIndex].DTO, spawnerIndex);
             
             if (nextUpgrade == null)
             {
@@ -102,10 +127,20 @@ namespace _Project.Scripts.LogicModule
             }
             else
             {
-                _upgradeButtons[spawnerIndex].SetPriceInfo(nextUpgrade.BuyPrice.ToHeaderMoneyFormat());
+                _upgradeButtons[spawnerIndex].SetPriceInfo(upgradeData.NextUpgradePrice.ToHeaderMoneyFormat());
             }
+        }
 
-            _spawnerDatas[spawnerIndex].UpdateSpeedAndPrice(speed, price);
+        private void OnEnable()
+        {
+            EventBus.BuyNextSpawnerPressed += TryBuyNext;
+            EventBus.BuySpawnerUpgradePressed += BuyUpgrade;
+        }
+
+        private void OnDisable()
+        {
+            EventBus.BuyNextSpawnerPressed -= TryBuyNext;
+            EventBus.BuySpawnerUpgradePressed -= BuyUpgrade;
         }
     }
 }

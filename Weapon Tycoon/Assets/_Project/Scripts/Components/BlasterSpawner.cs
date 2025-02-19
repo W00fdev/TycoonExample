@@ -5,6 +5,7 @@ using System.Linq;
 using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;
@@ -18,6 +19,7 @@ namespace _Project.Scripts.Components
 {
     public abstract class BlasterSpawner : MonoBehaviour
     {
+        [SerializeField] private string _spawnerName;
         [SerializeField] private SpawnerInfoView _infoView;
         
         [SerializeField] private Vector3 _defaultWeaponRotation;
@@ -38,7 +40,7 @@ namespace _Project.Scripts.Components
         [SerializeField] protected float _endScaleYSquash = 2f;
         [SerializeField] protected GameObject[] _upgradesVisual;
 
-        private int _upgradeVisualLevel;
+        protected int _upgradeVisualLevel;
         
         [Header("Debug only")]
         [SerializeField] private int _movablesCapacity;
@@ -53,7 +55,7 @@ namespace _Project.Scripts.Components
         [SerializeField, ReadOnly] private float _speedInPercents;
         private WaitForSeconds _waiter;
 
-        public void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
+        public virtual void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
         {
             _boxFactory = boxFactory;
             _moneyTextFactory = moneyTextFactory;
@@ -64,7 +66,7 @@ namespace _Project.Scripts.Components
             _movableBlasters = new (_movablesCapacity);
             
             //spawnerData.Initialize();
-            _infoView.Initialize(spawnerData.SpawnerName);
+            _infoView.Initialize(_spawnerName);
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
             
             _spawnerData.SpawnerDataChanged += UpgradeSpawner;
@@ -87,9 +89,16 @@ namespace _Project.Scripts.Components
             
             _infoView.UpdateInfo(_spawnerData.SpawnerSpeed.ToSpeedFormat(), _spawnerData.ProductPrice.ToString());
             _upgradeImpact.Play();
+            
+            _upgradeVisualLevel = Mathf.Min(_upgradeVisualLevel + 1, _upgradesVisual.Length);
 
-            if (_upgradeVisualLevel < _upgradesVisual.Length)
-                _upgradesVisual[_upgradeVisualLevel++].SetActive(true);
+            UpdateVisuals();
+        }
+
+        protected void UpdateVisuals()
+        {
+            for (int i = 0; i < Mathf.Min(_upgradeVisualLevel, _upgradesVisual.Length); i++)
+                _upgradesVisual[i].SetActive(true);
         }
 
         public virtual void Resolve(BlasterFactory blasterFactory)

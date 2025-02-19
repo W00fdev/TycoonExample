@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239c3477aac5426eadf1cbf424a0957c, type: 3}
+  m_Script: {fileID: 11500000, guid: dcedfd7fe113c2040954d90512652f1e, type: 3}
   m_Name: Rifle1Upgrades
   m_EditorClassIdentifier: 
   _upgrades:
   - Speed: 0.5
-    ProductPrice: 100
+    ProductPrice: 50
     BuyPrice: 100
   - Speed: 0.6
-    ProductPrice: 200
+    ProductPrice: 55
     BuyPrice: 200

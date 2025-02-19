@@ -55,7 +55,8 @@ namespace _Project.Scripts.Infrastructure.SaveLoad
                 return;
             }
 
-            Bridge.storage.Get(key, (success, json) =>
+            Bridge.storage.Get(key, 
+                (success, json) =>
             {
                 if (!success)
                     throw new ArgumentException($"not found key: {key}");

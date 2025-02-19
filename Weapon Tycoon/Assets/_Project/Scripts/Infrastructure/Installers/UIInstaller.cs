@@ -1,4 +1,5 @@
 using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Presenters;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,8 +15,8 @@ namespace _Project.Scripts.Infrastructure.Installers
         
         public void Initialize()
         {
-            _bankStorage = new BankStorage(0);
-            _walletStorage = new WalletStorage(0);
+            _bankStorage = new BankStorage(PersistentProgress.Instance.MoneyBank);
+            _walletStorage = new WalletStorage(PersistentProgress.Instance.MoneyWallet);
             
             _pipe.Initialize(_bankStorage, _walletStorage);
         }

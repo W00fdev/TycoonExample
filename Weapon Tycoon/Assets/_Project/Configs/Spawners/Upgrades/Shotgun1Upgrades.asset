@@ -9,16 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 239c3477aac5426eadf1cbf424a0957c, type: 3}
+  m_Script: {fileID: 11500000, guid: dcedfd7fe113c2040954d90512652f1e, type: 3}
   m_Name: Shotgun1Upgrades
   m_EditorClassIdentifier: 
   _upgrades:
+  - Speed: 0.4
+    ProductPrice: 75
+    BuyPrice: 1100
   - Speed: 0.5
     ProductPrice: 90
     BuyPrice: 824
   - Speed: 0.6
     ProductPrice: 110
-    BuyPrice: 1194
+    BuyPrice: 1200
   - Speed: 0.7
     ProductPrice: 132
     BuyPrice: 1850
@@ -36,7 +39,7 @@ MonoBehaviour:
     BuyPrice: 19616
   - Speed: 1.7
     ProductPrice: 330
-    BuyPrice: 38000
+    BuyPrice: 9808
   - Speed: 2
     ProductPrice: 396
     BuyPrice: 76000

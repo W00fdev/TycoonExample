@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.Components;
 using _Project.Scripts.CurrencyModule.Models;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;
@@ -40,6 +41,8 @@ namespace _Project.Scripts
                 return null;
             
             var spawner = _spawners[_spawnerLevel++];
+            PersistentProgress.Instance.Spawners = _spawnerLevel;
+            
             spawner.gameObject.SetActive(true);
             var boxFactory = (spawner is RifleSpawner) ? _longBoxFactory : _boxFactory;
             spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);

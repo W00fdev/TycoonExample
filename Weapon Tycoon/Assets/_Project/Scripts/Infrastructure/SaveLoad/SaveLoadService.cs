@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Infrastructure.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -25,7 +26,7 @@ namespace _Project.Scripts.Infrastructure.SaveLoad
 
             var json = PlayerPrefs.GetString(key);
             var data = JsonUtility.FromJson<T>(json);
-            
+
             onLoaded?.Invoke(data);
         }
 

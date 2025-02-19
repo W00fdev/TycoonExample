@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Project.Scripts.LogicModule;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using Sirenix.OdinInspector;
@@ -13,6 +14,7 @@ namespace _Project.Scripts.Infrastructure.Installers
         [SerializeField] private MoneyTextView _moneyTextPrefab;
 
         [Header("Controllers")]
+        [SerializeField] private UpgradeBuyer _upgradeBuyer;
         [SerializeField] private UpgradeController _upgradeController;
 
         [Header("Debug only")]
@@ -35,8 +37,8 @@ namespace _Project.Scripts.Infrastructure.Installers
                 { typeof(RifleFactory), rifleFactory },
             };
 
-
             _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory, longBoxFactory);
+            _upgradeBuyer.Initialize();
         }
     }
 }

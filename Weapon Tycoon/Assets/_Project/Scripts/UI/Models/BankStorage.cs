@@ -6,14 +6,14 @@ namespace _Project.Scripts.CurrencyModule.Models
     [Serializable]
     public class BankStorage : Currency
     {
-        public BankStorage(int money) : base(money)
+        public BankStorage(long money) : base(money)
         {
         }
     
         [Button("Cashout Money")]
-        public int Cashout()
+        public long Cashout()
         {
-            int temp = _money;
+            long temp = _money;
             _money = 0;
 
             return temp;

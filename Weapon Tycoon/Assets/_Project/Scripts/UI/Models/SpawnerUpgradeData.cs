@@ -14,8 +14,8 @@ namespace _Project.Scripts.UI.Models
         public class UpgradeData
         {
             public float Speed;
-            public int ProductPrice;
-            public int BuyPrice;
+            public long ProductPrice;
+            public long BuyPrice;
         }
     }
 }
