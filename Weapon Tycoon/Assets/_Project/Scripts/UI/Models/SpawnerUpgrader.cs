@@ -8,23 +8,14 @@ namespace _Project.Scripts.UI.Models
     {
         [SerializeField] private SpawnerUpgradeData _data;
             
-        private int _speedUpgradeIndex;
-        private int _priceUpgradeIndex;
+        private int _upgradeIndex;
         
-        public SpawnerUpgradeData.SpeedUpgradeData SpeedUpgrade => _data.SpeedUgrades[_speedUpgradeIndex];
-        public SpawnerUpgradeData.PriceUpgradeData PriceUpgrade => _data.PriceUgrades[_priceUpgradeIndex];
+        public SpawnerUpgradeData.UpgradeData Upgrade => _data.Upgrades[_upgradeIndex];
         
-        public SpawnerUpgradeData.SpeedUpgradeData NextSpeedUpgrade()
+        public SpawnerUpgradeData.UpgradeData NextUpgrade()
         {
-            return (_speedUpgradeIndex + 1 < _data.SpeedUgrades.Length) 
-                ? _data.SpeedUgrades[++_speedUpgradeIndex] 
-                : null;
-        }
-        
-        public SpawnerUpgradeData.PriceUpgradeData NextPriceUpgrade()
-        {
-            return (_priceUpgradeIndex + 1 < _data.PriceUgrades.Length) 
-                ? _data.PriceUgrades[++_priceUpgradeIndex] 
+            return (_upgradeIndex + 1 < _data.Upgrades.Length) 
+                ? _data.Upgrades[++_upgradeIndex] 
                 : null;
         }
     }

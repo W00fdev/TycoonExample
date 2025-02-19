@@ -12,53 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239c3477aac5426eadf1cbf424a0957c, type: 3}
   m_Name: Shotgun1Upgrades
   m_EditorClassIdentifier: 
-  _speedUpgrades:
+  _upgrades:
   - Speed: 0.5
-    BuyPrice: 412
+    ProductPrice: 90
+    BuyPrice: 824
   - Speed: 0.6
-    BuyPrice: 597
+    ProductPrice: 110
+    BuyPrice: 1194
   - Speed: 0.7
-    BuyPrice: 925
+    ProductPrice: 132
+    BuyPrice: 1850
   - Speed: 0.8
-    BuyPrice: 1618
+    ProductPrice: 160
+    BuyPrice: 3236
   - Speed: 1
-    BuyPrice: 2831
+    ProductPrice: 192
+    BuyPrice: 5662
   - Speed: 1.2
-    BuyPrice: 4954
+    ProductPrice: 230
+    BuyPrice: 9908
   - Speed: 1.4
-    BuyPrice: 9808
+    ProductPrice: 276
+    BuyPrice: 19616
   - Speed: 1.7
-    BuyPrice: 19000
+    ProductPrice: 330
+    BuyPrice: 38000
   - Speed: 2
-    BuyPrice: 38000
+    ProductPrice: 396
+    BuyPrice: 76000
   - Speed: 2.4
-    BuyPrice: 75000
+    ProductPrice: 475
+    BuyPrice: 150000
   - Speed: 2.9
-    BuyPrice: 148000
+    ProductPrice: 570
+    BuyPrice: 296000
   - Speed: 3.5
-    BuyPrice: 290000
-  _priceUpgrades:
-  - ProductPrice: 90
-    BuyPrice: 412
-  - ProductPrice: 110
-    BuyPrice: 597
-  - ProductPrice: 132
-    BuyPrice: 925
-  - ProductPrice: 160
-    BuyPrice: 1618
-  - ProductPrice: 192
-    BuyPrice: 2831
-  - ProductPrice: 230
-    BuyPrice: 4954
-  - ProductPrice: 276
-    BuyPrice: 9808
-  - ProductPrice: 330
-    BuyPrice: 19000
-  - ProductPrice: 396
-    BuyPrice: 38000
-  - ProductPrice: 475
-    BuyPrice: 75000
-  - ProductPrice: 570
-    BuyPrice: 148000
-  - ProductPrice: 684
-    BuyPrice: 290000
+    ProductPrice: 684
+    BuyPrice: 580000

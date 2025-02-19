@@ -12,17 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239c3477aac5426eadf1cbf424a0957c, type: 3}
   m_Name: Rifle1Upgrades
   m_EditorClassIdentifier: 
-  _speedUpgrades:
+  _upgrades:
+  - Speed: 0.5
+    ProductPrice: 100
+    BuyPrice: 100
   - Speed: 0.6
-    BuyPrice: 100
-  - Speed: 0.7
-    BuyPrice: 150
-  - Speed: 0.8
-    BuyPrice: 200
-  _priceUpgrades:
-  - ProductPrice: 45
-    BuyPrice: 100
-  - ProductPrice: 50
-    BuyPrice: 150
-  - ProductPrice: 55
+    ProductPrice: 200
     BuyPrice: 200

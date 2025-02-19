@@ -10,6 +10,7 @@ using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
+using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,8 +31,15 @@ namespace _Project.Scripts.Components
         [SerializeField] protected Transform _moneyTextSpawnPoint;
         #endregion
         
+        [Header("Impact visual")]
         [SerializeField] protected ParticleSystem _particles;
+        [SerializeField] protected ParticleSystem _upgradeImpact;
+        [SerializeField] protected Transform _machineryTransform;
+        [SerializeField] protected float _endScaleYSquash = 2f;
+        [SerializeField] protected GameObject[] _upgradesVisual;
 
+        private int _upgradeVisualLevel;
+        
         [Header("Debug only")]
         [SerializeField] private int _movablesCapacity;
         [ShowInInspector, ReadOnly] private List<PooledView> _movableBoxes;
@@ -71,8 +79,17 @@ namespace _Project.Scripts.Components
         {
             _waiter = new WaitForSeconds(1f / _spawnerData.SpawnerSpeed);
             _speedInPercents = _spawnerData.SpawnerSpeed / 3f;
+
+            float yPrevScale = _machineryTransform.localScale.y;
+            Sequence.Create(cycles: 1)
+                .Chain(Tween.ScaleY(_machineryTransform, _endScaleYSquash, 0.25f, Ease.InBack))
+                .Chain(Tween.ScaleY(_machineryTransform, yPrevScale, 0.25f, Ease.OutBack));
             
             _infoView.UpdateInfo(_spawnerData.SpawnerSpeed.ToSpeedFormat(), _spawnerData.ProductPrice.ToString());
+            _upgradeImpact.Play();
+
+            if (_upgradeVisualLevel < _upgradesVisual.Length)
+                _upgradesVisual[_upgradeVisualLevel++].SetActive(true);
         }
 
         public virtual void Resolve(BlasterFactory blasterFactory)

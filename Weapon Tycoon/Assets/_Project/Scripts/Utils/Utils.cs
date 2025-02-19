@@ -23,7 +23,7 @@ namespace _Project.Scripts.Utils
         {
             if (money < 10000)
                 return $"$ {money}";
-            else if (money < 100000)
+            else if (money < 1000000)
                 return $"$ {money / 1000}k";
             else if (money < 100000000)
                 return $"$ {money / 1000000}m";

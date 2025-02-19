@@ -12,53 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 239c3477aac5426eadf1cbf424a0957c, type: 3}
   m_Name: Pistol1Upgrades
   m_EditorClassIdentifier: 
-  _speedUpgrades:
+  _upgrades:
   - Speed: 0.6
-    BuyPrice: 30
+    ProductPrice: 12
+    BuyPrice: 60
   - Speed: 0.7
-    BuyPrice: 55
+    ProductPrice: 14
+    BuyPrice: 110
   - Speed: 0.8
-    BuyPrice: 100
+    ProductPrice: 17
+    BuyPrice: 200
   - Speed: 1
-    BuyPrice: 175
+    ProductPrice: 20
+    BuyPrice: 350
   - Speed: 1.2
-    BuyPrice: 305
+    ProductPrice: 24
+    BuyPrice: 610
   - Speed: 1.4
-    BuyPrice: 535
+    ProductPrice: 29
+    BuyPrice: 1070
   - Speed: 1.7
-    BuyPrice: 1060
+    ProductPrice: 35
+    BuyPrice: 2120
   - Speed: 2
-    BuyPrice: 2100
+    ProductPrice: 42
+    BuyPrice: 4200
   - Speed: 2.4
-    BuyPrice: 4200
+    ProductPrice: 50
+    BuyPrice: 8400
   - Speed: 2.8
-    BuyPrice: 8300
+    ProductPrice: 60
+    BuyPrice: 16600
   - Speed: 3
-    BuyPrice: 17000
+    ProductPrice: 72
+    BuyPrice: 34000
   - Speed: 3.6
-    BuyPrice: 34000
-  _priceUpgrades:
-  - ProductPrice: 12
-    BuyPrice: 30
-  - ProductPrice: 14
-    BuyPrice: 55
-  - ProductPrice: 17
-    BuyPrice: 100
-  - ProductPrice: 20
-    BuyPrice: 175
-  - ProductPrice: 24
-    BuyPrice: 305
-  - ProductPrice: 29
-    BuyPrice: 535
-  - ProductPrice: 35
-    BuyPrice: 1060
-  - ProductPrice: 42
-    BuyPrice: 2100
-  - ProductPrice: 50
-    BuyPrice: 4200
-  - ProductPrice: 60
-    BuyPrice: 8300
-  - ProductPrice: 72
-    BuyPrice: 17000
-  - ProductPrice: 87
-    BuyPrice: 34000
+    ProductPrice: 87
+    BuyPrice: 68000

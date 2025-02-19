@@ -7,7 +7,6 @@ namespace _Project.Scripts.UI.Models
     public class SpawnerConfig : ScriptableObject
     {
         public string SpawnerName;
-        public ValuableEntity Product;
         public float SpawnerSpeed;
         public int ProductPrice;
         public int BuyPrice;

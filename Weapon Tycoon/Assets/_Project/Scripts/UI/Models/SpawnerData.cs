@@ -25,6 +25,13 @@ namespace _Project.Scripts.UI.Models
             _productPrice = _config.ProductPrice;
         }
 
+        public void UpdateSpeedAndPrice(float speed, int price)
+        {
+            _spawnerSpeed = speed;
+            _productPrice = price;
+            SpawnerDataChanged?.Invoke();
+        }
+        
         public void UpdateSpeed(float speed)
         {
             _spawnerSpeed = speed;
