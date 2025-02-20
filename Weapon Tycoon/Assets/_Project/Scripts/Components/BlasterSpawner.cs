@@ -19,7 +19,7 @@ namespace _Project.Scripts.Components
 {
     public abstract class BlasterSpawner : MonoBehaviour
     {
-        [SerializeField] private string _spawnerName;
+        [SerializeField] private string _spawnerNameKey;
         [SerializeField] private SpawnerInfoView _infoView;
         
         [SerializeField] private Vector3 _defaultWeaponRotation;
@@ -66,7 +66,7 @@ namespace _Project.Scripts.Components
             _movableBlasters = new (_movablesCapacity);
             
             //spawnerData.Initialize();
-            _infoView.Initialize(_spawnerName);
+            _infoView.Initialize(_spawnerNameKey);
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
             
             _spawnerData.SpawnerDataChanged += UpgradeSpawner;

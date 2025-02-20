@@ -1472,6 +1472,7 @@ GameObject:
   - component: {fileID: 4024728170144707298}
   - component: {fileID: 1835074203807091926}
   - component: {fileID: 7275800271696627475}
+  - component: {fileID: 262103907085143254}
   m_Layer: 11
   m_Name: Name Text (TMP)
   m_TagString: Untagged
@@ -1601,6 +1602,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &262103907085143254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3587477532300930626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a114c4189a7efba448164f8298ebb97c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: rifle_1_factory
 --- !u!1 &3620189834574433602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3030,7 +3044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14f2d2dda4d4fc3806f63710f5258d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: {fileID: 7275800271696627475}
+  _name: {fileID: 262103907085143254}
   _speedText: {fileID: 1847773764303364337}
   _priceText: {fileID: 8973464487443304286}
 --- !u!1 &5976573404631460793
@@ -3124,6 +3138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cd5a2751fa479a9bcf2776037e0734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnerNameKey: rifle_1_factory
   _infoView: {fileID: 3681283139549007039}
   _defaultWeaponRotation: {x: 90, y: 90, z: 0}
   _defaultBoxRotation: {x: 0, y: 0, z: 0}

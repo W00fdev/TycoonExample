@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.SaveLoad;
+using _Project.Scripts.LocalizationSystem;
 using _Project.Scripts.Utils;
 using Playgama.Modules.Advertisement;
 using UnityEngine;
@@ -16,12 +18,27 @@ namespace _Project.Scripts.Infrastructure.Installers
         
         private readonly WaitForSeconds _timerProgressSave = new WaitForSeconds(3);
         private ISaveLoadService _saveLoadService;
-        
-        private void Start()
+
+        private void Awake()
         {
             _loadingFader.SetActive(true);
 
+            InitializeServices();
+        }
+
+        private void Start()
+        {
             CreateOrLoadData();
+        }
+
+        private void InitializeServices()
+        {
+            var localizationLoader = new LocalizationLoader();
+            Localization localizationService = new Localization(localizationLoader);
+            LanguageDetector languageDetector = new LanguageDetector(localizationService);
+            languageDetector.DetectSystemLanguage();
+            
+            localizationLoader.Load();
         }
 
         private void CreateOrLoadData()

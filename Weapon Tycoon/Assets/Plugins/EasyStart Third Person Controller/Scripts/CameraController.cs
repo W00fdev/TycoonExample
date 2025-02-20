@@ -40,11 +40,11 @@ public class CameraController : MonoBehaviour
         //offsetDistanceX = transform.position.x - player.position.x;
 
         // Lock and hide cursor with option isn't checked
-        if ( ! clickToMoveCamera )
+        /*if ( ! clickToMoveCamera )
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
-        }
+        }*/
     }
 
     void LateUpdate()

@@ -1966,6 +1966,7 @@ GameObject:
   - component: {fileID: 276618540198312360}
   - component: {fileID: 7123121710141019402}
   - component: {fileID: 3336137595170629871}
+  - component: {fileID: 4672529819633611472}
   m_Layer: 11
   m_Name: Name Text (TMP)
   m_TagString: Untagged
@@ -2095,6 +2096,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4672529819633611472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844000270327323697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a114c4189a7efba448164f8298ebb97c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: shotgun_1_factory
 --- !u!1 &1846526086103363379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,6 +2628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a74fb098a214f08890f1c4518208fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnerNameKey: shotgun_1_factory
   _infoView: {fileID: 7454679898572716633}
   _defaultWeaponRotation: {x: 90, y: 0, z: 0}
   _defaultBoxRotation: {x: 0, y: 90, z: -13.5}
@@ -4011,7 +4026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14f2d2dda4d4fc3806f63710f5258d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: {fileID: 3336137595170629871}
+  _name: {fileID: 4672529819633611472}
   _speedText: {fileID: 5636405785998292250}
   _priceText: {fileID: 955547858440087390}
 --- !u!1 &3487539011008037706

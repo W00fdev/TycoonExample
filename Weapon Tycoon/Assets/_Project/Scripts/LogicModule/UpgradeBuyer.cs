@@ -105,7 +105,7 @@ namespace _Project.Scripts.LogicModule
             
             _spawnerButtons[nextUpgradeLevel].gameObject.SetActive(true);
             _spawnerButtons[nextUpgradeLevel].Initialize(
-                Utils.Utils.GetSpawnerName(nextUpgradeLevel),
+                Utils.Utils.GetSpawnerKeyName(nextUpgradeLevel),
                 spawnerPrice:   data.BuyPrice.ToHeaderMoneyFormat(),
                 speed:          data.SpawnerSpeed.ToSpeedFormat(),
                 productPrice:   data.ProductPrice.ToString());

@@ -43,13 +43,13 @@ namespace _Project.Scripts.Utils
             return $"$ {money}";
         }
 
-        public static string GetSpawnerName(int spawnerIndex)
+        public static string GetSpawnerKeyName(int spawnerIndex)
         {
             return spawnerIndex switch
             {
-                0 => Constants.Pistol1FactoryName,
-                1 => Constants.Shotgun1FactoryName,
-                2 => Constants.Rifle1FactoryName,
+                0 => Constants.Pistol1FactoryKeyName,
+                1 => Constants.Shotgun1FactoryKeyName,
+                2 => Constants.Rifle1FactoryKeyName,
                 _ => throw new ArgumentException("Invalid spawner index")
             };
         }

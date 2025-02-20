@@ -616,6 +616,7 @@ GameObject:
   - component: {fileID: 3563596434499274517}
   - component: {fileID: 6121403588398205183}
   - component: {fileID: 2243009960760376434}
+  - component: {fileID: 8228901006162759267}
   m_Layer: 11
   m_Name: Name Text (TMP)
   m_TagString: Untagged
@@ -741,6 +742,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8228901006162759267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4102689682639001318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a114c4189a7efba448164f8298ebb97c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _key: pistol_1_factory
 --- !u!1 &4238312958850051758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,7 +1742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf72f22cce574a1fa643213deacf58bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: {fileID: 2243009960760376434}
+  _name: {fileID: 8228901006162759267}
   _speedText: {fileID: 4517610334333556519}
   _productPriceText: {fileID: 4185878042071526201}
   _spawnerPriceText: {fileID: 7627451196425482141}
