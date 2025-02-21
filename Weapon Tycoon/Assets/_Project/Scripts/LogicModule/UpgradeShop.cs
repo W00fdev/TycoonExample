@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace _Project.Scripts.LogicModule
 {
-    public class UpgradeBuyer : MonoBehaviour
+    public class UpgradeShop : MonoBehaviour
     {
         [SerializeField] private SpawnerData[] _spawnerDatas;
         [SerializeField] private SpawnerBuyerInfoView[] _spawnerButtons;
@@ -30,7 +30,7 @@ namespace _Project.Scripts.LogicModule
 
         public void LoadSpawners(int spawnersCount)
         {
-            var upgrades = PersistentProgress.Instance.SpawnerUpgrade;
+            var upgrades = PersistentProgress.Instance.SpawnerUpgrades;
             int index;
             for (index = 0; index < spawnersCount; index++)
                 LoadSpawner(index < upgrades.Count ? upgrades[index] : null, index);

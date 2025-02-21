@@ -17961,7 +17961,7 @@ GameObject:
   - component: {fileID: 863267579}
   - component: {fileID: 863267580}
   m_Layer: 0
-  m_Name: UpgradeBuyer
+  m_Name: UpgradeShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23294,7 +23294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyTextPrefab: {fileID: 4525344155091115298, guid: 4c2ecd546ffb0bb4cb70b54f378b26b9, type: 3}
-  _upgradeBuyer: {fileID: 863267580}
+  _upgradeShop: {fileID: 863267580}
   _upgradeController: {fileID: 1167107452}
 --- !u!1001 &1091092867
 PrefabInstance:

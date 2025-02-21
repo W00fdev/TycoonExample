@@ -5,6 +5,7 @@ using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Infrastructure.Installers
 {
@@ -13,8 +14,9 @@ namespace _Project.Scripts.Infrastructure.Installers
         [Header("Utilities factory prefabs")]
         [SerializeField] private MoneyTextView _moneyTextPrefab;
 
+        [FormerlySerializedAs("_upgradeBuyer")]
         [Header("Controllers")]
-        [SerializeField] private UpgradeBuyer _upgradeBuyer;
+        [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private UpgradeController _upgradeController;
 
         [Header("Debug only")]
@@ -38,7 +40,7 @@ namespace _Project.Scripts.Infrastructure.Installers
             };
 
             _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory, longBoxFactory);
-            _upgradeBuyer.Initialize();
+            _upgradeShop.Initialize();
         }
     }
 }

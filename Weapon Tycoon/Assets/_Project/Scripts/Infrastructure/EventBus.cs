@@ -7,9 +7,6 @@ namespace _Project.Scripts.Infrastructure
     {
         public static Action<long> BankIncome;
         public static Action BuyNextSpawnerPressed;
-        public static Action<int> BuySpawnerUpgradeSpeedPressed;
-        public static Action<int> BuySpawnerUpgradePricePressed;
-        
         public static Action<int> BuySpawnerUpgradePressed;
     }
 }

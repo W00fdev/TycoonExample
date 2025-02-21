@@ -14,9 +14,9 @@ namespace _Project.Scripts.Components
         {
             base.Initialize(boxFactory, moneyTextFactory, spawnerData);
 
-            if (SpawnerIndex < PersistentProgress.Instance.SpawnerUpgrade.Count)
+            if (SpawnerIndex < PersistentProgress.Instance.SpawnerUpgrades.Count)
             {
-                _upgradeVisualLevel = PersistentProgress.Instance.SpawnerUpgrade[SpawnerIndex].UpgradeIndex;
+                _upgradeVisualLevel = PersistentProgress.Instance.SpawnerUpgrades[SpawnerIndex].UpgradeIndex;
                 UpdateVisuals();
             }
         }
