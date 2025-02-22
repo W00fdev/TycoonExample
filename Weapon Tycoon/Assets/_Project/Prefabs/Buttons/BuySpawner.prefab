@@ -1286,7 +1286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3671133611716242706}
   - component: {fileID: 9207306892448188362}
-  - component: {fileID: 2009826579301204454}
+  - component: {fileID: 1480501526955866603}
   - component: {fileID: 5307414732497061815}
   - component: {fileID: 7295922919532033053}
   - component: {fileID: 8913980683574015266}
@@ -1332,7 +1332,7 @@ MonoBehaviour:
   _speedText: {fileID: 4517610334333556519}
   _productPriceText: {fileID: 4185878042071526201}
   _spawnerPriceText: {fileID: 7627451196425482141}
---- !u!114 &2009826579301204454
+--- !u!114 &1480501526955866603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1341,9 +1341,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8060586370520643241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984377b9d8a640ae87b60f91ec0c84b2, type: 3}
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dataSend: 0
+  _eventChannel: {fileID: 11400000, guid: f9eec55808b09654b993f278f1ce14e0, type: 2}
 --- !u!114 &5307414732497061815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1387,7 +1389,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2009826579301204454}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: _Project.Scripts.Components.ButtonSpawnerBuyer,
           Assembly-CSharp
         m_MethodName: BuySpawner

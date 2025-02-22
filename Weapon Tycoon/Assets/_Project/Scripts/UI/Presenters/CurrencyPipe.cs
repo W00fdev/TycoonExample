@@ -15,8 +15,6 @@ namespace _Project.Scripts.UI.Presenters
         {
             _bankPresenter.Initialize(bankStorage, this);
             _walletPresenter.Initialize(walletStorage, this);
-            
-            EventBus.BankIncome += BankIncome;
         }
 
         public void Cashout(long bankMoney) 
@@ -25,7 +23,7 @@ namespace _Project.Scripts.UI.Presenters
         public bool TrySpendCash(long amount)
             => _walletPresenter.TrySpendCash(amount);
 
-        private void BankIncome(long income) 
+        public void BankIncome(long income) 
             => _bankPresenter.BankIncome(income);
     }
 }

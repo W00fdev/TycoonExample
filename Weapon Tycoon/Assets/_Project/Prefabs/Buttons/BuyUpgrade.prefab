@@ -372,6 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerIndex: 0
+  _eventChannel: {fileID: 11400000, guid: b4ef7c990de28dd498e9efc18417ddf3, type: 2}
 --- !u!114 &3681956402163014068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +432,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1555795288177661391}
         m_TargetAssemblyTypeName: _Project.Scripts.Components.ButtonUpgradedPrice,
           Assembly-CSharp
-        m_MethodName: BuyUpgrade
+        m_MethodName: Send
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

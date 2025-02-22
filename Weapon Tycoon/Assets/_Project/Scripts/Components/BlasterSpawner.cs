@@ -6,6 +6,7 @@ using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.Infrastructure.Data;
+using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;
@@ -25,6 +26,8 @@ namespace _Project.Scripts.Components
         [SerializeField] private Vector3 _defaultWeaponRotation;
         [SerializeField] private Vector3 _defaultBoxRotation;
 
+        [SerializeField] private CurrencyEventChannel _currencyEventChannel;
+        
         #region SpawnPoints
         [SerializeField] protected Transform _boxSpawnPoint;
         [SerializeField] protected Transform _boxEndPoint;
@@ -170,8 +173,14 @@ namespace _Project.Scripts.Components
             weapon.ViewReturner -= ConsumeWeapon;
             _movableBlasters.Remove(weapon);
 
-            EventBus.BankIncome.Invoke(_spawnerData.ProductPrice);
+            RewardMoney();
             SpawnText();
+        }
+
+        private void RewardMoney()
+        {
+            _currencyEventChannel.Invoke(_spawnerData.ProductPrice);
+            //EventBus.BankIncome.Invoke(_spawnerData.ProductPrice);
         }
 
         private void SpawnText()

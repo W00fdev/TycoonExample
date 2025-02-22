@@ -21,8 +21,6 @@ namespace _Project.Scripts
         
         private BlasterFactoryResolver _resolver;
         private int _spawnerLevel;
-
-        public int SpawnerLevel => _spawnerLevel;
         
         public void Initialize(Dictionary<Type, BlasterFactory> factories,
             BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, BoxFactory longBoxFactory)
@@ -35,10 +33,10 @@ namespace _Project.Scripts
             _resolver = new BlasterFactoryResolver(factories);
         }
 
-        public BlasterSpawner Next(SpawnerData spawnerData)
+        public void Open(SpawnerData spawnerData, int index)
         {
             if (_spawnerLevel >= _spawners.Count)
-                return null;
+                return;
             
             var spawner = _spawners[_spawnerLevel++];
             PersistentProgress.Instance.Spawners = _spawnerLevel;
@@ -48,8 +46,12 @@ namespace _Project.Scripts
             var boxFactory = (spawner is RifleSpawner) ? _longBoxFactory : _boxFactory;
             spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);
             _resolver.Resolve(spawner);
-            
-            return spawner;
+        }
+        
+        public BlasterSpawner Next(SpawnerData spawnerData)
+        {
+
+            return null;
         }
     }
 }

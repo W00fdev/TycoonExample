@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.29333332
       objectReference: {fileID: 0}
+    - target: {fileID: 1480501526955866603, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
+      propertyPath: _dataSend
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2775970643696281178, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -641,14 +645,14 @@ PrefabInstance:
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 863267580}
+      objectReference: {fileID: 12621648}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: TryBuyNext
+      value: Send
       objectReference: {fileID: 0}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
+      value: _Project.Scripts.Components.Buttons.ButtonSender, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7627451196425482141, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: m_text
@@ -681,6 +685,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf72f22cce574a1fa643213deacf58bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &12621648 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1480501526955866603, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
+  m_PrefabInstance: {fileID: 12621646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &13427160
@@ -13403,7 +13418,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.275}
-  m_SizeDelta: {x: 0.55, y: 0.55}
+  m_SizeDelta: {x: 0.5, y: 0.55}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &640953077
 MonoBehaviour:
@@ -15234,6 +15249,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 797076746}
     m_Modifications:
+    - target: {fileID: 1555795288177661391, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
+      propertyPath: _dataSend
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1555795288177661391, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
       propertyPath: _spawnerIndex
       value: 1
@@ -18512,6 +18531,8 @@ GameObject:
   m_Component:
   - component: {fileID: 863267579}
   - component: {fileID: 863267580}
+  - component: {fileID: 863267581}
+  - component: {fileID: 863267582}
   m_Layer: 0
   m_Name: UpgradeShop
   m_TagString: Untagged
@@ -18560,6 +18581,62 @@ MonoBehaviour:
   - {fileID: 1113664713}
   _currencyPipe: {fileID: 1480677069}
   _upgradeController: {fileID: 1167107452}
+--- !u!114 &863267581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863267578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844a75c687a14231937e4b25a882fb48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventChannel: {fileID: 11400000, guid: f9eec55808b09654b993f278f1ce14e0, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 863267580}
+        m_TargetAssemblyTypeName: _Project.Scripts.LogicModule.UpgradeShop, Assembly-CSharp
+        m_MethodName: BuySpawner
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &863267582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863267578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844a75c687a14231937e4b25a882fb48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventChannel: {fileID: 11400000, guid: b4ef7c990de28dd498e9efc18417ddf3, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 863267580}
+        m_TargetAssemblyTypeName: _Project.Scripts.LogicModule.UpgradeShop, Assembly-CSharp
+        m_MethodName: BuyUpgrade
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &868914612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24272,6 +24349,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1480502426}
     m_Modifications:
     - target: {fileID: 1555795288177661391, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
+      propertyPath: _dataSend
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555795288177661391, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
       propertyPath: _spawnerIndex
       value: 2
       objectReference: {fileID: 0}
@@ -24334,6 +24415,14 @@ PrefabInstance:
     - target: {fileID: 6352215930794125544, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869119849847958572, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
+      propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Send
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869119849847958572, guid: 9c02f9f898481cb469e58348bd87fd5c, type: 3}
+      propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: _Project.Scripts.Components.Buttons.ButtonSender, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25337,6 +25426,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.29333332
       objectReference: {fileID: 0}
+    - target: {fileID: 1480501526955866603, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
+      propertyPath: _dataSend
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2775970643696281178, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -25676,14 +25769,14 @@ PrefabInstance:
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 863267580}
+      objectReference: {fileID: 1155520379}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: TryBuyNext
+      value: Send
       objectReference: {fileID: 0}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
+      value: _Project.Scripts.Components.Buttons.ButtonSender, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8060586370520643241, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: m_Name
@@ -25711,6 +25804,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf72f22cce574a1fa643213deacf58bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1155520379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1480501526955866603, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
+  m_PrefabInstance: {fileID: 1155520377}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1160252872
@@ -33484,6 +33588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1480677070}
   - component: {fileID: 1480677069}
+  - component: {fileID: 1480677071}
   m_Layer: 0
   m_Name: CurrencyPipe
   m_TagString: Untagged
@@ -33520,6 +33625,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1334644046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480677071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480677068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47dacbffb7464f9e8a499d1e91adf679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _eventChannel: {fileID: 11400000, guid: 04bdd4f9a6e59084c898eef0cfe29c8f, type: 2}
+  _unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1480677069}
+        m_TargetAssemblyTypeName: _Project.Scripts.UI.Presenters.CurrencyPipe, Assembly-CSharp
+        m_MethodName: BankIncome
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1481852302 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3292192661859741895, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
@@ -48448,7 +48581,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnerIndex: 0
+  _dataSend: 0
+  _eventChannel: {fileID: 11400000, guid: 8230a4bfa048dfb40aa9f1cc38e8b54f, type: 2}
 --- !u!1 &919132147520957731
 GameObject:
   m_ObjectHideFlags: 0
@@ -52052,9 +52186,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 863267580}
-        m_TargetAssemblyTypeName: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
-        m_MethodName: TryBuyNext
+      - m_Target: {fileID: 7038035534419867767}
+        m_TargetAssemblyTypeName: _Project.Scripts.Components.Buttons.ButtonSender,
+          Assembly-CSharp
+        m_MethodName: Send
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -52432,7 +52567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7038035534419867766}
   - component: {fileID: 3213512124640432814}
-  - component: {fileID: 5240512345047356546}
+  - component: {fileID: 7038035534419867767}
   - component: {fileID: 1943836511054222035}
   - component: {fileID: 3899571555263160697}
   - component: {fileID: 2948325734044966982}
@@ -54283,14 +54418,14 @@ PrefabInstance:
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 863267580}
+      objectReference: {fileID: 4579494747346448786}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: TryBuyNext
+      value: Send
       objectReference: {fileID: 0}
     - target: {fileID: 7295922919532033053, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: _actionCompleted.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
+      value: _Project.Scripts.Components.Buttons.ButtonSender, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7449733095392901183, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -54796,6 +54931,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf72f22cce574a1fa643213deacf58bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4579494747346448786 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1480501526955866603, guid: cd3aad78bd3dfb94d84baae5716bc05d, type: 3}
+  m_PrefabInstance: {fileID: 4579494747346448780}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4596265531527495684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55103,18 +55249,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _amountText: {fileID: 2760357125181258222}
---- !u!114 &5240512345047356546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4360232170162693069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 984377b9d8a640ae87b60f91ec0c84b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5275122139612248772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56481,6 +56615,20 @@ Transform:
   - {fileID: 69413237472415143}
   m_Father: {fileID: 1807489505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7038035534419867767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360232170162693069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dataSend: 0
+  _eventChannel: {fileID: 11400000, guid: 5de0f36457655004ebce2019481c465c, type: 2}
 --- !u!33 &7063907872793369046
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -56583,7 +56731,7 @@ MonoBehaviour:
       - m_Target: {fileID: 915291211660542351}
         m_TargetAssemblyTypeName: _Project.Scripts.Components.ButtonUpgradedPrice,
           Assembly-CSharp
-        m_MethodName: BuyUpgrade
+        m_MethodName: Send
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -56750,18 +56898,6 @@ MonoBehaviour:
       - m_Target: {fileID: 5307414733043514327}
         m_TargetAssemblyTypeName: _Project.Scripts.Animations.ButtonAnimation, Assembly-CSharp
         m_MethodName: PushButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 863267580}
-        m_TargetAssemblyTypeName: _Project.Scripts.UpgradeBuyer, Assembly-CSharp
-        m_MethodName: TryBuyNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -57664,6 +57800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3671133612260315506}
   - component: {fileID: 5307414733043514327}
+  - component: {fileID: 8913980684118083907}
   - component: {fileID: 8006956034386894843}
   - component: {fileID: 7295922919002359933}
   - component: {fileID: 8913980684118083906}
@@ -58710,6 +58847,20 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &8913980684118083907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060586369991232201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dataSend: 0
+  _eventChannel: {fileID: 0}
 --- !u!4 &8937326287806050746
 Transform:
   m_ObjectHideFlags: 0

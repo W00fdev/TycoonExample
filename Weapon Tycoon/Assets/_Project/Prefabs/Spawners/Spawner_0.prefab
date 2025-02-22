@@ -2140,6 +2140,7 @@ MonoBehaviour:
   _infoView: {fileID: 2934951001535346421}
   _defaultWeaponRotation: {x: 90, y: 180, z: -90}
   _defaultBoxRotation: {x: 0, y: 90, z: 0}
+  _currencyEventChannel: {fileID: 11400000, guid: 04bdd4f9a6e59084c898eef0cfe29c8f, type: 2}
   _boxSpawnPoint: {fileID: 8823401648901605897}
   _boxEndPoint: {fileID: 9118774258177100037}
   _blasterSpawnPoint: {fileID: 302735857847316042}

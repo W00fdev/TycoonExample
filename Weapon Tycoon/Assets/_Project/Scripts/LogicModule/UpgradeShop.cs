@@ -1,5 +1,7 @@
-﻿using _Project.Scripts.Animations;
+﻿using System;
+using _Project.Scripts.Animations;
 using _Project.Scripts.Components;
+using _Project.Scripts.Components.Buttons;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Models;
@@ -27,7 +29,7 @@ namespace _Project.Scripts.LogicModule
             else
                 LoadSpawners(spawners);
         }
-
+        
         public void LoadSpawners(int spawnersCount)
         {
             var upgrades = PersistentProgress.Instance.SpawnerUpgrades;
@@ -52,8 +54,8 @@ namespace _Project.Scripts.LogicModule
             
             if (spawnerData.UpgradeIndex >= spawnerData.TotalUpgradesCount)
             {
-                if (_upgradeButtons[spawnerIndex].TryGetComponent(out IButtonUpgrader upgrader))
-                    upgrader.DisableButton();
+                if (_upgradeButtons[spawnerIndex].TryGetComponent(out ButtonSender sender))
+                    sender.DisableButton();
             }
             else
             {
@@ -61,13 +63,11 @@ namespace _Project.Scripts.LogicModule
             }
             
             EnableUpgraderButton(spawnerIndex);
-            _upgradeController.Next(spawnerData);
+            _upgradeController.Open(spawnerData, spawnerIndex);
         }
 
-        public void TryBuyNext()
+        public void BuySpawner(int spawnerIndex)
         {
-            int spawnerIndex = _upgradeController.SpawnerLevel;
-            
             if (_spawnerDatas.Length <= spawnerIndex)
                 return;
             
@@ -76,11 +76,16 @@ namespace _Project.Scripts.LogicModule
                 return;
 
             EnableUpgraderButton(spawnerIndex);
-            _upgradeController.Next(spawnerData);
+            _upgradeController.Open(spawnerData, spawnerIndex);
             
-            int nextSpawnerLevel = _upgradeController.SpawnerLevel;
+            int nextSpawnerLevel = spawnerIndex + 1;
             if (_spawnerButtons.Length > nextSpawnerLevel && _spawnerDatas.Length > nextSpawnerLevel)
                 EnableSpawnerButton(nextSpawnerLevel);
+        }
+        
+        public void TryBuyNext()
+        {
+          //  int spawnerIndex = _upgradeController.SpawnerLevel;
         }
 
         private void EnableUpgraderButton(int spawnerIndex)
@@ -111,7 +116,7 @@ namespace _Project.Scripts.LogicModule
                 productPrice:   data.ProductPrice.ToString());
         }
 
-        private void BuyUpgrade(int spawnerIndex)
+        public void BuyUpgrade(int spawnerIndex)
         {
             var upgradeData = _spawnerDatas[spawnerIndex];
             if (_currencyPipe.TrySpendCash(upgradeData.NextUpgradePrice) == false)
@@ -122,25 +127,13 @@ namespace _Project.Scripts.LogicModule
             
             if (nextUpgrade == null)
             {
-                if (_upgradeButtons[spawnerIndex].TryGetComponent(out IButtonUpgrader upgrader))
-                    upgrader.DisableButton();
+                if (_upgradeButtons[spawnerIndex].TryGetComponent(out ButtonSender sender))
+                    sender.DisableButton();
             }
             else
             {
                 _upgradeButtons[spawnerIndex].SetPriceInfo(upgradeData.NextUpgradePrice.ToHeaderMoneyFormat());
             }
-        }
-
-        private void OnEnable()
-        {
-            EventBus.BuyNextSpawnerPressed += TryBuyNext;
-            EventBus.BuySpawnerUpgradePressed += BuyUpgrade;
-        }
-
-        private void OnDisable()
-        {
-            EventBus.BuyNextSpawnerPressed -= TryBuyNext;
-            EventBus.BuySpawnerUpgradePressed -= BuyUpgrade;
         }
     }
 }
