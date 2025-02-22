@@ -26,7 +26,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             UpdateView();
         }
 
-        public bool SpentCash(long amount)
+        public bool TrySpendCash(long amount)
         {
             if (_storage.SpendMoney(amount))
             {

@@ -44,6 +44,7 @@ namespace _Project.Scripts
             PersistentProgress.Instance.Spawners = _spawnerLevel;
             
             spawner.gameObject.SetActive(true);
+            // Косяк, не засунули в резолвер
             var boxFactory = (spawner is RifleSpawner) ? _longBoxFactory : _boxFactory;
             spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);
             _resolver.Resolve(spawner);

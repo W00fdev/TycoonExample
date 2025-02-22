@@ -152,6 +152,7 @@ namespace _Project.Scripts.Components
 
         private void SpawnWeapon(PooledView box)
         {
+            // stack or queue
             _movableBoxes.Remove(box);
             box.ViewReturner -= SpawnWeapon;
             

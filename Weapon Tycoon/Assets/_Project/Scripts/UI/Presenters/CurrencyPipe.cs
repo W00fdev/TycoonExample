@@ -22,8 +22,8 @@ namespace _Project.Scripts.UI.Presenters
         public void Cashout(long bankMoney) 
             => _walletPresenter.AddCash(bankMoney);
 
-        public bool SpentCash(long amount)
-            => _walletPresenter.SpentCash(amount);
+        public bool TrySpendCash(long amount)
+            => _walletPresenter.TrySpendCash(amount);
 
         private void BankIncome(long income) 
             => _bankPresenter.BankIncome(income);

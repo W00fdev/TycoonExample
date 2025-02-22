@@ -72,7 +72,7 @@ namespace _Project.Scripts.LogicModule
                 return;
             
             var spawnerData = _spawnerDatas[spawnerIndex];
-            if (_currencyPipe.SpentCash(spawnerData.BuyPrice) == false)
+            if (_currencyPipe.TrySpendCash(spawnerData.BuyPrice) == false)
                 return;
 
             EnableUpgraderButton(spawnerIndex);
@@ -114,7 +114,7 @@ namespace _Project.Scripts.LogicModule
         private void BuyUpgrade(int spawnerIndex)
         {
             var upgradeData = _spawnerDatas[spawnerIndex];
-            if (_currencyPipe.SpentCash(upgradeData.NextUpgradePrice) == false)
+            if (_currencyPipe.TrySpendCash(upgradeData.NextUpgradePrice) == false)
                 return;
          
             var nextUpgrade = _spawnerDatas[spawnerIndex].ApplyNextUpgrade();
