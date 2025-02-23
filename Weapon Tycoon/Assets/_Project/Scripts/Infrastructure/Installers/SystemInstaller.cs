@@ -74,7 +74,7 @@ namespace _Project.Scripts.Infrastructure.Installers
                 yield return _timerProgressSave;
                 _saveLoadService.Save(Constants.PlayerDataKey, PersistentProgress.Instance);
                 
-                Debug.Log("Was saved: " + JsonUtility.ToJson(PersistentProgress.Instance));
+                //Debug.Log("Was saved: " + JsonUtility.ToJson(PersistentProgress.Instance));
             }
         }
     }

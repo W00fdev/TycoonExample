@@ -61,6 +61,10 @@ public class ThirdPersonController : MonoBehaviour
                 && animatorStateInfo.IsName("Sad Idle") == false
                 && animatorStateInfo.IsName("Warrior Idle") == false)
             {
+                Debug.Log(animatorStateInfo.IsName("Idle") + " " +
+                          animatorStateInfo.IsName("Dwarf Idle")  + " " +
+                          animatorStateInfo.IsName("Sad Idle")  + " " +
+                          animatorStateInfo.IsName("Warrior Idle"));
                 animator.SetTrigger(_idleTriggerHash);
             }
         }

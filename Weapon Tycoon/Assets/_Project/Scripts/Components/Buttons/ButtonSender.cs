@@ -19,7 +19,6 @@ namespace _Project.Scripts.Components.Buttons
                 return;
               
             _eventChannel.Invoke(_dataSend);
-            //EventBus.BuySpawnerUpgradePressed?.Invoke(_spawnerIndex);
         }
 
         public void DisableButton()
