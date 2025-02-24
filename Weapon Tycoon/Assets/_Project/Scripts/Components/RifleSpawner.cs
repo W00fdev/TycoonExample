@@ -8,14 +8,14 @@ namespace _Project.Scripts.Components
     public class RifleSpawner : BlasterSpawner
     {
         private const int SpawnerIndex = 2;
-        
+
         public override void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
         {
             base.Initialize(boxFactory, moneyTextFactory, spawnerData);
-            
+
             if (SpawnerIndex < PersistentProgress.Instance.SpawnerUpgrades.Count)
             {
-                _upgradeVisualLevel = PersistentProgress.Instance.SpawnerUpgrades[SpawnerIndex].UpgradeIndex;
+                _upgradeVisualLevel = PersistentProgress.Instance.SpawnerUpgrades[SpawnerIndex];
                 UpdateVisuals();
             }
         }
@@ -24,7 +24,7 @@ namespace _Project.Scripts.Components
         {
             if (blasterFactory is not RifleFactory)
                 throw new InvalidCastException($"RifleSpawner got non RifleFactory {blasterFactory.GetType().Name}");
-                    
+
             base.Resolve(blasterFactory);
         }
     }
