@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using _Project.Scripts.UI.Models;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Infrastructure.Data
 {
@@ -10,17 +7,17 @@ namespace _Project.Scripts.Infrastructure.Data
     public class PlayerData
     {
         public int Spawners;
-        public List<SpawnerUpgradeDTO> SpawnerUpgrades = new();
+        public List<int> SpawnerUpgrades = new();
 
         public long MoneyWallet;
         public long MoneyBank;
-        
-        public void UpdateSpawnerUpgrade(SpawnerUpgradeDTO dto, int index)
+
+        public void UpdateSpawnerUpgrade(int index, int upgradeIndex)
         {
             if (index < SpawnerUpgrades.Count)
-                SpawnerUpgrades[index] = dto;
+                SpawnerUpgrades[index] = upgradeIndex;
             else
-                SpawnerUpgrades.Add(dto);
+                SpawnerUpgrades.Add(upgradeIndex);
         }
     }
 }
