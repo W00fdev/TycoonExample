@@ -6,7 +6,7 @@ namespace _Project.Scripts.Components.Character
     public interface IStateMachine
     {
         public void SwitchState<T>()
-            where T : State;
+            where T : IState;
         
         public Animator Animator { get; }
         public CharacterController Controller { get; }

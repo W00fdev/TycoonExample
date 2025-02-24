@@ -4,7 +4,7 @@ using UnityEngine;
 namespace _Project.Scripts.Components.Character.States
 {
     [Serializable]
-    public class MovingState : State
+    public class MovingState : IState
     {
         protected readonly IStateMachine _stateMachine;
         protected readonly InputReader _inputReader;
@@ -26,11 +26,11 @@ namespace _Project.Scripts.Components.Character.States
             _parameters = parameters;
         }
 
-        public override void Enter()
+        public virtual void Enter()
         {
         }
 
-        public override void Update()
+        public virtual void Update()
         {
             HandleMovement();
             HandleFalling();
@@ -85,7 +85,7 @@ namespace _Project.Scripts.Components.Character.States
         
         private void SetAnimationVelocityY() => _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
 
-        public override void Exit()
+        public void Exit()
         {
         }
     }

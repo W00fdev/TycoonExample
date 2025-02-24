@@ -2,11 +2,10 @@ using System;
 
 namespace _Project.Scripts.Components.Character
 {
-    [Serializable]
-    public abstract class State
+    public interface IState
     {
-        public abstract void Enter();
-        public abstract void Update();
-        public abstract void Exit();
+        public void Enter();
+        public void Update();
+        public void Exit();
     }
 }

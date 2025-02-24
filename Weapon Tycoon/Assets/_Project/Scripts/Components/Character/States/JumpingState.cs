@@ -39,9 +39,5 @@ namespace _Project.Scripts.Components.Character.States
             if (_stateMachine.IsGrounded == false)
                 _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, _velocityY.magnitude);
         }
-
-        public override void Exit()
-        {
-        }
     }
 }

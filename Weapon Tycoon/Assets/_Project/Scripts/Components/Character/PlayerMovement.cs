@@ -34,9 +34,9 @@ namespace _Project.Scripts.Components.Character
         private Animator _animator;
         private CharacterController _controller;
 
-        private Dictionary<Type, State> _movementStates;
+        private Dictionary<Type, IState> _movementStates;
         private InputReader _inputReader;
-        private State _currentState;
+        private IState _currentState;
 
         public Animator Animator => _animator;
         public CharacterController Controller => _controller;
@@ -49,7 +49,7 @@ namespace _Project.Scripts.Components.Character
             
             _inputReader = new InputReader();
             _currentState = new StandingState(this, _parameters);
-            _movementStates = new Dictionary<Type, State>()
+            _movementStates = new Dictionary<Type, IState>()
             {
                 { typeof(StandingState), _currentState },
                 { typeof(MovingState), new MovingState(this, _mainCamera, _stats, _parameters) },
@@ -67,7 +67,7 @@ namespace _Project.Scripts.Components.Character
             => Controller.isGrounded; /*|| Physics.CheckSphere(_groundCheck.position, 0.0001f, _groundLayer.value);*/
 
         public void SwitchState<T>()
-            where T : State
+            where T : IState
         {
             var type = typeof(T);
             
