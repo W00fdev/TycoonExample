@@ -75,7 +75,7 @@ namespace _Project.Scripts.Components.Character.States
             
             if (_stateMachine.IsGrounded)
             {
-                SetAnimationVelocityY();
+                ResetAnimationVelocityY();
                 _velocityY = _stats.GravityForce;
             }
         }
@@ -83,7 +83,7 @@ namespace _Project.Scripts.Components.Character.States
         private void SetAnimationVelocityXZ(float xzMagnitude) 
             => _stateMachine.Animator.SetFloat(_parameters.HashVelocityXZ, xzMagnitude);
         
-        private void SetAnimationVelocityY() => _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
+        private void ResetAnimationVelocityY() => _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
 
         public void Exit()
         {
