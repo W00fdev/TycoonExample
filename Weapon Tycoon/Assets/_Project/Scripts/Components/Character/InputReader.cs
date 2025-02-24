@@ -2,10 +2,6 @@ using UnityEngine;
 
 namespace _Project.Scripts.Components.Character
 {
-    /// <summary>
-    /// Standing -> Moving -> Jumping (1 frame) -> Falling + Moving
-    /// </summary>
-
     public class InputReader
     {
         private Vector3 _input;
