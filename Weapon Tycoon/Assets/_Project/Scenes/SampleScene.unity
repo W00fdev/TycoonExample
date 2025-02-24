@@ -49390,7 +49390,7 @@ GameObject:
   - component: {fileID: 1863007293}
   - component: {fileID: 1863007292}
   - component: {fileID: 1863007294}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60001,7 +60001,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6514601922225382921}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60251,7 +60251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7126567512317861843}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63822,7 +63822,7 @@ GameObject:
   - component: {fileID: 5282710743022865698}
   - component: {fileID: 1683743717313602125}
   - component: {fileID: 8699937391952523356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: blasterG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64774,7 +64774,7 @@ GameObject:
   - component: {fileID: 8913713735370153916}
   - component: {fileID: 379932096944715392}
   - component: {fileID: 8443840252355852316}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: blasterJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65658,7 +65658,7 @@ GameObject:
   - component: {fileID: 428492728720904373}
   - component: {fileID: 6344466806892863370}
   - component: {fileID: 6965892743842558417}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: blasterM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66934,7 +66934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7727219687549439092}
   - component: {fileID: 8271439786328511417}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
