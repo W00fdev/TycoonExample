@@ -1,11 +1,10 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace _Project.Scripts.UI.Models
+namespace _Project.Scripts.Infrastructure.Data.Spawners
 {
     [CreateAssetMenu(fileName = "Spawner Upgrade Data", menuName = "Config/SpawnersUpgrades")]
-    public class SpawnerUpgradeData : ScriptableObject
+    public class SpawnerUpgradeConfig : ScriptableObject
     {
         [SerializeField] private UpgradeData[] _upgrades;
         public UpgradeData[] Upgrades => _upgrades;

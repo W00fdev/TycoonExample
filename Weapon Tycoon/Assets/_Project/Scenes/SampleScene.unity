@@ -3663,7 +3663,7 @@ Transform:
   m_GameObject: {fileID: 120487011}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071048, y: 0.0016913002, z: -0.0016913002, w: 0.7071048}
-  m_LocalPosition: {x: -0.52904624, y: 0.83768743, z: 0.20942497}
+  m_LocalPosition: {x: -0.529, y: 0.796, z: 0.209}
   m_LocalScale: {x: 0.9999829, y: 0.79999983, z: 0.5714341}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11464,7 +11464,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _basicModel: {fileID: 340080955}
-  _damagedColor: {r: 0, g: 0, b: 0, a: 0}
+  _health: 40
+  _agent: {fileID: 432041975}
+  _animator: {fileID: 340080956}
 --- !u!114 &432041975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11517,7 +11519,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 450
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -11895,7 +11897,7 @@ MonoBehaviour:
   _sensorZoneRadius: 45.22
   _stat:
     Damage: 1
-    RPM: 300
+    RPM: 0
     BuyPrice: 0
   _enemyLayer:
     serializedVersion: 2
@@ -11904,7 +11906,7 @@ MonoBehaviour:
   _gunPoint2: {fileID: 1475225288}
   _bulletPrefab: {fileID: 7251915904420410266, guid: 3ebd1acbee79ab245812d53442af9420, type: 3}
   _explosionPrefab: {fileID: 5110507210960215, guid: 2024c795522c4114ea3b45698bbb6950, type: 3}
-  _rotationSpeed: 10
+  _rotationSpeed: 100
   _turretHead: {fileID: 776434755}
   _turretGun1: {fileID: 1246535994}
   _turretGun2: {fileID: 1075327212}
@@ -30163,7 +30165,7 @@ Transform:
   m_GameObject: {fileID: 1050298031}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071048, y: 0.0016913002, z: -0.0016913002, w: 0.7071048}
-  m_LocalPosition: {x: 0.9155661, y: 0.8356459, z: 0.20942497}
+  m_LocalPosition: {x: 0.916, y: 0.794, z: 0.209}
   m_LocalScale: {x: 0.9999829, y: 0.79999983, z: 0.5714341}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44276,7 +44278,7 @@ Transform:
   m_GameObject: {fileID: 1475225287}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071048, y: 0.0016913002, z: -0.0016913002, w: 0.7071048}
-  m_LocalPosition: {x: 0.9155661, y: 0.8356459, z: 0.20942497}
+  m_LocalPosition: {x: 0.915, y: 0.784, z: 0.209}
   m_LocalScale: {x: 0.9999829, y: 0.79999983, z: 0.5714341}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50978,7 +50980,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 450
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -51021,7 +51023,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _basicModel: {fileID: 543450652995071291}
-  _damagedColor: {r: 1, g: 0.7971698, b: 0.7971698, a: 1}
+  _health: 100
+  _agent: {fileID: 1690546608}
+  _animator: {fileID: 5866666021204817729}
 --- !u!1001 &1691383061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54138,7 +54142,7 @@ MonoBehaviour:
   _sensorZoneRadius: 45.22
   _stat:
     Damage: 1
-    RPM: 600
+    RPM: 30
     BuyPrice: 0
   _enemyLayer:
     serializedVersion: 2
@@ -54147,7 +54151,7 @@ MonoBehaviour:
   _gunPoint2: {fileID: 1050298032}
   _bulletPrefab: {fileID: 7251915904420410266, guid: 3ebd1acbee79ab245812d53442af9420, type: 3}
   _explosionPrefab: {fileID: 5110507210960215, guid: 2024c795522c4114ea3b45698bbb6950, type: 3}
-  _rotationSpeed: 10
+  _rotationSpeed: 100
   _turretHead: {fileID: 8616923847010816203}
   _turretGun1: {fileID: 5744186806896015587}
   _turretGun2: {fileID: 7620109147495642979}
@@ -59963,7 +59967,7 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 450
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -60001,7 +60005,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _basicModel: {fileID: 764395040}
-  _damagedColor: {r: 0, g: 0, b: 0, a: 0}
+  _health: 20
+  _agent: {fileID: 1991949820}
+  _animator: {fileID: 764395041}
 --- !u!65 &1991949824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -61816,7 +61822,7 @@ Transform:
   m_GameObject: {fileID: 2087462149}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071048, y: 0.0016913002, z: -0.0016913002, w: 0.7071048}
-  m_LocalPosition: {x: -0.52904624, y: 0.83768743, z: 0.20942497}
+  m_LocalPosition: {x: -0.53, y: 0.786, z: 0.209}
   m_LocalScale: {x: 0.9999829, y: 0.79999983, z: 0.5714341}
   m_ConstrainProportionsScale: 0
   m_Children: []

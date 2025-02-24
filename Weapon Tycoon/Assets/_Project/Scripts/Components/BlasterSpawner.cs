@@ -6,6 +6,7 @@ using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.Infrastructure.Data;
+using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;

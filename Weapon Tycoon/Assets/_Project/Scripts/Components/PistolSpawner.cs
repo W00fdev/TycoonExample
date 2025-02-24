@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Infrastructure.Data;
+using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.UI.Models;
 

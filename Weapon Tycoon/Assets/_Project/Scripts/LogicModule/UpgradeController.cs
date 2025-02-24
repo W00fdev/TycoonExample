@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts.Components;
 using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure.Data;
+using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;

@@ -1,23 +1,16 @@
 using System;
 using System.Collections;
+using _Project.Scripts.Infrastructure.Data.Turrets;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components.Turrets
 {
-    [Serializable]
-    public struct TurretStat
-    {
-        public int Damage;
-        public float RPM;
-        public long BuyPrice;
-    }
-    
     public class Turret : MonoBehaviour
     {
         [SerializeField] private float _sensorZoneRadius;
-        [SerializeField] private TurretStat _stat;
+        [SerializeField] private TurretData _data;
         [SerializeField] private LayerMask _enemyLayer;
 
         [SerializeField] private Transform _gunPoint1;
@@ -30,7 +23,7 @@ namespace _Project.Scripts.Components.Turrets
         [SerializeField] private Transform _turretHead;
         [SerializeField] private Transform _turretGun1;
         [SerializeField] private Transform _turretGun2;
-
+        
         private Enemy _target;
         private Collider[] _colliders;
         private WaitForSeconds _awaiter;
@@ -41,7 +34,7 @@ namespace _Project.Scripts.Components.Turrets
         private void Start()
         {
             _colliders = new Collider[MaxColliders];
-            _awaiter = new WaitForSeconds(60f / _stat.RPM);
+            _awaiter = new WaitForSeconds(60f / _data.RPM);
 
             StartCoroutine(FiringCoroutine());
         }
@@ -65,6 +58,9 @@ namespace _Project.Scripts.Components.Turrets
                 if (!_colliders[i]) continue;
                 if (_colliders[i].TryGetComponent(out Enemy spottedEnemy))
                 {
+                    if (spottedEnemy.IsAlive == false)
+                        continue;
+                    
                     var distance = Vector3.Distance(transform.position, spottedEnemy.transform.position);
                     if (distance >= nearestDistance) continue;
                     
@@ -73,7 +69,7 @@ namespace _Project.Scripts.Components.Turrets
                 }
             }
 
-            return enemy != null;
+            return enemy;
         }
 
         private void Shoot(Vector3 position)
@@ -134,6 +130,6 @@ namespace _Project.Scripts.Components.Turrets
                 Gizmos.DrawWireSphere(enemy.transform.position, 3f);
             }
         }
-        #endif
+#endif
     }
 }
