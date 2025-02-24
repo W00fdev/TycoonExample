@@ -15,9 +15,7 @@ namespace _Project.Scripts.Components.Character
             _input.x = Input.GetAxisRaw("Horizontal");
             _input.y = 0f;
             _input.z = Input.GetAxisRaw("Vertical");
-
-            if (_input.magnitude > 1f)
-                _input.Normalize();
+            _input.Normalize();
             
             _isJumping = Input.GetKeyDown(KeyCode.Space);
         }

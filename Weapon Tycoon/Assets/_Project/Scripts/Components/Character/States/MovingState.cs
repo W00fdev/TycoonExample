@@ -35,7 +35,7 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
             
-            if (_inputReader.Value == Vector3.zero)
+            if (_inputReader.Value == Vector3.zero && _stateMachine.Controller.velocity.magnitude < 0.001f)
             {
                 _stateMachine.SwitchState<StandingState>();
                 return;
