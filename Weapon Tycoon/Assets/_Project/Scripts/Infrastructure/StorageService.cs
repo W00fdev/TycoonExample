@@ -1,6 +1,7 @@
 using System;
 using _Project.Scripts.Data;
 using _Project.Scripts.LogicModule.Views;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,9 +16,14 @@ namespace _Project.Scripts.Infrastructure
     
     public class StorageService
     {
-        //private AssetPath _assetPath;
+        public async UniTask<PooledView> GetWeaponViewAsync(BlasterType type)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
+                .Task.AsUniTask();
+            return result.GetComponent<PooledView>();
+        }
         
-        // Addressables
+        // ReSharper disable once MemberCanBeMadeStatic.Global
         public void GetWeaponView(BlasterType type, Action<PooledView> onComplete)
         {
             var handle = Addressables.LoadAssetAsync<GameObject>(type.ToString());
@@ -26,7 +32,15 @@ namespace _Project.Scripts.Infrastructure
                 onComplete?.Invoke(x.Result.GetComponent<PooledView>());
             };
         }
+        
+        public async UniTask<PooledView> GetBoxViewAsync(BoxType type)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
+                .Task.AsUniTask();
+            return result.GetComponent<PooledView>();
+        }
 
+        // ReSharper disable once MemberCanBeMadeStatic.Global
         public void GetBoxView(BoxType type, Action<PooledView> onComplete)
         {
             var asyncOperationHandle = Addressables.LoadAssetAsync<GameObject>(type.ToString());

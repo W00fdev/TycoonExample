@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts.LogicModule;
 using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,8 +14,7 @@ namespace _Project.Scripts.Infrastructure.Installers
     {
         [Header("Utilities factory prefabs")]
         [SerializeField] private MoneyTextView _moneyTextPrefab;
-
-        [FormerlySerializedAs("_upgradeBuyer")]
+        
         [Header("Controllers")]
         [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private UpgradeController _upgradeController;
@@ -22,19 +22,22 @@ namespace _Project.Scripts.Infrastructure.Installers
         [Header("Debug only")]
         [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
         
-        public void Initialize(StorageService storageService)
+        public async UniTaskVoid Initialize(StorageService storageService)
         {
-            var glockFactory = new PistolFactory(storageService);
-            var shotgunFactory = new ShotgunFactory(storageService);
-            var rifleFactory = new RifleFactory(storageService);
+            var pistolFactoryTask = PistolFactory.CreateAsync(storageService);
+            var shotgunFactoryTask = ShotgunFactory.CreateAsync(storageService);
+            var rifleFactoryTask = RifleFactory.CreateAsync(storageService);
             
-            var boxFactory = new BoxFactory(storageService);
-            var longBoxFactory = new LongBoxFactory(storageService);
+            var boxFactoryTask = BoxFactory.CreateAsync(storageService);
+            var longBoxFactoryTask = LongBoxFactory.CreateAsync(storageService);
             var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
 
+            var (pistolFactory, shotgunFactory, rifleFactory, boxFactory, longBoxFactory) =
+                await UniTask.WhenAll(pistolFactoryTask, shotgunFactoryTask, rifleFactoryTask, boxFactoryTask, longBoxFactoryTask);
+            
             _weaponFactories = new()
             {
-                { typeof(PistolFactory), glockFactory },
+                { typeof(PistolFactory), pistolFactory },
                 { typeof(ShotgunFactory), shotgunFactory },
                 { typeof(RifleFactory), rifleFactory },
             };

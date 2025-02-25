@@ -8,12 +8,7 @@ namespace _Project.Scripts.LogicModule.Factories
     [Serializable]
     public abstract class CustomPool
     {
-        [ShowInInspector] protected List<PooledView> _freeItems;
-        
-        public CustomPool()
-        {
-            _freeItems = new List<PooledView>();
-        }
+        [ShowInInspector] protected List<PooledView> _freeItems = new();
 
         public abstract PooledView Next();
     }

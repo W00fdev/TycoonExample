@@ -3,6 +3,7 @@ using _Project.Scripts.CurrencyModule;
 using _Project.Scripts.Data;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Views;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,11 +13,12 @@ namespace _Project.Scripts.LogicModule.Factories
     public class BoxFactory : CustomPool
     {
         protected PooledView _prefab;
+
+        protected BoxFactory(PooledView prefab)
+            => _prefab = prefab;
         
-        public BoxFactory(StorageService storageService)
-        {
-            storageService.GetBoxView(BoxType.Box, (x) => _prefab = x);
-        }
+        public static async UniTask<BoxFactory> CreateAsync(StorageService storageService) 
+            => new BoxFactory(await storageService.GetBoxViewAsync(BoxType.Box));
 
         [Button]
         public override PooledView Next()

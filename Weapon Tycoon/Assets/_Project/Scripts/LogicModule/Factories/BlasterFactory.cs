@@ -12,9 +12,8 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         protected PooledView _prefab;
         
-        public BlasterFactory() : base()
-        {
-        }
+        protected BlasterFactory(PooledView prefab)
+            => _prefab = prefab;
 
         [Button]
         public override PooledView Next()
