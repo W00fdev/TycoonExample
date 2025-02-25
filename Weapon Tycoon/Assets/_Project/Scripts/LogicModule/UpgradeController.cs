@@ -22,11 +22,9 @@ namespace _Project.Scripts.LogicModule
 
         [Inject] private PersistentProgress _progress;
         
-        
         public void Initialize(Dictionary<Type, BlasterFactory> factories,
             BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, BoxFactory longBoxFactory)
         {
-            _longBoxFactory = 
             _boxFactory = boxFactory;
             _longBoxFactory = longBoxFactory;
             _moneyTextFactory = moneyTextFactory;
