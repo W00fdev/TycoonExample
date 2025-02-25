@@ -49,5 +49,12 @@ namespace _Project.Scripts.Infrastructure
                 onComplete?.Invoke(x.Result.GetComponent<PooledView>());
             };
         }
+        
+        public async UniTask<PooledView> GetMoneyTextPrefabAsync(string name)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(name)
+                .Task.AsUniTask();
+            return result.GetComponent<PooledView>();
+        }
     }
 }

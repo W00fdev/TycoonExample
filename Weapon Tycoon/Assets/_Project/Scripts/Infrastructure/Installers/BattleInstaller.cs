@@ -12,9 +12,6 @@ namespace _Project.Scripts.Infrastructure.Installers
 {
     public class BattleInstaller : MonoBehaviour
     {
-        [Header("Utilities factory prefabs")]
-        [SerializeField] private MoneyTextView _moneyTextPrefab;
-        
         [Header("Controllers")]
         [SerializeField] private UpgradeShop _upgradeShop;
         [SerializeField] private UpgradeController _upgradeController;
@@ -30,10 +27,10 @@ namespace _Project.Scripts.Infrastructure.Installers
             
             var boxFactoryTask = BoxFactory.CreateAsync(storageService);
             var longBoxFactoryTask = LongBoxFactory.CreateAsync(storageService);
-            var moneyTextFactory = new MoneyTextFactory(_moneyTextPrefab);
+            var moneyTextFactoryTask = MoneyTextFactory.CreateAsync(storageService);
 
-            var (pistolFactory, shotgunFactory, rifleFactory, boxFactory, longBoxFactory) =
-                await UniTask.WhenAll(pistolFactoryTask, shotgunFactoryTask, rifleFactoryTask, boxFactoryTask, longBoxFactoryTask);
+            var (pistolFactory, shotgunFactory, rifleFactory, boxFactory, longBoxFactory, moneyTextFactory) =
+                await UniTask.WhenAll(pistolFactoryTask, shotgunFactoryTask, rifleFactoryTask, boxFactoryTask, longBoxFactoryTask, moneyTextFactoryTask);
             
             _weaponFactories = new()
             {

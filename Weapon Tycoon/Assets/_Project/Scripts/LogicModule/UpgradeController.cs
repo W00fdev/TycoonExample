@@ -48,11 +48,5 @@ namespace _Project.Scripts
             spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);
             _resolver.Resolve(spawner);
         }
-        
-        public BlasterSpawner Next(SpawnerData spawnerData)
-        {
-
-            return null;
-        }
     }
 }

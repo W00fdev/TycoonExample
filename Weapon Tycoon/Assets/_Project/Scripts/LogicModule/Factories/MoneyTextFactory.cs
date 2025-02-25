@@ -1,5 +1,7 @@
 ﻿using System;
+using _Project.Scripts.Infrastructure;
 using _Project.Scripts.LogicModule.Views;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,12 +12,11 @@ namespace _Project.Scripts.LogicModule.Factories
     {
         private readonly PooledView _prefab;
 
-        public Action<PooledView> MoneyReturned;
+        protected MoneyTextFactory(PooledView prefab)
+            => _prefab = prefab;
         
-        public MoneyTextFactory(PooledView prefab) : base()
-        {
-            _prefab = prefab;
-        }
+        public static async UniTask<MoneyTextFactory> CreateAsync(StorageService storageService) 
+            => new MoneyTextFactory(await storageService.GetMoneyTextPrefabAsync("MoneyTextView"));
 
         [Button]
         public override PooledView Next()
@@ -37,8 +38,6 @@ namespace _Project.Scripts.LogicModule.Factories
 
         private void ReturnToItemsList(PooledView pooled)
         {
-            MoneyReturned?.Invoke(pooled);
-            
             pooled.gameObject.SetActive(false);
             _freeItems.Add(pooled);
         }
