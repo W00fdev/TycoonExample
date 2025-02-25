@@ -7,12 +7,13 @@ using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
+using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
-using _Project.Scripts.LogicModule.Factories;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Models;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -57,7 +58,6 @@ namespace _Project.Scripts.Components
         private MoneyTextFactory _moneyTextFactory;
 
         [SerializeField, ReadOnly] private float _speedInPercents;
-        private WaitForSeconds _waiter;
 
         public virtual void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
         {
@@ -69,7 +69,6 @@ namespace _Project.Scripts.Components
             _movableBoxes = new (_movablesCapacity);
             _movableBlasters = new (_movablesCapacity);
             
-            //spawnerData.Initialize();
             _infoView.Initialize(_spawnerNameKey);
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
             
@@ -83,7 +82,6 @@ namespace _Project.Scripts.Components
 
         private void UpgradeSpawner()
         {
-            _waiter = new WaitForSeconds(1f / _spawnerData.SpawnerSpeed);
             _speedInPercents = _spawnerData.SpawnerSpeed / 3f;
 
             float yPrevScale = _machineryTransform.localScale.y;
@@ -108,7 +106,8 @@ namespace _Project.Scripts.Components
         public virtual void Resolve(BlasterFactory blasterFactory)
         {
             _blasterFactory = blasterFactory;
-            StartCoroutine(SpawnTimer());
+            
+            SpawnerTimerAsync().Forget();
         }
 
         private void Update()
@@ -191,14 +190,14 @@ namespace _Project.Scripts.Components
             ((MoneyTextView)moneyText).SetText($"+{_spawnerData.ProductPrice.ToHeaderMoneyFormat()}");
             ((MoneyTextView)moneyText).PlayTextAnimation();
         }
-        
-        IEnumerator SpawnTimer()
+
+        async UniTaskVoid SpawnerTimerAsync()
         {
-            _waiter = new WaitForSeconds(1f / _spawnerData.SpawnerSpeed);
-            
             while (true)
             {
-                yield return _waiter;
+                await UniTask.Delay(TimeSpan.FromSeconds(1f / _spawnerData.SpawnerSpeed),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+
                 SpawnBox();
             }
         }

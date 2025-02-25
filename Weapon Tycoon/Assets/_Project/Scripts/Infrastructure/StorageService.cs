@@ -4,16 +4,10 @@ using _Project.Scripts.LogicModule.Views;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace _Project.Scripts.Infrastructure
 {
-    /*public class AssetPath
-    {
-        public readonly string WeaponResourcesPath = "Blasters/";
-        public readonly string BoxResourcesPath = "";
-    }*/
-    
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class StorageService
     {
         public async UniTask<PooledView> GetWeaponViewAsync(BlasterType type)

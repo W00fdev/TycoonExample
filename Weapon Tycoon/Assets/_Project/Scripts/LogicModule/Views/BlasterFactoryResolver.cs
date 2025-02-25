@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project.Scripts.Components;
-using _Project.Scripts.LogicModule.Factories;
+using _Project.Scripts.Infrastructure.Factories;
 
 namespace _Project.Scripts
 {

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using _Project.Scripts.Components;
-using _Project.Scripts.CurrencyModule.Models;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
-using _Project.Scripts.LogicModule.Factories;
-using _Project.Scripts.LogicModule.Views;
-using _Project.Scripts.UI.Models;
-using Sirenix.OdinInspector;
+using _Project.Scripts.Infrastructure.Factories;
 using UnityEngine;
+using Zenject;
 
-namespace _Project.Scripts
+namespace _Project.Scripts.LogicModule
 {
     public sealed class UpgradeController : MonoBehaviour
     {
@@ -19,9 +16,12 @@ namespace _Project.Scripts
         private BoxFactory _longBoxFactory;
         private BoxFactory _boxFactory;
         private MoneyTextFactory _moneyTextFactory;
-        
+
         private BlasterFactoryResolver _resolver;
         private int _spawnerLevel;
+
+        [Inject] private PersistentProgress _progress;
+        
         
         public void Initialize(Dictionary<Type, BlasterFactory> factories,
             BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, BoxFactory longBoxFactory)
@@ -40,7 +40,7 @@ namespace _Project.Scripts
                 return;
             
             var spawner = _spawners[_spawnerLevel++];
-            PersistentProgress.Instance.Spawners = _spawnerLevel;
+            _progress.Data.Spawners = _spawnerLevel;
             
             spawner.gameObject.SetActive(true);
             // Косяк, не засунули в резолвер
