@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _Project.Scripts.Infrastructure.Factories;
+using _Project.Scripts.Infrastructure.Factories.Accessors;
 using _Project.Scripts.LogicModule;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
@@ -18,13 +19,13 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
         [Header("Debug only")]
         [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
 
-        private StorageService _storageService;
-        
-        [Inject]
-        public void Construct(StorageService service)
-        {
-            _storageService = service;
-        }
+        [Inject] private StorageService _storageService;
+        [Inject] private PistolFactoryAccessor<PistolFactory> _pistolFactoryAccessor;
+        [Inject] private ShotgunFactoryAccessor<ShotgunFactory> _shotgunFactoryAccessor;
+        [Inject] private RifleFactoryAccessor<RifleFactory> _rifleFactoryAccessor;
+        [Inject] private BoxFactoryAccessor<BoxFactory> _boxFactoryAccessor;
+        [Inject] private BoxFactoryAccessor<LongBoxFactory> _longBoxFactoryAccessor;
+        [Inject] private MoneyTextFactoryAccessor _moneyTextFactoryAccessor;        
         
         public async UniTaskVoid Initialize()
         {
@@ -38,15 +39,15 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
 
             var (pistolFactory, shotgunFactory, rifleFactory, boxFactory, longBoxFactory, moneyTextFactory) =
                 await UniTask.WhenAll(pistolFactoryTask, shotgunFactoryTask, rifleFactoryTask, boxFactoryTask, longBoxFactoryTask, moneyTextFactoryTask);
-            
-            _weaponFactories = new()
-            {
-                { typeof(PistolFactory), pistolFactory },
-                { typeof(ShotgunFactory), shotgunFactory },
-                { typeof(RifleFactory), rifleFactory },
-            };
 
-            _upgradeController.Initialize(_weaponFactories, boxFactory, moneyTextFactory, longBoxFactory);
+            _pistolFactoryAccessor.PistolFactory = pistolFactory as PistolFactory;
+            _shotgunFactoryAccessor.ShotgunFactory = shotgunFactory as ShotgunFactory;
+            _rifleFactoryAccessor.RifleFactory = rifleFactory as RifleFactory;
+            _boxFactoryAccessor.BoxFactory = boxFactory;
+            _longBoxFactoryAccessor.BoxFactory = longBoxFactory as LongBoxFactory;
+            _moneyTextFactoryAccessor.MoneyTextFactory = moneyTextFactory;
+            
+            _upgradeController.Initialize();
             _spawnerUpgrader.Initialize();
         }
     }

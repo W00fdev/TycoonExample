@@ -51,18 +51,16 @@ namespace _Project.Scripts.Components
         [SerializeField] private int _movablesCapacity;
         [ShowInInspector, ReadOnly] private List<PooledView> _movableBoxes;
         [ShowInInspector, ReadOnly] private List<PooledView> _movableBlasters;
+        [SerializeField, ReadOnly] private float _speedInPercents;
+        
+        protected BlasterFactory _blasterFactory;
+        protected BoxFactory _boxFactory;
+        protected MoneyTextFactory _moneyTextFactory;
         
         private SpawnerData _spawnerData;
-        private BlasterFactory _blasterFactory;
-        private BoxFactory _boxFactory;
-        private MoneyTextFactory _moneyTextFactory;
-
-        [SerializeField, ReadOnly] private float _speedInPercents;
-
-        public virtual void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
+        
+        public virtual void Initialize(SpawnerData spawnerData)
         {
-            _boxFactory = boxFactory;
-            _moneyTextFactory = moneyTextFactory;
             _spawnerData = spawnerData;
             _speedInPercents = _spawnerData.SpawnerSpeed / 3f;
             
@@ -73,6 +71,11 @@ namespace _Project.Scripts.Components
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
             
             _spawnerData.SpawnerDataChanged += UpgradeSpawner;
+        }
+        
+        public virtual void Resolve()
+        {
+            SpawnerTimerAsync().Forget();
         }
 
         private void OnDestroy()
@@ -103,12 +106,7 @@ namespace _Project.Scripts.Components
                 _upgradesVisual[i].SetActive(true);
         }
 
-        public virtual void Resolve(BlasterFactory blasterFactory)
-        {
-            _blasterFactory = blasterFactory;
-            
-            SpawnerTimerAsync().Forget();
-        }
+
 
         private void Update()
         {

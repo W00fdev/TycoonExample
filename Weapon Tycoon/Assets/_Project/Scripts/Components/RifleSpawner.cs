@@ -2,6 +2,7 @@ using System;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.Infrastructure.Factories;
+using _Project.Scripts.Infrastructure.Factories.Accessors;
 using _Project.Scripts.UI.Models;
 using Zenject;
 
@@ -13,9 +14,13 @@ namespace _Project.Scripts.Components
 
         [Inject] private PersistentProgress _progress;
         
-        public override void Initialize(BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, SpawnerData spawnerData)
+        [Inject] private RifleFactoryAccessor<RifleFactory> _rifleFactoryAccessor;
+        [Inject] private BoxFactoryAccessor<LongBoxFactory> _longBoxFactoryAccessor;
+        [Inject] private MoneyTextFactoryAccessor _moneyTextFactoryAccessor;
+        
+        public override void Initialize(SpawnerData spawnerData)
         {
-            base.Initialize(boxFactory, moneyTextFactory, spawnerData);
+            base.Initialize(spawnerData);
 
             if (SpawnerIndex < _progress.Data.SpawnerUpgrades.Count)
             {
@@ -24,12 +29,13 @@ namespace _Project.Scripts.Components
             }
         }
 
-        public override void Resolve(BlasterFactory blasterFactory)
+        public override void Resolve()
         {
-            if (blasterFactory is not RifleFactory)
-                throw new InvalidCastException($"RifleSpawner got non RifleFactory {blasterFactory.GetType().Name}");
-
-            base.Resolve(blasterFactory);
+            _blasterFactory = _rifleFactoryAccessor.RifleFactory;
+            _boxFactory = _longBoxFactoryAccessor.BoxFactory;
+            _moneyTextFactory = _moneyTextFactoryAccessor.MoneyTextFactory;
+            
+            base.Resolve();
         }
     }
 }
