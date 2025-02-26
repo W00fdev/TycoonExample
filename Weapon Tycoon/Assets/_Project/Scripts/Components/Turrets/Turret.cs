@@ -36,8 +36,9 @@ namespace _Project.Scripts.Components.Turrets
         private Enemy _target;
         private Collider[] _colliders;
         private WaitForSeconds _awaiter;
+        private float _gunAnimDuration;
         private bool _gunPointChanger;
-        
+
         private const int MaxColliders = 10;
         
         public virtual void Initialize(TurretData turretData)
@@ -48,6 +49,8 @@ namespace _Project.Scripts.Components.Turrets
             _infoView.Initialize(_turretNameKey);
             _infoView.UpdateInfo(_data.RPM.ToString(), _data.Damage.ToString());
             
+            int rps = _data.RPM / 60;
+            _gunAnimDuration = 1f / (rps * 2f);
             _data.TurretDataChanged += UpgradeTurret;
         }
         
@@ -73,6 +76,8 @@ namespace _Project.Scripts.Components.Turrets
             _upgradeVisualLevel = Mathf.Min(_upgradeVisualLevel + 1, _upgradesVisual.Length);
             _upgradeImpact.Play();
 
+            int rps = _data.RPM / 60;
+            _gunAnimDuration = 1f / (rps * 2f);
             UpdateVisuals();
         }
 
@@ -115,25 +120,31 @@ namespace _Project.Scripts.Components.Turrets
             return enemy;
         }
 
-        private void Shoot(Vector3 position)
+        private async UniTaskVoid Shoot(Vector3 position)
         {
             var animatableGun = _gunPointChanger ? _turretGun1 : _turretGun2;
-            var prevPosition = animatableGun.position;
+            var startPositionZ = animatableGun.localPosition.z;
+            
+            // RPS = RPM / 60 
+            // if (1 / RPS <= 0.1f) then RPM >= 600 
+            // duration = (1 / RPS * 2)
+            
             Sequence.Create()
-                .Chain(Tween.Position(animatableGun, animatableGun.position - animatableGun.up * 0.2f, 0.05f))
-                .Chain(Tween.Position(animatableGun, prevPosition, 0.05f));
+                .Chain(Tween.LocalPositionZ(animatableGun, animatableGun.localPosition.z - 0.2f, _gunAnimDuration * 0.5f))
+                .Chain(Tween.LocalPositionZ(animatableGun, startPositionZ, _gunAnimDuration * 0.5f));
             
             var spawnPosition = _gunPointChanger ? _gunPoint1.position : _gunPoint2.position;
             var bullet = GameObject.Instantiate(_bulletPrefab, spawnPosition, Quaternion.identity);
-            Tween.Position(bullet.transform, position, 0.15f)
-                .OnComplete(() =>
-                {
-                    _target?.TakeDamage();
-                    GameObject.Instantiate(_explosionPrefab, position, Quaternion.identity);
-                    GameObject.Destroy(bullet);
-                });
-
+            
             _gunPointChanger = !_gunPointChanger;
+            
+            var target = _target;
+            await Tween.Position(bullet.transform, position, 0.15f).ToYieldInstruction()
+                .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            target?.TakeDamage();
+            GameObject.Instantiate(_explosionPrefab, position, Quaternion.identity);
+            GameObject.Destroy(bullet);
         }
         
         async UniTaskVoid FiringTimer()
@@ -145,11 +156,12 @@ namespace _Project.Scripts.Components.Turrets
 
                 do
                 {
-                    await UniTask.DelayFrame(delayFrameCount: 3);
+                    await UniTask.DelayFrame(delayFrameCount: 3, 
+                        cancellationToken: this.GetCancellationTokenOnDestroy());
                 } while (TryFindTarget(out _target) == false);
 
                 var position = _target.transform.position + Vector3.up * 1.5f;
-                Shoot(position);
+                Shoot(position).Forget();
             }
         }
 

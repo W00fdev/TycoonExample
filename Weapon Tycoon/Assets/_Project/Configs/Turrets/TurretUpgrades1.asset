@@ -19,6 +19,6 @@ MonoBehaviour:
   - Damage: 2
     RPM: 60
     BuyPrice: 25
-  - Damage: 3
-    RPM: 80
+  - Damage: 1
+    RPM: 120
     BuyPrice: 500

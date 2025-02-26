@@ -14,11 +14,14 @@ namespace _Project.Scripts.LogicModule.Turrets
     
         public void Initialize()
         {
+            // 1 -> 
+            
             var data = _progress.Data;
-            if (data.Turrets < _upgraders.Length)
-                _upgraders[data.Turrets].ShowBuyButton();
+            int turretsCount = data.TurretUpgrades.Count; 
+            if (turretsCount < _upgraders.Length)
+                _upgraders[turretsCount].ShowBuyButton();
         
-            for (int i = 0; i < _upgraders.Length; i++)
+            for (int i = 0; i < turretsCount; i++)
                 _upgraders[i].Initialize(NextTurretButtonOpen, data.GetTurretUpgradeLevelOrDefault(i));
         }
 
@@ -29,8 +32,6 @@ namespace _Project.Scripts.LogicModule.Turrets
         
             var upgrader = _upgraders[_turretLevel++];
             upgrader.ShowBuyButton();
-        
-            _progress.Data.Spawners = _turretLevel;
         }
     
         // Context invocation (BuySpawner Signal)

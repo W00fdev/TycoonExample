@@ -29,15 +29,17 @@ namespace _Project.Scripts.LogicModule.Turrets
         {
             _turretBought = turretBought;
             _turretData.Initialize(upgradeIndex);
-            
+
             if (upgradeIndex > 0)
                 LoadTurret();
+            else
+                OpenTurret();
         }
 
         private void LoadTurret()
         {
-            UpdateButtonViewAfterUpgrade();
             OpenTurret();
+            UpdateButtonViewAfterUpgrade();
         }
 
         public void BuyTurret()
@@ -46,6 +48,7 @@ namespace _Project.Scripts.LogicModule.Turrets
                 return;
             
             OpenTurret();
+            
             _turretBought?.Invoke();
         }
         
@@ -55,7 +58,7 @@ namespace _Project.Scripts.LogicModule.Turrets
                 return;
 
             _turretData.Upgrade();
-            SaveUpgradeToData();
+            SaveUpdateToData();
 
             UpdateButtonViewAfterUpgrade();
         }
@@ -70,8 +73,8 @@ namespace _Project.Scripts.LogicModule.Turrets
                 fireRate: _turretData.RPM.ToString());
         }
 
-        private void SaveUpgradeToData() => _progress.Data.UpdateTurretUpgrade(_turretIndex, _turretData.Index);
-
+        private void SaveUpdateToData() => _progress.Data.UpdateTurretUpgrade(_turretIndex, _turretData.Index);
+        
         private void UpdateButtonViewAfterUpgrade()
         {
             if (_turretData.IsUpgradeExist() == false)
@@ -90,6 +93,7 @@ namespace _Project.Scripts.LogicModule.Turrets
         private void OpenTurret()
         {
             EnableUpgraderButton();
+            SaveUpdateToData();
             
             _turret.gameObject.SetActive(true);
             _turret.Initialize(_turretData);

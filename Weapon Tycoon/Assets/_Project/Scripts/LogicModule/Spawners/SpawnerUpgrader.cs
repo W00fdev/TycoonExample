@@ -31,12 +31,14 @@ namespace _Project.Scripts.LogicModule.Spawners
             
             if (upgradeIndex > 0)
                 LoadSpawner();
+            else
+                OpenSpawner();
         }
 
         private void LoadSpawner()
         {
-            UpdateButtonViewAfterUpgrade();
             OpenSpawner();
+            UpdateButtonViewAfterUpgrade();
         }
 
         public void BuySpawner()
@@ -89,6 +91,7 @@ namespace _Project.Scripts.LogicModule.Spawners
         private void OpenSpawner()
         {
             EnableUpgraderButton();
+            SaveUpgradeToData();
             
             _spawner.gameObject.SetActive(true);
             _spawner.Initialize(_spawnerData);

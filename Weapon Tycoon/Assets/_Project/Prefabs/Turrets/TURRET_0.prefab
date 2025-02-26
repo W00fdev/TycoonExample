@@ -2138,7 +2138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _infoView: {fileID: 7084753883028673190}
-  _turretNameKey: turret_0
+  _turretNameKey: turret_1
   _sensorZoneRadius: 46
   _enemyLayer:
     serializedVersion: 2

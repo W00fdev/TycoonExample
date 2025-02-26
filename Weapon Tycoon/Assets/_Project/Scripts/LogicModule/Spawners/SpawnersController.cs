@@ -14,10 +14,11 @@ namespace _Project.Scripts.LogicModule.Spawners
         public void Initialize()
         {
             var data = _progress.Data;
-            if (data.Spawners < _upgraders.Length)
-                _upgraders[data.Spawners].ShowBuyButton();
+            int spawnersCount = data.SpawnerUpgrades.Count;
+            if (spawnersCount < _upgraders.Length)
+                _upgraders[spawnersCount].ShowBuyButton();
             
-            for (int i = 0; i < _upgraders.Length; i++)
+            for (int i = 0; i < spawnersCount; i++)
                 _upgraders[i].Initialize(NextSpawnerButtonOpen, data.GetSpawnerUpgradeLevelOrDefault(i));
         }
 
@@ -28,8 +29,6 @@ namespace _Project.Scripts.LogicModule.Spawners
             
             var upgrader = _upgraders[_spawnerLevel++];
             upgrader.ShowBuyButton();
-            
-            _progress.Data.Spawners = _spawnerLevel;
         }
         
         // Context invocation (BuySpawner Signal)

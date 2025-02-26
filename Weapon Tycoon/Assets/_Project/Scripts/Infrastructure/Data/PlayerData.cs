@@ -7,8 +7,6 @@ namespace _Project.Scripts.Infrastructure.Data
     [Serializable]
     public class PlayerData
     {
-        public int Spawners;
-        public int Turrets;
         public List<int> SpawnerUpgrades = new();
         public List<int> TurretUpgrades = new();
 
@@ -21,8 +19,6 @@ namespace _Project.Scripts.Infrastructure.Data
         
         public PlayerData(PlayerData data)
         {
-            Spawners = data.Spawners;
-            Turrets = data.Turrets;
             SpawnerUpgrades = data.SpawnerUpgrades;
             TurretUpgrades = data.TurretUpgrades;
             MoneyWallet = data.MoneyWallet;
