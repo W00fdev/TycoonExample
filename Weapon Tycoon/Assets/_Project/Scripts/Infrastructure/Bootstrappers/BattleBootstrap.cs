@@ -14,8 +14,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
 {
     public class BattleBootstrap : MonoBehaviour
     {
-        [Header("Controllers")]
-        [SerializeField] private SpawnersController _spawnersController;
+        [SerializeField] private GameShop _gameShop;
 
         [Header("Debug only")]
         [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
@@ -48,7 +47,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             _longBoxFactoryAccessor.BoxFactory = longBoxFactory as LongBoxFactory;
             _moneyTextFactoryAccessor.MoneyTextFactory = moneyTextFactory;
             
-            _spawnersController.Initialize();
+            _gameShop.Initialize();
         }
     }
 }

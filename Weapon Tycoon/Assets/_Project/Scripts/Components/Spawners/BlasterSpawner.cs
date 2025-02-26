@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using _Project.Scripts.CurrencyModule;
-using _Project.Scripts.CurrencyModule.Models;
-using _Project.Scripts.Infrastructure;
-using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.LogicModule.Views;
-using _Project.Scripts.UI.Models;
 using _Project.Scripts.UI.Views;
+using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Project.Scripts.Components
+namespace _Project.Scripts.Components.Spawners
 {
     public abstract class BlasterSpawner : MonoBehaviour
     {
@@ -93,9 +87,8 @@ namespace _Project.Scripts.Components
                 .Chain(Tween.ScaleY(_machineryTransform, yPrevScale, 0.25f, Ease.OutBack));
             
             _infoView.UpdateInfo(_spawnerData.SpawnerSpeed.ToSpeedFormat(), _spawnerData.ProductPrice.ToString());
-            _upgradeImpact.Play();
-            
             _upgradeVisualLevel = Mathf.Min(_upgradeVisualLevel + 1, _upgradesVisual.Length);
+            _upgradeImpact.Play();
 
             UpdateVisuals();
         }
@@ -105,8 +98,6 @@ namespace _Project.Scripts.Components
             for (int i = 0; i < Mathf.Min(_upgradeVisualLevel, _upgradesVisual.Length); i++)
                 _upgradesVisual[i].SetActive(true);
         }
-
-
 
         private void Update()
         {

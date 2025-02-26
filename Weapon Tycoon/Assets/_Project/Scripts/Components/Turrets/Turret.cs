@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using _Project.Scripts.Infrastructure.Data.Turrets;
+using _Project.Scripts.UI.Views.Turrets;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,21 +11,28 @@ namespace _Project.Scripts.Components.Turrets
 {
     public class Turret : MonoBehaviour
     {
+        [SerializeField] private TurretInfoView _infoView;
+        [SerializeField] private string _turretNameKey;
         [SerializeField] private float _sensorZoneRadius;
-        [SerializeField] private TurretData _data;
         [SerializeField] private LayerMask _enemyLayer;
-
-        [SerializeField] private Transform _gunPoint1;
-        [SerializeField] private Transform _gunPoint2;
 
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private GameObject _explosionPrefab;
-
+        
+        [Header("Impact visual")]
+        [SerializeField] protected ParticleSystem _upgradeImpact;
+        [SerializeField] protected float _endScaleYSquash = 2f;
+        [SerializeField] protected GameObject[] _upgradesVisual;
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private Transform _turretHead;
         [SerializeField] private Transform _turretGun1;
         [SerializeField] private Transform _turretGun2;
+        [SerializeField] private Transform _gunPoint1;
+        [SerializeField] private Transform _gunPoint2;
+
+        protected int _upgradeVisualLevel;
         
+        private TurretData _data;
         private Enemy _target;
         private Collider[] _colliders;
         private WaitForSeconds _awaiter;
@@ -31,14 +40,48 @@ namespace _Project.Scripts.Components.Turrets
         
         private const int MaxColliders = 10;
         
-        private void Start()
+        public virtual void Initialize(TurretData turretData)
         {
             _colliders = new Collider[MaxColliders];
-            _awaiter = new WaitForSeconds(60f / _data.RPM);
-
-            StartCoroutine(FiringCoroutine());
+            _data = turretData;
+            
+            _infoView.Initialize(_turretNameKey);
+            _infoView.UpdateInfo(_data.RPM.ToString(), _data.Damage.ToString());
+            
+            _data.TurretDataChanged += UpgradeTurret;
+        }
+        
+        public void Resolve()
+        {
+            FiringTimer().Forget();
         }
 
+        private void OnDestroy()
+        {
+            _data.TurretDataChanged -= UpgradeTurret;
+        }
+
+        private void UpgradeTurret()
+        {
+            float yPrevScale = _turretHead.localScale.y;
+            Sequence.Create(cycles: 1)
+                .Chain(Tween.ScaleY(_turretHead, _endScaleYSquash, 0.25f, Ease.InBack))
+                .Chain(Tween.ScaleY(_turretHead, yPrevScale, 0.25f, Ease.OutBack));
+            
+            _infoView.UpdateInfo(_data.RPM.ToString(), _data.Damage.ToString());
+            
+            _upgradeVisualLevel = Mathf.Min(_upgradeVisualLevel + 1, _upgradesVisual.Length);
+            _upgradeImpact.Play();
+
+            UpdateVisuals();
+        }
+
+        private void UpdateVisuals()
+        {
+            for (int i = 0; i < Mathf.Min(_upgradeVisualLevel, _upgradesVisual.Length); i++)
+                _upgradesVisual[i].SetActive(true);
+        }
+        
         private void Update()
         {
             if (!_target) return;
@@ -79,12 +122,9 @@ namespace _Project.Scripts.Components.Turrets
             Sequence.Create()
                 .Chain(Tween.Position(animatableGun, animatableGun.position - animatableGun.up * 0.2f, 0.05f))
                 .Chain(Tween.Position(animatableGun, prevPosition, 0.05f));
-
             
             var spawnPosition = _gunPointChanger ? _gunPoint1.position : _gunPoint2.position;
             var bullet = GameObject.Instantiate(_bulletPrefab, spawnPosition, Quaternion.identity);
-
-            //var targetedEnemy = _target;
             Tween.Position(bullet.transform, position, 0.15f)
                 .OnComplete(() =>
                 {
@@ -96,22 +136,19 @@ namespace _Project.Scripts.Components.Turrets
             _gunPointChanger = !_gunPointChanger;
         }
         
-        IEnumerator FiringCoroutine()
+        async UniTaskVoid FiringTimer()
         {
             while (true)
             {
-                yield return _awaiter;
+                await UniTask.Delay(TimeSpan.FromSeconds(60f / _data.RPM),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+
                 do
                 {
-                    yield return null;
-                    yield return null;
-                    yield return null;
-                    
+                    await UniTask.DelayFrame(delayFrameCount: 3);
                 } while (TryFindTarget(out _target) == false);
 
                 var position = _target.transform.position + Vector3.up * 1.5f;
-                //_turretHead.LookAt(position);
-                
                 Shoot(position);
             }
         }

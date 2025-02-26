@@ -1,8 +1,9 @@
 using _Project.Scripts.LocalizationSystem;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace _Project.Scripts.UI.Views
+namespace _Project.Scripts.UI.Views.Spawners
 {
     public class SpawnerBuyerInfoView : MonoBehaviour
     {

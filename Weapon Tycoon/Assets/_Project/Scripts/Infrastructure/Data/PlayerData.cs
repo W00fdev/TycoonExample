@@ -8,7 +8,9 @@ namespace _Project.Scripts.Infrastructure.Data
     public class PlayerData
     {
         public int Spawners;
+        public int Turrets;
         public List<int> SpawnerUpgrades = new();
+        public List<int> TurretUpgrades = new();
 
         public long MoneyWallet;
         public long MoneyBank;
@@ -20,7 +22,9 @@ namespace _Project.Scripts.Infrastructure.Data
         public PlayerData(PlayerData data)
         {
             Spawners = data.Spawners;
+            Turrets = data.Turrets;
             SpawnerUpgrades = data.SpawnerUpgrades;
+            TurretUpgrades = data.TurretUpgrades;
             MoneyWallet = data.MoneyWallet;
             MoneyBank = data.MoneyBank;
         }
@@ -32,10 +36,23 @@ namespace _Project.Scripts.Infrastructure.Data
             else
                 SpawnerUpgrades.Add(upgradeIndex);
         }
+        
+        public void UpdateTurretUpgrade(int index, int upgradeIndex)
+        {
+            if (index < TurretUpgrades.Count)
+                TurretUpgrades[index] = upgradeIndex;
+            else
+                TurretUpgrades.Add(upgradeIndex);
+        }
 
         public int GetSpawnerUpgradeLevelOrDefault(int spawnerIndex) =>
             (spawnerIndex < SpawnerUpgrades.Count) 
                 ? SpawnerUpgrades[spawnerIndex] 
+                : 0;
+        
+        public int GetTurretUpgradeLevelOrDefault(int turretIndex) =>
+            (turretIndex < TurretUpgrades.Count) 
+                ? TurretUpgrades[turretIndex] 
                 : 0;
     }
 }

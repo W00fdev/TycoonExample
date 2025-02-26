@@ -13,7 +13,7 @@ namespace _Project.Scripts.Infrastructure.Data.Turrets
         public class TurretStat
         {
             public int Damage;
-            public float RPM;
+            public int RPM;
             public long BuyPrice;
         }
     }

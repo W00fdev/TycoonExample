@@ -1,21 +1,21 @@
 ﻿using System;
-using _Project.Scripts.Components;
 using _Project.Scripts.Components.Buttons;
+using _Project.Scripts.Components.Spawners;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.UI.Presenters;
-using _Project.Scripts.UI.Views;
+using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.Utils;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.LogicModule
+namespace _Project.Scripts.LogicModule.Spawners
 {
     public class SpawnerUpgrader : MonoBehaviour
     {
         [SerializeField] private SpawnerData _spawnerData;
         [SerializeField] private SpawnerBuyerInfoView _spawnerButton;
-        [SerializeField] private SpawnerUpgraderInfoView _upgradeButton;
+        [SerializeField] private UpgraderInfoView _upgradeButton;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private BlasterSpawner _spawner;
         [SerializeField] private int _spawnerIndex;

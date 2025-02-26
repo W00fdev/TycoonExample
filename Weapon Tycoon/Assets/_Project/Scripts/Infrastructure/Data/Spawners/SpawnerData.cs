@@ -16,7 +16,7 @@ namespace _Project.Scripts.Infrastructure.Data.Spawners
         public long ProductPrice => _config.Upgrades[_index].ProductPrice;
         public long BuyPrice => _config.Upgrades[_index].BuyPrice;
 
-        public long UpgradePrice => _index + 1 < _config.Upgrades.Length
+        public long UpgradePrice => _index + 1 < UpgradesCount
             ? _config.Upgrades[_index + 1].BuyPrice
             : 0;
 
@@ -43,6 +43,6 @@ namespace _Project.Scripts.Infrastructure.Data.Spawners
         }
 
         public bool IsUpgradeExist()
-            => _index + 1 < _config.Upgrades.Length;
+            => _index + 1 < UpgradesCount;
     }
 }

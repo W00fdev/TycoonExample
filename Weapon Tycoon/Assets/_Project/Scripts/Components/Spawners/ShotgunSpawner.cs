@@ -1,22 +1,21 @@
-﻿using System;
-using _Project.Scripts.Infrastructure.Data;
+﻿using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.Factories.Accessors;
-using _Project.Scripts.UI.Models;
 using Zenject;
 
-namespace _Project.Scripts.Components
+namespace _Project.Scripts.Components.Spawners
 {
-    public class PistolSpawner : BlasterSpawner
+    public class ShotgunSpawner : BlasterSpawner
     {
-        private const int SpawnerIndex = 0;
+        private const int SpawnerIndex = 1;
+        
         [Inject] private PersistentProgress _progress;
-
-        [Inject] private PistolFactoryAccessor<PistolFactory> _pistolFactoryAccessor;
+        
+        [Inject] private ShotgunFactoryAccessor<ShotgunFactory> _shotgunFactoryAccessor;
         [Inject] private BoxFactoryAccessor<BoxFactory> _boxFactoryAccessor;
         [Inject] private MoneyTextFactoryAccessor _moneyTextFactoryAccessor;
-        
+
         public override void Initialize(SpawnerData spawnerData)
         {
             base.Initialize(spawnerData);
@@ -30,7 +29,7 @@ namespace _Project.Scripts.Components
 
         public override void Resolve()
         {
-            _blasterFactory = _pistolFactoryAccessor.PistolFactory;
+            _blasterFactory = _shotgunFactoryAccessor.ShotgunFactory;
             _boxFactory = _boxFactoryAccessor.BoxFactory;
             _moneyTextFactory = _moneyTextFactoryAccessor.MoneyTextFactory;
             

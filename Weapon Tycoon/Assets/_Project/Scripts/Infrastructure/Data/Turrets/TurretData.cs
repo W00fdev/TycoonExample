@@ -10,7 +10,7 @@ namespace _Project.Scripts.Infrastructure.Data.Turrets
         [SerializeField] private TurretUpgradeConfig _config;
         private int _index;
 
-        public float RPM => _config.Upgrades[_index].RPM;
+        public int RPM => _config.Upgrades[_index].RPM;
         public long Damage => _config.Upgrades[_index].Damage;
         public long BuyPrice => _config.Upgrades[_index].BuyPrice;
 
@@ -32,12 +32,15 @@ namespace _Project.Scripts.Infrastructure.Data.Turrets
 
         public TurretUpgradeConfig.TurretStat Upgrade()
         {
-            var nextUpdateData = _index + 1 < _config.Upgrades.Length
+            var nextUpdateData = IsUpgradeExist()
                 ? _config.Upgrades[++_index]
                 : null;
 
             TurretDataChanged?.Invoke();
             return nextUpdateData;
         }
+
+        public bool IsUpgradeExist()
+            => _index + 1 < UpgradesCount;
     }
 }

@@ -2,7 +2,7 @@ using _Project.Scripts.LocalizationSystem;
 using TMPro;
 using UnityEngine;
 
-namespace _Project.Scripts.UI.Views
+namespace _Project.Scripts.UI.Views.Spawners
 {
     public class SpawnerInfoView : MonoBehaviour
     {
