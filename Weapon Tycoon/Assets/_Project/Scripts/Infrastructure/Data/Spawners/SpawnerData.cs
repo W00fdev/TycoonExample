@@ -34,12 +34,15 @@ namespace _Project.Scripts.Infrastructure.Data.Spawners
 
         public SpawnerUpgradeConfig.UpgradeData Upgrade()
         {
-            var nextUpdateData = _index + 1 < _config.Upgrades.Length
+            var nextUpdateData = IsUpgradeExist()
                 ? _config.Upgrades[++_index]
                 : null;
 
             SpawnerDataChanged?.Invoke();
             return nextUpdateData;
         }
+
+        public bool IsUpgradeExist()
+            => _index + 1 < _config.Upgrades.Length;
     }
 }

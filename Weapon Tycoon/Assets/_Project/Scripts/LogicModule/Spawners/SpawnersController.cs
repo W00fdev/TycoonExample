@@ -1,49 +1,43 @@
-using _Project.Scripts.Components;
+using _Project.Scripts.Infrastructure.Data;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.LogicModule.Spawners
 {
     public class SpawnersController : MonoBehaviour
     {
-        [SerializeField] private BlasterSpawner[] _spawners;
-
-        /// copy-paste upgradeController'a
-        /*[SerializeField] private List<BlasterSpawner> _spawners;
-        
-        private BoxFactory _longBoxFactory;
-        private BoxFactory _boxFactory;
-        private MoneyTextFactory _moneyTextFactory;
-
-        private BlasterFactoryResolver _resolver;
+        [SerializeField] private SpawnerUpgrader[] _upgraders;
         private int _spawnerLevel;
 
         [Inject] private PersistentProgress _progress;
         
-        
-        public void Initialize(Dictionary<Type, BlasterFactory> factories,
-            BoxFactory boxFactory, MoneyTextFactory moneyTextFactory, BoxFactory longBoxFactory)
+        public void Initialize()
         {
-            _longBoxFactory = 
-                _boxFactory = boxFactory;
-            _longBoxFactory = longBoxFactory;
-            _moneyTextFactory = moneyTextFactory;
+            var data = _progress.Data;
+            if (data.Spawners < _upgraders.Length)
+                _upgraders[data.Spawners].ShowBuyButton();
             
-            _resolver = new BlasterFactoryResolver(factories);
+            for (int i = 0; i < _upgraders.Length; i++)
+                _upgraders[i].Initialize(NextSpawnerButtonOpen, data.GetSpawnerUpgradeLevelOrDefault(i));
         }
 
-        public void Open(SpawnerData spawnerData, int index)
+        public void NextSpawnerButtonOpen()
         {
-            if (_spawnerLevel >= _spawners.Count)
+            if (_spawnerLevel >= _upgraders.Length)
                 return;
             
-            var spawner = _spawners[_spawnerLevel++];
-            _progress.Data.Spawners = _spawnerLevel;
+            var upgrader = _upgraders[_spawnerLevel++];
+            upgrader.ShowBuyButton();
             
-            spawner.gameObject.SetActive(true);
-            // Косяк, не засунули в резолвер
-            var boxFactory = (spawner is RifleSpawner) ? _longBoxFactory : _boxFactory;
-            spawner.Initialize(boxFactory, _moneyTextFactory, spawnerData);
-            _resolver.Resolve(spawner);
-        }*/
+            _progress.Data.Spawners = _spawnerLevel;
+        }
+        
+        // Context invocation (BuySpawner Signal)
+        public void BuySpawner(int spawnerIndex)
+            => _upgraders[spawnerIndex].BuySpawner();
+        
+        // Context invocation (BuyUpgradeSpawner Signal)
+        public void UpgradeSpawner(int spawnerIndex) 
+            => _upgraders[spawnerIndex].BuyUpgrade();
     }
 }

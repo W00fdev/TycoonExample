@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.Factories.Accessors;
 using _Project.Scripts.LogicModule;
+using _Project.Scripts.LogicModule.Spawners;
 using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Bootstrappers
@@ -13,8 +15,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
     public class BattleBootstrap : MonoBehaviour
     {
         [Header("Controllers")]
-        [SerializeField] private SpawnerUpgrader _spawnerUpgrader;
-        [SerializeField] private UpgradeController _upgradeController;
+        [SerializeField] private SpawnersController _spawnersController;
 
         [Header("Debug only")]
         [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
@@ -47,8 +48,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             _longBoxFactoryAccessor.BoxFactory = longBoxFactory as LongBoxFactory;
             _moneyTextFactoryAccessor.MoneyTextFactory = moneyTextFactory;
             
-            _upgradeController.Initialize();
-            _spawnerUpgrader.Initialize();
+            _spawnersController.Initialize();
         }
     }
 }

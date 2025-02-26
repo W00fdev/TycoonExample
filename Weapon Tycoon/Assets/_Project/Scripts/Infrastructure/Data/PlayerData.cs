@@ -32,5 +32,10 @@ namespace _Project.Scripts.Infrastructure.Data
             else
                 SpawnerUpgrades.Add(upgradeIndex);
         }
+
+        public int GetSpawnerUpgradeLevelOrDefault(int spawnerIndex) =>
+            (spawnerIndex < SpawnerUpgrades.Count) 
+                ? SpawnerUpgrades[spawnerIndex] 
+                : 0;
     }
 }
