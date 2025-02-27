@@ -49,7 +49,7 @@ namespace _Project.Scripts.Components.Turrets
             _infoView.Initialize(_turretNameKey);
             _infoView.UpdateInfo(_data.RPM.ToString(), _data.Damage.ToString());
             
-            int rps = _data.RPM / 60;
+            float rps = _data.RPM / 60f;
             _gunAnimDuration = 1f / (rps * 2f);
             _data.TurretDataChanged += UpgradeTurret;
         }
@@ -76,7 +76,7 @@ namespace _Project.Scripts.Components.Turrets
             _upgradeVisualLevel = Mathf.Min(_upgradeVisualLevel + 1, _upgradesVisual.Length);
             _upgradeImpact.Play();
 
-            int rps = _data.RPM / 60;
+            float rps = _data.RPM / 60f;
             _gunAnimDuration = 1f / (rps * 2f);
             UpdateVisuals();
         }
