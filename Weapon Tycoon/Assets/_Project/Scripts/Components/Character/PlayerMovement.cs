@@ -23,7 +23,7 @@ namespace _Project.Scripts.Components.Character
         public int HashVelocityY=> Animator.StringToHash(VelocityY);
     }
     
-    public class PlayerMovement : MonoBehaviour, IStateMachine
+    public class PlayerMovement : MonoBehaviour, IStateMachineCharacter
     {
         [SerializeField] private AnimationParameters _parameters;
         [SerializeField] private MovementStats _stats;

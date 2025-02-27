@@ -6,7 +6,7 @@ namespace _Project.Scripts.Components.Character.States
     [Serializable]
     public class MovingState : IState
     {
-        protected readonly IStateMachine _stateMachine;
+        protected readonly IStateMachineCharacter StateMachineCharacter;
         protected readonly InputReader _inputReader;
         private readonly Camera _mainCamera;
         
@@ -14,11 +14,11 @@ namespace _Project.Scripts.Components.Character.States
         protected readonly MovementStats _stats;
         protected Vector3 _velocityY;
 
-        public MovingState(IStateMachine stateMachine, Camera mainCamera,
+        public MovingState(IStateMachineCharacter stateMachineCharacter, Camera mainCamera,
             MovementStats stats, AnimationParameters parameters)
         {
-            _stateMachine = stateMachine;
-            _inputReader = _stateMachine.InputReader;
+            StateMachineCharacter = stateMachineCharacter;
+            _inputReader = StateMachineCharacter.InputReader;
             _mainCamera = mainCamera;
 
             _velocityY = Vector3.zero;
@@ -35,14 +35,14 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
             
-            if (_inputReader.Value == Vector3.zero && _stateMachine.Controller.velocity.magnitude < 0.001f)
+            if (_inputReader.Value == Vector3.zero && StateMachineCharacter.Controller.velocity.magnitude < 0.001f)
             {
-                _stateMachine.SwitchState<StandingState>();
+                StateMachineCharacter.SwitchState<StandingState>();
                 return;
             }
 
-            if (_inputReader.IsJumping && _stateMachine.IsGrounded)
-                _stateMachine.SwitchState<JumpingState>();
+            if (_inputReader.IsJumping && StateMachineCharacter.IsGrounded)
+                StateMachineCharacter.SwitchState<JumpingState>();
         }
 
         protected void HandleMovement()
@@ -59,7 +59,7 @@ namespace _Project.Scripts.Components.Character.States
             float angle = Mathf.Atan2(-forward.z - right.z, forward.x + right.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.Euler(0, angle, 0);
 
-            var controller = _stateMachine.Controller;
+            var controller = StateMachineCharacter.Controller;
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, rotation, 0.15f);
             controller.Move((right + forward) * _stats.Speed);
             
@@ -70,10 +70,10 @@ namespace _Project.Scripts.Components.Character.States
         {
             _velocityY += _stats.GravityForce * (_stats.GravityForce.magnitude * 0.5f * Time.deltaTime);
 
-            var controller = _stateMachine.Controller;
+            var controller = StateMachineCharacter.Controller;
             controller.Move(_velocityY * Time.deltaTime);
             
-            if (_stateMachine.IsGrounded)
+            if (StateMachineCharacter.IsGrounded)
             {
                 ResetAnimationVelocityY();
                 _velocityY = _stats.GravityForce;
@@ -81,9 +81,9 @@ namespace _Project.Scripts.Components.Character.States
         }
 
         private void SetAnimationVelocityXZ(float xzMagnitude) 
-            => _stateMachine.Animator.SetFloat(_parameters.HashVelocityXZ, xzMagnitude);
+            => StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityXZ, xzMagnitude);
         
-        private void ResetAnimationVelocityY() => _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
+        private void ResetAnimationVelocityY() => StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, 0f);
 
         public void Exit()
         {

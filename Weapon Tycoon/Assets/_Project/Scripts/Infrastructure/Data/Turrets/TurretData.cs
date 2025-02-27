@@ -11,7 +11,7 @@ namespace _Project.Scripts.Infrastructure.Data.Turrets
         private int _index;
 
         public int RPM => _config.Upgrades[_index].RPM;
-        public long Damage => _config.Upgrades[_index].Damage;
+        public int Damage => _config.Upgrades[_index].Damage;
         public long BuyPrice => _config.Upgrades[_index].BuyPrice;
 
         public long UpgradePrice => _index + 1 < _config.Upgrades.Length

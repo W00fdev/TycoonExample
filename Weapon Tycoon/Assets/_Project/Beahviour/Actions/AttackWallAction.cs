@@ -14,7 +14,6 @@ public partial class AttackWallAction : Action
 
     protected override Status OnStart()
     {
-        Attack.Value.Attack(Wall);
         return Status.Running;
     }
 

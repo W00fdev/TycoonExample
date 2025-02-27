@@ -6,33 +6,33 @@ namespace _Project.Scripts.Components.Character.States
     [Serializable]
     public class StandingState : IState
     {
-        private readonly IStateMachine _stateMachine;
+        private readonly IStateMachineCharacter _stateMachineCharacter;
         private readonly InputReader _inputReader;
         private readonly AnimationParameters _parameters;
         
-        public StandingState(IStateMachine stateMachine, AnimationParameters parameters)
+        public StandingState(IStateMachineCharacter stateMachineCharacter, AnimationParameters parameters)
         {
-            _stateMachine = stateMachine;
-            _inputReader = stateMachine.InputReader;
+            _stateMachineCharacter = stateMachineCharacter;
+            _inputReader = stateMachineCharacter.InputReader;
             _parameters = parameters;
         }
         
         public void Enter()
         {
-            _stateMachine.Animator.SetFloat(_parameters.HashVelocityXZ, 0f);
-            _stateMachine.Animator.SetFloat(_parameters.VelocityY, 0f);
+            _stateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityXZ, 0f);
+            _stateMachineCharacter.Animator.SetFloat(_parameters.VelocityY, 0f);
         }
 
         public void Update()
         {
-            if (_inputReader.Value != Vector3.zero || _stateMachine.Controller.velocity.magnitude > 0.01f)
+            if (_inputReader.Value != Vector3.zero || _stateMachineCharacter.Controller.velocity.magnitude > 0.01f)
             {
-                _stateMachine.SwitchState<MovingState>();
+                _stateMachineCharacter.SwitchState<MovingState>();
                 return;
             }
             
             if (_inputReader.IsJumping)
-                _stateMachine.SwitchState<JumpingState>();
+                _stateMachineCharacter.SwitchState<JumpingState>();
         }
 
         public void Exit()

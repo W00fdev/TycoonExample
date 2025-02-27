@@ -33,7 +33,7 @@ namespace _Project.Scripts.Components.Turrets
         protected int _upgradeVisualLevel;
         
         private TurretData _data;
-        private Enemy _target;
+        private Health _target;
         private Collider[] _colliders;
         private WaitForSeconds _awaiter;
         private float _gunAnimDuration;
@@ -95,7 +95,7 @@ namespace _Project.Scripts.Components.Turrets
             _turretHead.rotation = Quaternion.RotateTowards(_turretHead.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
 
-        private bool TryFindTarget(out Enemy enemy)
+        private bool TryFindTarget(out Health enemy)
         {
             Physics.OverlapSphereNonAlloc(transform.position, _sensorZoneRadius, _colliders, _enemyLayer.value);
 
@@ -104,16 +104,16 @@ namespace _Project.Scripts.Components.Turrets
             for (int i = 0; i < _colliders.Length; i++)
             {
                 if (!_colliders[i]) continue;
-                if (_colliders[i].TryGetComponent(out Enemy spottedEnemy))
+                if (_colliders[i].TryGetComponent(out Health aliveEnemy))
                 {
-                    if (spottedEnemy.IsAlive == false)
+                    if (aliveEnemy.IsAlive == false)
                         continue;
                     
-                    var distance = Vector3.Distance(transform.position, spottedEnemy.transform.position);
+                    var distance = Vector3.Distance(transform.position, aliveEnemy.transform.position);
                     if (distance >= nearestDistance) continue;
                     
                     nearestDistance = distance;
-                    enemy = spottedEnemy;
+                    enemy = aliveEnemy;
                 }
             }
 
@@ -142,7 +142,7 @@ namespace _Project.Scripts.Components.Turrets
             await Tween.Position(bullet.transform, position, 0.15f).ToYieldInstruction()
                 .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
 
-            target?.TakeDamage();
+            target?.TakeDamage(_data.Damage);
             GameObject.Instantiate(_explosionPrefab, position, Quaternion.identity);
             GameObject.Destroy(bullet);
         }

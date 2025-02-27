@@ -1,13 +1,9 @@
 using UnityEngine;
 
-namespace _Project.Scripts.Components.Character
+namespace _Project.Scripts.Components.Character.States
 {
-    /// FIXME: interface segregation apply
-    public interface IStateMachine
+    public interface IStateMachineCharacter : IStateSwitcher
     {
-        public void SwitchState<T>()
-            where T : IState;
-        
         public Animator Animator { get; }
         public CharacterController Controller { get; }
         public InputReader InputReader { get; }
