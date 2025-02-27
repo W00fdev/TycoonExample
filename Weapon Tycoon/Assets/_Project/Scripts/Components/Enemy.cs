@@ -42,5 +42,10 @@ namespace _Project.Scripts.Components
             yield return _secondsToDie;
             GameObject.Destroy(gameObject);
         }
+
+        public void Attack(BlackboardVariable<GameObject> wall)
+        {
+            Debug.Log("Im attacking the wall: " + wall);
+        }
     }
 }
