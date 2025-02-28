@@ -14,20 +14,26 @@ namespace _Project.Scripts.LogicModule.Spawners
         public void Initialize()
         {
             var data = _progress.Data;
-            int spawnersCount = data.SpawnerUpgrades.Count;
-            if (spawnersCount < _upgraders.Length)
-                _upgraders[spawnersCount].ShowBuyButton();
+            int openSpawnersCount = data.SpawnerUpgrades.Count;
+            if (openSpawnersCount < _upgraders.Length)
+                _upgraders[openSpawnersCount].ShowBuyButton();
             
-            for (int i = 0; i < spawnersCount; i++)
+            for (int i = 0; i < _upgraders.Length; i++)
+            {
                 _upgraders[i].Initialize(NextSpawnerButtonOpen, data.GetSpawnerUpgradeLevelOrDefault(i));
+                if (i < openSpawnersCount)
+                    _upgraders[i].OpenOrLoad(data.GetTurretUpgradeLevelOrDefault(i));
+            }
+            
+            _spawnerLevel = openSpawnersCount;
         }
 
         public void NextSpawnerButtonOpen()
         {
-            if (_spawnerLevel >= _upgraders.Length)
+            if (_spawnerLevel + 1 >= _upgraders.Length)
                 return;
             
-            var upgrader = _upgraders[_spawnerLevel++];
+            var upgrader = _upgraders[++_spawnerLevel];
             upgrader.ShowBuyButton();
         }
         

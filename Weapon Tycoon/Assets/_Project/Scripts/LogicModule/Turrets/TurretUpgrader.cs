@@ -29,7 +29,10 @@ namespace _Project.Scripts.LogicModule.Turrets
         {
             _turretBought = turretBought;
             _turretData.Initialize(upgradeIndex);
-
+        }
+        
+        public void OpenOrLoad(int upgradeIndex)
+        {
             if (upgradeIndex > 0)
                 LoadTurret();
             else

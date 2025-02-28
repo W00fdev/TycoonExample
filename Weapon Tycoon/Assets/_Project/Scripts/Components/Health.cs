@@ -11,7 +11,7 @@ namespace _Project.Scripts.Components
         public event Action DamagedEvent;
         public event Action DiedEvent;
         
-        public void Initialize(int hp)
+        public virtual void Initialize(int hp)
         {
             _health = hp;
         }

@@ -14,23 +14,27 @@ namespace _Project.Scripts.LogicModule.Turrets
     
         public void Initialize()
         {
-            // 1 -> 
-            
             var data = _progress.Data;
-            int turretsCount = data.TurretUpgrades.Count; 
-            if (turretsCount < _upgraders.Length)
-                _upgraders[turretsCount].ShowBuyButton();
-        
-            for (int i = 0; i < turretsCount; i++)
+            int openTurretsCount = data.TurretUpgrades.Count;
+            if (openTurretsCount < _upgraders.Length)
+                _upgraders[openTurretsCount].ShowBuyButton();
+
+            for (int i = 0; i < _upgraders.Length; i++)
+            {
                 _upgraders[i].Initialize(NextTurretButtonOpen, data.GetTurretUpgradeLevelOrDefault(i));
+                if (i < openTurretsCount)
+                    _upgraders[i].OpenOrLoad(data.GetTurretUpgradeLevelOrDefault(i));
+            }
+
+            _turretLevel = openTurretsCount;
         }
 
         public void NextTurretButtonOpen()
         {
-            if (_turretLevel >= _upgraders.Length)
+            if (_turretLevel + 1 >= _upgraders.Length)
                 return;
         
-            var upgrader = _upgraders[_turretLevel++];
+            var upgrader = _upgraders[++_turretLevel];
             upgrader.ShowBuyButton();
         }
     

@@ -1,13 +1,13 @@
-﻿using System;
-using _Project.Scripts.Components.Buttons;
-using _Project.Scripts.Components.Spawners;
+﻿using _Project.Scripts.Infrastructure.Data.Spawners;
 using _Project.Scripts.Infrastructure.Data;
-using _Project.Scripts.Infrastructure.Data.Spawners;
-using _Project.Scripts.UI.Presenters;
+using _Project.Scripts.Components.Spawners;
+using _Project.Scripts.Components.Buttons;
 using _Project.Scripts.UI.Views.Spawners;
+using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.Utils;
 using UnityEngine;
 using Zenject;
+using System;
 
 namespace _Project.Scripts.LogicModule.Spawners
 {
@@ -28,7 +28,10 @@ namespace _Project.Scripts.LogicModule.Spawners
         {
             _spawnerBought = spawnerBought;
             _spawnerData.Initialize(upgradeIndex);
-            
+        }
+
+        public void OpenOrLoad(int upgradeIndex)
+        {
             if (upgradeIndex > 0)
                 LoadSpawner();
             else
