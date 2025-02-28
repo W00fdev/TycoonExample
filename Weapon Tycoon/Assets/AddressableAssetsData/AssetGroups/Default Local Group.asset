@@ -15,6 +15,16 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 3e93967a0531bd246ac4aa1d8d10fa0a
   m_SerializeEntries:
+  - m_GUID: 2024c795522c4114ea3b45698bbb6950
+    m_Address: LaserExplosionYellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ebd1acbee79ab245812d53442af9420
+    m_Address: LaserYellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c2ecd546ffb0bb4cb70b54f378b26b9
     m_Address: MoneyTextView
     m_ReadOnly: 0

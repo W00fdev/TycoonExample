@@ -50,5 +50,19 @@ namespace _Project.Scripts.Infrastructure
                 .Task.AsUniTask();
             return result.GetComponent<PooledView>();
         }
+        
+        public async UniTask<PooledView> GetProjectileViewAsync(ProjectileType type)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
+                .Task.AsUniTask();
+            return result.GetComponent<PooledView>();
+        }
+        
+        public async UniTask<PooledView> GetExplosionViewAsync(ExplosionType type)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
+                .Task.AsUniTask();
+            return result.GetComponent<PooledView>();
+        }
     }
 }
