@@ -15,6 +15,7 @@ namespace _Project.Scripts.Infrastructure
             Container.Bind<PistolFactoryAccessor<PistolFactory>>().AsSingle();
             Container.Bind<ShotgunFactoryAccessor<ShotgunFactory>>().AsSingle();
             Container.Bind<RifleFactoryAccessor<RifleFactory>>().AsSingle();
+            Container.Bind<EnemyFactoryAccessor<EnemyFactory>>().AsSingle();
             Container.Bind<BoxFactoryAccessor<BoxFactory>>().AsSingle();
             Container.Bind<BoxFactoryAccessor<LongBoxFactory>>().AsSingle();
             Container.Bind<ProjectileFactoryAccessor<ProjectileFactory>>().AsSingle();

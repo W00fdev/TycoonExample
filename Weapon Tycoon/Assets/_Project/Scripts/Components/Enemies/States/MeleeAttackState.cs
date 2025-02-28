@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using _Project.Scripts.Components.Character;
+using _Project.Scripts.Infrastructure.Data.Enemies;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -14,26 +15,32 @@ namespace _Project.Scripts.Components.Enemies.States
         private readonly Collider[] _targetColliders;
 
         private int _damage;
+        private float _atkCooldown;
         private Health _target;
+        private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
 
-        private const float AttackCooldown = 2.5f;
         private const string AttackTrigger = "Attack";
         private static readonly int AttackTriggerHash = Animator.StringToHash(AttackTrigger);
 
-        public MeleeAttackState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, int damage)
+        public MeleeAttackState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             _targetMask = targetMask;
-            _damage = damage;
-            
             _targetColliders = new Collider[1];
+
+            UpdateConfig(enemyConfig);
         }
 
-        public void UpdateDamage(int damage)
-            => _damage = damage;
-        
+        public void UpdateConfig(EnemyConfig enemyConfig)
+        {
+            _enemyConfig = enemyConfig;
+            
+            _damage = _enemyConfig.Data.Damage;
+            _atkCooldown = _enemyConfig.Data.AtkCooldown;
+        }
+
         public void Enter()
         {
             if (Physics.OverlapSphereNonAlloc
@@ -77,7 +84,7 @@ namespace _Project.Scripts.Components.Enemies.States
                 _animator.SetTrigger(AttackTriggerHash);
                 _target.TakeDamage(_damage);
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(AttackCooldown), cancellationToken: _linkedCts.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(_atkCooldown), cancellationToken: _linkedCts.Token);
             }
             
             if (!_target)

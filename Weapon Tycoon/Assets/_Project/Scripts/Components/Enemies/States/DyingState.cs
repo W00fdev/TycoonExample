@@ -15,8 +15,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private CancellationTokenSource _linkedCts;
         
         private const float SecondsToDie = 2.6f;
-        private const string DeathTrigger = "Death";
-        private static readonly int DeathTriggerHash = Animator.StringToHash(DeathTrigger);
+        private static readonly int DeathTriggerHash = Animator.StringToHash("Death");
         
         public DyingState(Animator animator, Action diedEvent)
         {

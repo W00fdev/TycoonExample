@@ -1,5 +1,6 @@
 using System.Threading;
 using _Project.Scripts.Components.Character;
+using _Project.Scripts.Infrastructure.Data.Enemies;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,22 +14,30 @@ namespace _Project.Scripts.Components.Enemies.States
         private readonly Animator _animator;
 
         private Transform _target;
+        private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
 
-        private const string WalkBoolean = "Walk";
-        private static readonly int WalkBooleanHash = Animator.StringToHash(WalkBoolean); 
+        private static readonly int WalkBooleanHash = Animator.StringToHash("Walk");
+        private static readonly int SpeedMagnitude = Animator.StringToHash("SpeedMagnitude");
 
-        public WalkingState(IStateMachineEnemy stateMachineEnemy)
+        public WalkingState(IStateMachineEnemy stateMachineEnemy, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             
             _agent = _stateMachineEnemy.Agent;
             _animator = _stateMachineEnemy.Animator;
-
             _target = stateMachineEnemy.Target;
+
+            UpdateConfig(enemyConfig);
         }
 
+        public void UpdateConfig(EnemyConfig enemyConfig)
+        {
+            _enemyConfig = enemyConfig;
+            _agent.speed = _enemyConfig.Data.Speed;
+        }
+        
         public void Enter()
         {
             _target = _stateMachineEnemy.Target;
@@ -42,6 +51,8 @@ namespace _Project.Scripts.Components.Enemies.States
                     _agent.gameObject.GetCancellationTokenOnDestroy());
             
             OptimizedChecker().Forget();
+            
+            _animator.SetFloat(SpeedMagnitude, _enemyConfig.Data.Speed);
         }
 
         public void Update()
@@ -50,6 +61,7 @@ namespace _Project.Scripts.Components.Enemies.States
 
         public void Exit()
         {
+            _animator.SetFloat(SpeedMagnitude, 0f);
             _animator.SetBool(WalkBooleanHash, false);
             _linkedCts.Cancel();
             _target = null;

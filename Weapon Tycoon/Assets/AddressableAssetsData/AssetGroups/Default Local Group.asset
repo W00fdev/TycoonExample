@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d075b60bc06ba3c4d82b4b5c3464b584
+    m_Address: Enemy1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9ce3a56411c4e840a7d466317d4407c
     m_Address: LongBox
     m_ReadOnly: 0

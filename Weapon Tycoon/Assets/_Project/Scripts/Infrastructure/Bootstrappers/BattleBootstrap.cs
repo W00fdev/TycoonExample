@@ -23,6 +23,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
         [Inject] private PistolFactoryAccessor<PistolFactory> _pistolFactoryAccessor;
         [Inject] private ShotgunFactoryAccessor<ShotgunFactory> _shotgunFactoryAccessor;
         [Inject] private RifleFactoryAccessor<RifleFactory> _rifleFactoryAccessor;
+        [Inject] private EnemyFactoryAccessor<EnemyFactory> _enemyFactoryAccessor;
         [Inject] private ProjectileFactoryAccessor<ProjectileFactory> _projectileFactoryAccessor;
         [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
         [Inject] private BoxFactoryAccessor<BoxFactory> _boxFactoryAccessor;
@@ -35,6 +36,8 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             var shotgunFactoryTask = ShotgunFactory.CreateAsync(_storageService);
             var rifleFactoryTask = RifleFactory.CreateAsync(_storageService);
 
+            var enemyFactoryTask = EnemyFactory.CreateAsync(_storageService);
+            
             var projectileFactoryTask = ProjectileFactory.CreateAsync(_storageService);
             var explosionFactoryTask = ExplosionFactory.CreateAsync(_storageService);
             
@@ -43,16 +46,17 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             var moneyTextFactoryTask = MoneyTextFactory.CreateAsync(_storageService);
 
             var (pistolFactory, shotgunFactory, rifleFactory, projectileFactory, 
-                    explosionFactory, boxFactory, longBoxFactory, moneyTextFactory) 
+                    explosionFactory, enemyFactory, boxFactory, longBoxFactory, moneyTextFactory) 
                 =
                 await UniTask.WhenAll(pistolFactoryTask, shotgunFactoryTask, rifleFactoryTask, projectileFactoryTask,
-                    explosionFactoryTask, boxFactoryTask, longBoxFactoryTask, moneyTextFactoryTask);
+                    explosionFactoryTask, enemyFactoryTask, boxFactoryTask, longBoxFactoryTask, moneyTextFactoryTask);
 
             _pistolFactoryAccessor.PistolFactory = pistolFactory as PistolFactory;
             _shotgunFactoryAccessor.ShotgunFactory = shotgunFactory as ShotgunFactory;
             _rifleFactoryAccessor.RifleFactory = rifleFactory as RifleFactory;
             _projectileFactoryAccessor.Factory = projectileFactory;
             _explosionFactoryAccessor.Factory = explosionFactory;
+            _enemyFactoryAccessor.Factory = enemyFactory;
             _boxFactoryAccessor.BoxFactory = boxFactory;
             _longBoxFactoryAccessor.BoxFactory = longBoxFactory as LongBoxFactory;
             _moneyTextFactoryAccessor.MoneyTextFactory = moneyTextFactory;

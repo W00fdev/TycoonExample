@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Components;
 using _Project.Scripts.Data;
 using _Project.Scripts.LogicModule.Views;
 using Cysharp.Threading.Tasks;
@@ -63,6 +64,13 @@ namespace _Project.Scripts.Infrastructure
             var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
                 .Task.AsUniTask();
             return result.GetComponent<PooledView>();
+        }
+        
+        public async UniTask<Enemy> GetEnemyPrefabAsync(EnemyType type)
+        {
+            var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
+                .Task.AsUniTask();
+            return result.GetComponent<Enemy>();
         }
     }
 }
