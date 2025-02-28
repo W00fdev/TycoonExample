@@ -18,7 +18,7 @@ namespace _Project.Scripts.LogicModule.Waves
         // waveconfig : enemyconfig[] wavedata
         
         private EnemyFactory _enemyFactory;
-        private float _delay = 1f;
+        private float _delay = 3f;
         
         [Inject] private EnemyFactoryAccessor<EnemyFactory> _enemyFactoryAccessor;
 
