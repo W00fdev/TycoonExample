@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 23629103}
   - component: {fileID: 23629102}
   m_Layer: 11
-  m_Name: FireRate
+  m_Name: Regen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,10 +877,10 @@ RectTransform:
   - {fileID: 2052180551}
   m_Father: {fileID: 1546746470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0.875, y: -0.925}
+  m_SizeDelta: {x: 1.75, y: 1.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &23629102
 MonoBehaviour:
@@ -3995,13 +3995,15 @@ GameObject:
   - component: {fileID: 172093769}
   - component: {fileID: 172093770}
   - component: {fileID: 172093771}
+  - component: {fileID: 172093773}
+  - component: {fileID: 172093772}
   m_Layer: 14
   m_Name: NavigationObstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &172093769
 Transform:
   m_ObjectHideFlags: 0
@@ -4058,6 +4060,56 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 90, y: 5, z: 1.39}
   m_Center: {x: -14.01, y: 0, z: 2.95}
+--- !u!114 &172093772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172093768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a29da1372a240339c3cff638fe8c00b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 10
+  _regeneration: 0
+--- !u!114 &172093773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172093768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ab02115c9564055ac582ed704dd9632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 172093772}
+  _infoView: {fileID: 1787823119}
+  _upgradeImpact: {fileID: 807293388}
+  _endScaleYSquash: 1.2
+  _upgradesVisual:
+  - {fileID: 1482978300}
+  - {fileID: 1287115305}
+  - {fileID: 114058810}
+  - {fileID: 312413906}
+  - {fileID: 595900601}
+  - {fileID: 1897462303}
+  - {fileID: 1412457689}
+  - {fileID: 1388721580}
+  - {fileID: 1972726557}
+  - {fileID: 524111396}
+  - {fileID: 1938282034}
+  - {fileID: 1234986789}
+  - {fileID: 1093533842}
+  - {fileID: 1613537258}
+  - {fileID: 1801870254}
+  - {fileID: 346342505}
+  - {fileID: 2010172544}
+  - {fileID: 1235871673}
+  _wallNameKey: wall
 --- !u!1 &172621173
 GameObject:
   m_ObjectHideFlags: 0
@@ -11310,7 +11362,7 @@ GameObject:
   - component: {fileID: 458327899}
   - component: {fileID: 458327898}
   m_Layer: 11
-  m_Name: Damage Text (TMP)
+  m_Name: Health Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11677,7 +11729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Small Turret 1
+  m_text: Big Beautiful wall
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7540737f66e9beb4eacb709e751cfcb8, type: 2}
   m_sharedMaterial: {fileID: -6760811691314871358, guid: 7540737f66e9beb4eacb709e751cfcb8, type: 2}
@@ -12338,7 +12390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7045dbc281f24bdfa99e0d4a8d6debb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallTarget: {fileID: 1308518778}
+  _wallTarget: {fileID: 172093772}
   _flagTarget: {fileID: 3469287837533407254}
   _spawnPosition: {fileID: 272216970}
 --- !u!1001 &477605956
@@ -13308,7 +13360,7 @@ GameObject:
   - component: {fileID: 525880218}
   - component: {fileID: 525880217}
   m_Layer: 11
-  m_Name: Damage
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13329,10 +13381,10 @@ RectTransform:
   - {fileID: 1637046827}
   m_Father: {fileID: 1546746470}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2.625, y: -0.925}
+  m_SizeDelta: {x: 1.75, y: 1.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525880217
 MonoBehaviour:
@@ -19280,6 +19332,7 @@ MonoBehaviour:
   _spawnersController: {fileID: 1167107452}
   _turretsController: {fileID: 1719287250}
   _wavesController: {fileID: 476071174}
+  _wallUpgrader: {fileID: 815618271}
 --- !u!1001 &743719615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21214,11 +21267,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wallData:
-    _config: {fileID: 0}
+    _config: {fileID: 11400000, guid: bf339c5af193c354e9199fa4cf97bb92, type: 2}
   _wallBuyButton: {fileID: 755050151}
   _upgradeButton: {fileID: 859947989}
   _currencyPipe: {fileID: 1480677069}
-  _wall: {fileID: 1308518779}
+  _wall: {fileID: 172093773}
   _wallKeyName: wall
 --- !u!1001 &815858887
 PrefabInstance:
@@ -22266,7 +22319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &859947984
 Transform:
   m_ObjectHideFlags: 0
@@ -35896,8 +35949,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1308518775}
-  - component: {fileID: 1308518779}
-  - component: {fileID: 1308518778}
   m_Layer: 14
   m_Name: Wall
   m_TagString: Untagged
@@ -35923,56 +35974,6 @@ Transform:
   - {fileID: 859947984}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1308518778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308518774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a29da1372a240339c3cff638fe8c00b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 10
-  _regeneration: 0
---- !u!114 &1308518779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308518774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ab02115c9564055ac582ed704dd9632, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: {fileID: 1308518778}
-  _infoView: {fileID: 1787823119}
-  _upgradeImpact: {fileID: 807293388}
-  _endScaleYSquash: 1.2
-  _upgradesVisual:
-  - {fileID: 1482978300}
-  - {fileID: 1287115305}
-  - {fileID: 114058810}
-  - {fileID: 312413906}
-  - {fileID: 595900601}
-  - {fileID: 1897462303}
-  - {fileID: 1412457689}
-  - {fileID: 1388721580}
-  - {fileID: 1972726557}
-  - {fileID: 524111396}
-  - {fileID: 1938282034}
-  - {fileID: 1234986789}
-  - {fileID: 1093533842}
-  - {fileID: 1613537258}
-  - {fileID: 1801870254}
-  - {fileID: 346342505}
-  - {fileID: 2010172544}
-  - {fileID: 1235871673}
-  _wallNameKey: wall
 --- !u!1001 &1310599989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42230,7 +42231,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0, y: 2.5}
-  m_SizeDelta: {x: 2.5, y: 2.8}
+  m_SizeDelta: {x: 3, y: 2.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1529327759
 MonoBehaviour:
@@ -42927,7 +42928,7 @@ GameObject:
   - component: {fileID: 1546746472}
   - component: {fileID: 1546746471}
   m_Layer: 11
-  m_Name: SpeedUp
+  m_Name: Regen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45008,7 +45009,7 @@ GameObject:
   - component: {fileID: 1637046829}
   - component: {fileID: 1637046828}
   m_Layer: 11
-  m_Name: Damage
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45074,7 +45075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b738df281cc94be418bc776f3c887a6f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 55566510131dfd14089ed0c32dbb2720, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -50241,7 +50242,7 @@ GameObject:
   - component: {fileID: 1840118767}
   - component: {fileID: 1840118766}
   m_Layer: 11
-  m_Name: FIre Rate Text (TMP)
+  m_Name: Regen Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51527,7 +51528,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Small turret 1
+  m_text: Big Beautiful wall 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7540737f66e9beb4eacb709e751cfcb8, type: 2}
   m_sharedMaterial: {fileID: -6760811691314871358, guid: 7540737f66e9beb4eacb709e751cfcb8, type: 2}
@@ -51554,7 +51555,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.4
+  m_fontSize: 0.35
   m_fontSizeBase: 0.75
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -55156,7 +55157,7 @@ GameObject:
   - component: {fileID: 2052180553}
   - component: {fileID: 2052180552}
   m_Layer: 11
-  m_Name: Speedometer
+  m_Name: Regen Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55202,7 +55203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a9f3c5f82e5158e4a91402a57e5d520a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2073fdb67f42e45458edc65f87298cf9, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

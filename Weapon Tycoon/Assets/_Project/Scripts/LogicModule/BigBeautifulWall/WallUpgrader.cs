@@ -30,7 +30,7 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         {
             int upgradeIndex = _progress.Data.WallUpgrades;
             _wallBought = wallBought;
-            _wallData.Initialize(upgradeIndex);
+            _wallData.Initialize(upgradeIndex == -1 ? 0 : upgradeIndex);
             
             if (upgradeIndex == -1)
                 ShowBuyButton();
