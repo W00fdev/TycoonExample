@@ -1,9 +1,10 @@
+using _Project.Scripts.Components;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
 using PrimeTween;
 using UnityEngine;
 
-namespace _Project.Scripts.Components.BigBeautifulWall
+namespace _Project.Scripts.LogicModule.BigBeautifulWall
 {
     public class Wall : MonoBehaviour
     {

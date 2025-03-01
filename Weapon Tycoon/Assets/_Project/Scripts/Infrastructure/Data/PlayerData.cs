@@ -9,6 +9,7 @@ namespace _Project.Scripts.Infrastructure.Data
     {
         public List<int> SpawnerUpgrades = new();
         public List<int> TurretUpgrades = new();
+        public int WallUpgrades = -1;
 
         public long MoneyWallet;
         public long MoneyBank;
@@ -21,6 +22,7 @@ namespace _Project.Scripts.Infrastructure.Data
         {
             SpawnerUpgrades = data.SpawnerUpgrades;
             TurretUpgrades = data.TurretUpgrades;
+            WallUpgrades = data.WallUpgrades;
             MoneyWallet = data.MoneyWallet;
             MoneyBank = data.MoneyBank;
         }
@@ -41,6 +43,11 @@ namespace _Project.Scripts.Infrastructure.Data
                 TurretUpgrades.Add(upgradeIndex);
         }
 
+        public void UpdateWallUpgrade(int upgradeIndex)
+        {
+            WallUpgrades = upgradeIndex;
+        }
+        
         public int GetSpawnerUpgradeLevelOrDefault(int spawnerIndex) =>
             (spawnerIndex < SpawnerUpgrades.Count) 
                 ? SpawnerUpgrades[spawnerIndex] 
