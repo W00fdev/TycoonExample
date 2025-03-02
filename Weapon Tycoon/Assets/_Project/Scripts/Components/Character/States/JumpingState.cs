@@ -6,16 +6,16 @@ namespace _Project.Scripts.Components.Character.States
     [Serializable]
     public class JumpingState : MovingState
     {
-        public JumpingState(IStateMachine stateMachine, Camera mainCamera,
+        public JumpingState(IStateMachineCharacter stateMachineCharacter, Camera mainCamera,
             MovementStats stats, AnimationParameters parameters)
-            : base(stateMachine, mainCamera, stats, parameters)
+            : base(stateMachineCharacter, mainCamera, stats, parameters)
         {
         }
         
         public override void Enter()
         {
             _velocityY = _stats.JumpForce;
-            _stateMachine.Controller.Move(_velocityY * Time.deltaTime);
+            StateMachineCharacter.Controller.Move(_velocityY * Time.deltaTime);
         }
 
         public override void Update()
@@ -23,21 +23,21 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
 
-            if (!_stateMachine.IsGrounded) 
+            if (!StateMachineCharacter.IsGrounded) 
                 return;
             
             if (_inputReader.Value == Vector3.zero)
-                _stateMachine.SwitchState<StandingState>();
+                StateMachineCharacter.SwitchState<StandingState>();
             else
-                _stateMachine.SwitchState<MovingState>();
+                StateMachineCharacter.SwitchState<MovingState>();
         }
 
         protected override void HandleFalling()
         {
             base.HandleFalling();
             
-            if (_stateMachine.IsGrounded == false)
-                _stateMachine.Animator.SetFloat(_parameters.HashVelocityY, _velocityY.magnitude);
+            if (StateMachineCharacter.IsGrounded == false)
+                StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, _velocityY.magnitude);
         }
     }
 }

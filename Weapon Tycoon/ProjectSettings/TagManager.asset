@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Conveyor
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -18,9 +19,9 @@ TagManager:
   - Consumer
   - Machine
   - Button
-  - 
-  - 
-  - 
+  - Enemy
+  - Turret
+  - Target
   - 
   - 
   - 

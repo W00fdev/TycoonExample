@@ -4,6 +4,7 @@ using _Project.Scripts.UI.Presenters;
 using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.CurrencyModule.Presenters
 {
@@ -13,6 +14,8 @@ namespace _Project.Scripts.CurrencyModule.Presenters
 
         private CurrencyPipe _pipe;
         private WalletStorage _storage;
+
+        [Inject] private PersistentProgress _progress;
         
         public void Initialize(WalletStorage storage, CurrencyPipe pipe)
         {
@@ -41,7 +44,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
         private void UpdateView()
         {
             _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
-            PersistentProgress.Instance.MoneyWallet = _storage.Money;
+            _progress.Data.MoneyWallet = _storage.Money;
         }
     }
 }

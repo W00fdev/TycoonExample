@@ -1,7 +1,17 @@
 namespace _Project.Scripts.Infrastructure.Data
 {
-    public static class PersistentProgress
+    public class PersistentProgress
     {
-        public static PlayerData Instance;
+        public PlayerData Data;
+
+        public PersistentProgress()
+        {
+            Data = new PlayerData();
+        }
+        
+        public PersistentProgress(PlayerData data)
+        {
+            Data = data;
+        }
     }
 }

@@ -5,6 +5,7 @@ using _Project.Scripts.UI.Views;
 using _Project.Scripts.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.CurrencyModule.Presenters
 {
@@ -15,6 +16,8 @@ namespace _Project.Scripts.CurrencyModule.Presenters
 
         private CurrencyPipe _pipe;
         private BankStorage _storage;
+        
+        [Inject] private PersistentProgress _progress;
         
         public void Initialize(BankStorage storage, 
             CurrencyPipe pipe)
@@ -30,7 +33,7 @@ namespace _Project.Scripts.CurrencyModule.Presenters
             _view.UpdateCurrency(_storage.Money.ToHeaderMoneyFormat());
             _cashStacksView.UpdateCurrency(_storage.Money);
 
-            PersistentProgress.Instance.MoneyBank = _storage.Money;
+            _progress.Data.MoneyBank = _storage.Money;
         }
 
         public void BankIncome(long income)

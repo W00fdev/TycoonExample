@@ -1,5 +1,6 @@
 using System;
 using _Project.Scripts.Infrastructure.Data;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 

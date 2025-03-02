@@ -1,5 +1,7 @@
 ﻿
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /*
     This file has a commented version with details about how each line works. 
@@ -32,10 +34,17 @@ public class CameraController : MonoBehaviour
     public float offsetDistanceX = 0;
     public float distance;
 
+    [SerializeField] private RaycastHit[] _anyCollider;
+    [SerializeField] private LayerMask _allExceptPlayer;
+    [SerializeField] private float _smoothingStep;
     Transform player;
+
+    private float _offsetZ;
 
     void Start()
     {
+        _anyCollider = new RaycastHit[1];
+        
         player = GameObject.FindWithTag("Player").transform;
         //offsetDistanceX = transform.position.x - player.position.x;
 
@@ -49,29 +58,27 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        // Follow player - camera offset
-        // Set camera zoom when mouse wheel is scrolled
-        if( canZoom && Input.GetAxis("Mouse ScrollWheel") != 0 )
-            _camera.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * sensitivity * 2;
-        // You can use Mathf.Clamp to set limits on the field of view
-
-        // Checker for right click to move camera
-        if ( clickToMoveCamera )
-            if (Input.GetAxisRaw("Fire2") == 0)
-                return;
-            
-        // Calculate new position
         mouseX += Input.GetAxis("Mouse X") * sensitivity;
         mouseY += Input.GetAxis("Mouse Y") * sensitivity;
-        // Apply camera limts
         mouseY = Mathf.Clamp(mouseY, cameraLimit.x, cameraLimit.y);
 
-        transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
+        _camera.transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
 
-        var position = transform.rotation * new Vector3(offsetDistanceX, 0, -distance);
+        var position = _camera.transform.rotation * new Vector3(0f, 0, -distance);
         position += player.position;
         position += Vector3.up * offsetDistanceY;
         
-        transform.position = position;
+        Ray backSpaceCamera = new Ray(player.position, -_camera.transform.forward);
+        float distanceToCamera = Vector3.Distance(player.position, _camera.transform.position);
+        float distanceToWall = distanceToCamera;
+        
+        if (Physics.RaycastNonAlloc(backSpaceCamera, _anyCollider, distanceToCamera + 0.1f, _allExceptPlayer.value) > 0)
+            distanceToWall = Vector3.Distance(player.position, _anyCollider[0].point);
+
+        _offsetZ = Mathf.SmoothStep(_offsetZ, Mathf.Abs(distanceToWall - distanceToCamera), _smoothingStep * Time.deltaTime);
+        if (distanceToWall <= 10f)
+            position += _camera.transform.forward * _offsetZ;
+        
+        _camera.transform.position = position;
     }
 }
