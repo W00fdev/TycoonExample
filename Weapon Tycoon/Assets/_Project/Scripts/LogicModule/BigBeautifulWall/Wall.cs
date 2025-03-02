@@ -27,6 +27,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             _infoView.Initialize(_wallNameKey);
             _infoView.UpdateInfo(wallData.Regeneration.ToString(), wallData.Health.ToString());
             
+            _upgradeVisualLevel = _wallData.Index;
+            UpdateVisuals();
+
             _wallData.SpawnerDataChanged += UpgradeWall;
         }
         

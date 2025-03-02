@@ -8,7 +8,7 @@ namespace _Project.Scripts.Infrastructure.Factories
     {
         protected ExplosionFactory(PooledView prefab) : base(prefab) { }
         
-        public static async UniTask<ExplosionFactory> CreateAsync(StorageService storageService) 
+        public new static async UniTask<ExplosionFactory> CreateAsync(StorageService storageService) 
             => new ExplosionFactory(await storageService.GetExplosionViewAsync(ExplosionType.LaserExplosionYellow));
     }
 }

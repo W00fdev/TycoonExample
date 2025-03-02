@@ -63,7 +63,10 @@ namespace _Project.Scripts.Components.Spawners
             
             _infoView.Initialize(_spawnerNameKey);
             _infoView.UpdateInfo(spawnerData.SpawnerSpeed.ToSpeedFormat(), spawnerData.ProductPrice.ToString());
-            
+
+            _upgradeVisualLevel = _spawnerData.Index;
+            UpdateVisuals();
+    
             _spawnerData.SpawnerDataChanged += UpgradeSpawner;
         }
         
