@@ -47,9 +47,9 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
         // FIX ME: maybe convert to coroutine?
         private async UniTaskVoid ShowDamageAnimation()
         {
-            var vignetteTask = Tween.Alpha(_vignette, 0.65f, 0.1f, Ease.Linear).ToUniTask();
-            var fillTask = Tween.Alpha(_redFill, 0.25f, 0.1f, Ease.Linear).ToUniTask();
-            var shakeTask = Tween.ShakeLocalPosition(_mainCamera, Vector3.one * 0.35f, 0.1f).ToUniTask();
+            var vignetteTask = Tween.Alpha(_vignette, 0.65f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();
+            var fillTask = Tween.Alpha(_redFill, 0.25f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();
+            var shakeTask = Tween.ShakeLocalPosition(_mainCamera, Vector3.one * 0.35f, 0.1f).ToYieldInstruction().ToUniTask();
 
             _stopCameraMovement.Invoke(new Empty());
 

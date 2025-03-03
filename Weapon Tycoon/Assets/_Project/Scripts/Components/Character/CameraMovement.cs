@@ -13,7 +13,7 @@ namespace _Project.Scripts.Components.Character
         float mouseX;
         float mouseY;
         public float offsetDistanceY;
-        public float offsetDistanceX = 0;
+        public float offsetDistanceX = 3;
         public float distance;
 
         [SerializeField] private LayerMask _allExceptPlayer;
@@ -55,7 +55,7 @@ namespace _Project.Scripts.Components.Character
 
             _camera.transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
 
-            var position = _camera.transform.rotation * new Vector3(0f, 0, -distance);
+            var position = _camera.transform.rotation * new Vector3(offsetDistanceX, 0, -distance);
             position += player.position;
             position += Vector3.up * offsetDistanceY;
             
