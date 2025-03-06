@@ -56,14 +56,21 @@ namespace _Project.Scripts.Components.Character.States
             forward = forward.normalized * (_inputReader.Value.z * Time.deltaTime);
             right = right.normalized * (_inputReader.Value.x * Time.deltaTime);
             
-            float angle = Mathf.Atan2(-forward.z - right.z, forward.x + right.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(0, angle, 0);
-
+            //float angle = Mathf.Atan2(-forward.z - right.z, forward.x + right.x) * Mathf.Rad2Deg;
+            //var forwardOnPlane = Vector3.Project(_mainCamera.transform.forward, Vector3.forward);
+            Quaternion look = Quaternion.LookRotation(-_mainCamera.transform.right, Vector3.up);
+            //Quaternion rotation = Quaternion.Euler(0, forwardOnPlane.y, 0);
+            Vector3 euler = look.eulerAngles;
+            euler.x = 0f;
+            euler.z = 0f;
+            look = Quaternion.Euler(euler);
+            
             var controller = StateMachineCharacter.Controller;
-            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, rotation, 0.15f);
+            Debug.DrawLine(controller.transform.position, controller.transform.position + _mainCamera.transform.forward, Color.red);
+            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, look, 0.15f);
             controller.Move((right + forward) * _stats.Speed);
             
-            SetAnimationVelocityXZ((right + forward).magnitude);
+            SetAnimationVelocityXZ(_inputReader.Value.x, _inputReader.Value.z);
         }
         
         protected virtual void HandleFalling()
@@ -80,9 +87,15 @@ namespace _Project.Scripts.Components.Character.States
             }
         }
 
-        private void SetAnimationVelocityXZ(float xzMagnitude) 
-            => StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityXZ, xzMagnitude);
-        
+        private void SetAnimationVelocityXZ(float xMagnitude, float zMagnitude)
+        {
+            StateMachineCharacter.Animator.SetFloat(_parameters.VelocityX, xMagnitude);
+            StateMachineCharacter.Animator.SetFloat(_parameters.VelocityZ, zMagnitude);
+            
+            // sqrt(x^2 + y^2) ~= (x+y) * sqrt(2)
+            StateMachineCharacter.Animator.SetFloat(_parameters.MagnitudeXZ, (Math.Abs(xMagnitude) + Math.Abs(zMagnitude)) * 0.7f);
+        }
+
         private void ResetAnimationVelocityY() => StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, 0f);
 
         public void Exit()

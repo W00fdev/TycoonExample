@@ -3,12 +3,14 @@ using System.Threading;
 using _Project.Scripts.Components.Character;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
     public class DyingState : IState
     {
         private readonly Animator _animator;
+        private readonly NavMeshAgent _agent;
         private readonly Action _diedEvent;
 
         private CancellationTokenSource _cts;
@@ -17,15 +19,18 @@ namespace _Project.Scripts.Components.Enemies.States
         private const float SecondsToDie = 2.6f;
         private static readonly int DeathTriggerHash = Animator.StringToHash("Death");
         
-        public DyingState(Animator animator, Action diedEvent)
+        public DyingState(IStateMachineEnemy stateMachine, Action diedEvent)
         {
-            _animator = animator;
+            _animator = stateMachine.Animator;
+            _agent = stateMachine.Agent;
+            
             _diedEvent = diedEvent;
         }
         
         public void Enter()
         {
             _animator.SetTrigger(DeathTriggerHash);
+            _agent.isStopped = true;
             
             _cts = new CancellationTokenSource();
 

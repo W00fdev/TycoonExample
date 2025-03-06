@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using _Project.Scripts.Components.Character.States;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components.Character
 {
@@ -16,10 +17,14 @@ namespace _Project.Scripts.Components.Character
     [Serializable]
     public struct AnimationParameters
     {
-        public string VelocityXZ;
         public string VelocityY;
+        public string VelocityX;
+        public string VelocityZ;
+        public string MagnitudeXZ;
 
-        public int HashVelocityXZ => Animator.StringToHash(VelocityXZ);
+        public int HashMagnitudeXZ => Animator.StringToHash(MagnitudeXZ);
+        public int HashVelocityX => Animator.StringToHash(VelocityX);
+        public int HashVelocityZ => Animator.StringToHash(VelocityZ);
         public int HashVelocityY=> Animator.StringToHash(VelocityY);
     }
     
@@ -48,7 +53,7 @@ namespace _Project.Scripts.Components.Character
             _controller = GetComponent<CharacterController>();
             
             _inputReader = new InputReader();
-            _currentState = new StandingState(this, _parameters);
+            _currentState = new StandingState(this, _parameters, _mainCamera);
             _movementStates = new Dictionary<Type, IState>()
             {
                 { typeof(StandingState), _currentState },

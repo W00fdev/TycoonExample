@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
 using Zenject;
 
@@ -24,6 +25,14 @@ namespace _Project.Scripts.Components.Character
     
     public class WeaponHolder : MonoBehaviour
     {
+        [Header("Impact animations")]
+        [SerializeField] private Transform _ikTarget;
+        [SerializeField] private Transform _armConstraintTarget;
+        [SerializeField] private Transform _armDefaultPivot;
+        [SerializeField] private MultiAimConstraint _headConstraint;
+        [SerializeField] private TwoBoneIKConstraint _armConstraint;
+        [SerializeField] private Animator _animator;
+        
         [SerializeField] private Transform _gunPoint;
         [SerializeField] private WeaponConfig _weaponConfig;
         [SerializeField] private Camera _mainCamera;
@@ -33,7 +42,6 @@ namespace _Project.Scripts.Components.Character
 
         [SerializeField, ReadOnly] private BlasterType _type;
 
-        private RaycastHit[] _hits;
         private ProjectileFactory _projectileFactory;
         private ExplosionFactory _explosionFactory;
         private int _damage;
@@ -41,7 +49,8 @@ namespace _Project.Scripts.Components.Character
         private float _timer;
         private bool _initialized;
         private bool _allowedFire;
-        
+        private bool _constraintAnimating;
+
         [Inject] private ProjectileFactoryAccessor<ProjectileFactory> _projectileFactoryAccessor;
         [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
 
@@ -50,7 +59,6 @@ namespace _Project.Scripts.Components.Character
             while (_projectileFactoryAccessor.Factory == null || _explosionFactoryAccessor.Factory == null)
                 yield return null;
 
-            _hits = new RaycastHit[1];
             _projectileFactory = _projectileFactoryAccessor.Factory;
             _explosionFactory = _explosionFactoryAccessor.Factory;
             _initialized = true;
@@ -73,14 +81,44 @@ namespace _Project.Scripts.Components.Character
             if (!_initialized)
                 return;
 
-
-            if (_allowedFire && Input.GetMouseButtonDown(0))
+            Ray ray = _mainCamera.ViewportPointToRay(Vector3.one * 0.5f);
+            bool hasHit = false;
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _shootable.value))
             {
-                Ray ray = _mainCamera.ViewportPointToRay(Vector3.one * 0.5f);
-                if (Physics.RaycastNonAlloc(ray, _hits, 1000f, _shootable.value) <= 0) 
-                    return;
+                _ikTarget.position = hit.point;
+             
+                if (_constraintAnimating == false)
+                    _armConstraintTarget.position = hit.point;
                 
-                Fire().Forget();
+                _headConstraint.weight = Mathf.Lerp(_headConstraint.weight, 
+                    Vector3.Angle(transform.right, _ikTarget.position - transform.position) > 90 
+                        ? 0f 
+                        : 1f,
+                    0.1f);
+                
+                hasHit = true;
+            }
+
+            var hasInput = Input.GetMouseButton(0);
+            _armConstraint.weight = Mathf.Lerp(_armConstraint.weight, hasInput 
+                ? 1f 
+                : 0f, 0.1f);
+
+            if (_allowedFire && hasInput && hasHit)
+            {
+                Fire(hit).Forget();
+                _allowedFire = false;
+                _timer -= _cooldown;
+
+                _constraintAnimating = true;
+                _armConstraintTarget.position = _armDefaultPivot.position;
+
+                Sequence.Create()
+                    .Chain(Tween.Position(_armConstraintTarget,
+                        _armDefaultPivot.position - _armDefaultPivot.up * 0.1f, 0.1f))
+                    .Chain(Tween.Position(_armConstraintTarget, _armDefaultPivot.position, 0.1f))
+                    .OnComplete(() => _constraintAnimating = false);
+
             }
             else
             {
@@ -94,31 +132,24 @@ namespace _Project.Scripts.Components.Character
 
         }
 
-        private async UniTaskVoid Fire()
+        private async UniTaskVoid Fire(RaycastHit hitInfo)
         {
             var bullet = _projectileFactory.Next();
             bullet.transform.position = _gunPoint.position;
                 
             // add distance-time scaling 
 
-            var hit = _hits[0];
-            await Tween.Position(bullet.transform, hit.point, 0.15f).ToYieldInstruction()
-                .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
-
-            if (hit.collider.CompareTag("Enemy"))
-            {
-                if (TryGetComponent(out Health health))
-                {
-                    health.TakeDamage(_damage);
-                }
-            }
+            Health target = null;
+            if (hitInfo.collider.CompareTag("Enemy"))
+                hitInfo.collider.TryGetComponent(out target);
             
-            MakeExplosion(_hits[0].point);
+            await Tween.Position(bullet.transform, hitInfo.point, 0.15f).ToYieldInstruction()
+                .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+            
+            MakeExplosion(hitInfo.point);
 
+            target?.TakeDamage(_damage);
             bullet.ReturnToPool();
-            //target?.TakeDamage(_data.Damage);
-
-            _allowedFire = false;
         }
 
         private void MakeExplosion(Vector3 position)

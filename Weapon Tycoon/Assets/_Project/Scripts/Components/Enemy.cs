@@ -50,6 +50,8 @@ namespace _Project.Scripts.Components
 
         private void OnEnable()
         {
+            _health.Initialize(_config.Data.Health);
+            
             _health.DamagedEvent += AnimateDamage;
             _health.DiedEvent += EnterDeathState;
         }
@@ -82,7 +84,7 @@ namespace _Project.Scripts.Components
             {
                 {typeof(WalkingState), new WalkingState(this, _config) },
                 {typeof(MeleeAttackState), new MeleeAttackState(this, _targetLayer, _config) },
-                {typeof(DyingState), new DyingState(_animator, ReturnToPool) },
+                {typeof(DyingState), new DyingState(this, ReturnToPool) },
             };
         }
         
