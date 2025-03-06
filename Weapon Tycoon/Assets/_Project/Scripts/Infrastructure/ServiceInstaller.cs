@@ -20,6 +20,7 @@ namespace _Project.Scripts.Infrastructure
             Container.Bind<BoxFactoryAccessor<LongBoxFactory>>().AsSingle();
             Container.Bind<ProjectileFactoryAccessor<ProjectileFactory>>().AsSingle();
             Container.Bind<ProjectileFactoryAccessor<ExplosionFactory>>().AsSingle();
+            Container.Bind<ProjectileFactoryAccessor<DefaultProjectileFactory>>().AsSingle();
             Container.Bind<MoneyTextFactoryAccessor>().AsSingle();
         }
     }

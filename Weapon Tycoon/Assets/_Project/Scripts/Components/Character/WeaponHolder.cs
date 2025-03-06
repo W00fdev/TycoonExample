@@ -44,7 +44,7 @@ namespace _Project.Scripts.Components.Character
 
         [SerializeField, ReadOnly] private BlasterType _type;
 
-        private ProjectileFactory _projectileFactory;
+        private DefaultProjectileFactory _projectileFactory;
         private ExplosionFactory _explosionFactory;
         private int _damage;
         private float _cooldown;
@@ -56,7 +56,7 @@ namespace _Project.Scripts.Components.Character
 
         private readonly Vector3 _strength = new Vector3(0.05f, 0.1f, 0.5f);
         
-        [Inject] private ProjectileFactoryAccessor<ProjectileFactory> _projectileFactoryAccessor;
+        [Inject] private ProjectileFactoryAccessor<DefaultProjectileFactory> _projectileFactoryAccessor;
         [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
 
         private IEnumerator Start()

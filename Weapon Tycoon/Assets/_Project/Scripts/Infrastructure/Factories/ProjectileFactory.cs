@@ -16,7 +16,7 @@ namespace _Project.Scripts.Infrastructure.Factories
             => _prefab = prefab;
         
         public static async UniTask<ProjectileFactory> CreateAsync(StorageService storageService) 
-            => new ProjectileFactory(await storageService.GetProjectileViewAsync(ProjectileType.LaserYellow));
+            => new(await storageService.GetProjectileViewAsync(ProjectileType.LaserYellow));
 
         [Button]
         public override PooledView Next()
