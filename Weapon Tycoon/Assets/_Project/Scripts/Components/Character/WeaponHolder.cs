@@ -9,7 +9,9 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Components.Character
 {
@@ -46,11 +48,14 @@ namespace _Project.Scripts.Components.Character
         private ExplosionFactory _explosionFactory;
         private int _damage;
         private float _cooldown;
+        private float _spread;
         private float _timer;
         private bool _initialized;
         private bool _allowedFire;
         private bool _constraintAnimating;
 
+        private readonly Vector3 _strength = new Vector3(0.05f, 0.1f, 0.5f);
+        
         [Inject] private ProjectileFactoryAccessor<ProjectileFactory> _projectileFactoryAccessor;
         [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
 
@@ -74,21 +79,23 @@ namespace _Project.Scripts.Components.Character
         {
             _damage = _weaponConfig.Damage;
             _cooldown = 1f / _weaponConfig.RPS;
+            _spread = _weaponConfig.Spread;
         }
 
         private void Update()
         {
             if (!_initialized)
                 return;
-
+            
             Ray ray = _mainCamera.ViewportPointToRay(Vector3.one * 0.5f);
+            
             bool hasHit = false;
             if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _shootable.value))
             {
                 _ikTarget.position = hit.point;
              
                 if (_constraintAnimating == false)
-                    _armConstraintTarget.position = hit.point;
+                    _armConstraintTarget.position = Vector3.Slerp(_armConstraintTarget.position, hit.point, 0.15f);
                 
                 _headConstraint.weight = Mathf.Lerp(_headConstraint.weight, 
                     Vector3.Angle(transform.right, _ikTarget.position - transform.position) > 90 
@@ -106,19 +113,21 @@ namespace _Project.Scripts.Components.Character
 
             if (_allowedFire && hasInput && hasHit)
             {
-                Fire(hit).Forget();
+                Ray spreadedRay = _mainCamera.ViewportPointToRay(Vector3.one * 0.5f 
+                                                                 + new Vector3(Random.value * _spread, Random.value * _spread));
+
+                if (Physics.Raycast(spreadedRay, out RaycastHit spreadedHit, 1000f, _shootable.value) == false)
+                    return;
+                
+                Fire(spreadedHit).Forget();
                 _allowedFire = false;
                 _timer -= _cooldown;
 
                 _constraintAnimating = true;
                 _armConstraintTarget.position = _armDefaultPivot.position;
 
-                Sequence.Create()
-                    .Chain(Tween.Position(_armConstraintTarget,
-                        _armDefaultPivot.position - _armDefaultPivot.up * 0.1f, 0.1f))
-                    .Chain(Tween.Position(_armConstraintTarget, _armDefaultPivot.position, 0.1f))
+                Tween.PunchLocalPosition(_armConstraintTarget,_strength, 0.1f)
                     .OnComplete(() => _constraintAnimating = false);
-
             }
             else
             {

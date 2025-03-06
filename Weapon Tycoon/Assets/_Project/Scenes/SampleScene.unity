@@ -40934,7 +40934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2509804}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -47019,7 +47019,7 @@ Transform:
   m_GameObject: {fileID: 1685721089}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5735764, y: 0, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: 0.47, y: 1.2, z: -0.18}
+  m_LocalPosition: {x: -20.009201, y: 11.0623865, z: 15.981592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -52195,7 +52195,7 @@ MonoBehaviour:
     MaxAmmo: 10
     Damage: 1
     RPS: 2
-    Spread: 0
+    Spread: 0.03
   _mainCamera: {fileID: 1876250148}
   _shootable:
     serializedVersion: 2
