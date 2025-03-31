@@ -9,6 +9,8 @@ namespace _Project.Scripts.Components.Character
 
         public Vector3 Value => _input;
         public bool IsJumping => _isJumping;
+
+        public bool IsLeftMouseButton => Input.GetMouseButton(0);
         
         public void Update()
         {

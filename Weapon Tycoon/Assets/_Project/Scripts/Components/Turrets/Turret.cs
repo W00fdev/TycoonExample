@@ -71,15 +71,11 @@ namespace _Project.Scripts.Components.Turrets
             _data.TurretDataChanged += UpgradeTurret;
         }
         
-        public void Resolve()
-        {
-            FiringTimer().Forget();
-        }
+        public void Resolve() => FiringTimer().Forget();
 
-        private void OnDestroy()
-        {
-            _data.TurretDataChanged -= UpgradeTurret;
-        }
+        private void OnEnable() => _infoView.ShowAsync().Forget();
+
+        private void OnDestroy() => _data.TurretDataChanged -= UpgradeTurret;
 
         private void UpgradeTurret()
         {

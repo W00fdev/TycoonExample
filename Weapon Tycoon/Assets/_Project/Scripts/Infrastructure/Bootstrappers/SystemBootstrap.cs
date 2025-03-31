@@ -5,13 +5,14 @@ using _Project.Scripts.LocalizationSystem;
 using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Bootstrappers
 {
     public class SystemBootstrap : MonoBehaviour
     {
-        [SerializeField] private BattleBootstrap _battleBootstrap;
+        [FormerlySerializedAs("_battleBootstrap")] [SerializeField] private GameBootstrap _gameBootstrap;
         [SerializeField] private UIBootstrap _uiBootstrap;
         [SerializeField] private GameObject _loadingFader;
         
@@ -69,7 +70,7 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
         private void InitializeInstallers()
         {
             _uiBootstrap.Initialize();
-            _battleBootstrap.Initialize().Forget();
+            _gameBootstrap.Initialize().Forget();
         }
 
         async UniTaskVoid TimerProgressSave()

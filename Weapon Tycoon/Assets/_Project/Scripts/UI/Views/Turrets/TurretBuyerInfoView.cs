@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.UI.Views.Turrets
 {
-    public class TurretBuyerInfoView : MonoBehaviour
+    public class TurretBuyerInfoView : PopupView
     {
         [SerializeField] private LangText _name;
         [SerializeField] private TMP_Text _fireRateText;

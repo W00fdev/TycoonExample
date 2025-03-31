@@ -1704,6 +1704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14f2d2dda4d4fc3806f63710f5258d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _popupContainer: {fileID: 5266074050690394405}
+  _popupAnimationDuration: 0.25
   _name: {fileID: 688833054064276674}
   _speedText: {fileID: 7695127931082711594}
   _priceText: {fileID: 146750148801952524}

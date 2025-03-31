@@ -21,8 +21,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
 
-        private const string AttackTrigger = "Attack";
-        private static readonly int AttackTriggerHash = Animator.StringToHash(AttackTrigger);
+        private static readonly int AttackTriggerHash = Animator.StringToHash("Attack");
 
         public MeleeAttackState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
         {

@@ -1,10 +1,11 @@
+using _Project.Scripts.Infrastructure.UI;
 using _Project.Scripts.LocalizationSystem;
 using TMPro;
 using UnityEngine;
 
 namespace _Project.Scripts.UI.Views.Spawners
 {
-    public class SpawnerInfoView : MonoBehaviour
+    public class SpawnerInfoView : PopupDialog
     {
         [SerializeField] private LangText _name;
         [SerializeField] private TMP_Text _speedText;

@@ -12,9 +12,10 @@ using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Bootstrappers
 {
-    public class BattleBootstrap : MonoBehaviour
+    public class GameBootstrap : MonoBehaviour
     {
-        [SerializeField] private GameShop _gameShop;
+        [SerializeField] private EconomyShop _economyShop;
+        [SerializeField] private DefenseShop _defenseShop;
 
         [Header("Debug only")]
         [ShowInInspector, ReadOnly] private Dictionary<Type, BlasterFactory> _weaponFactories;
@@ -64,7 +65,8 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             _longBoxFactoryAccessor.BoxFactory = longBoxFactory as LongBoxFactory;
             _moneyTextFactoryAccessor.MoneyTextFactory = moneyTextFactory;
             
-            _gameShop.Initialize();
+            _economyShop.Initialize();
+            _defenseShop.Initialize();
         }
     }
 }

@@ -26,10 +26,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
 
         private Action _wallBought;
         
-        public void Initialize(Action wallBought)
+        public void Initialize()
         {
             int upgradeIndex = _progress.Data.WallUpgrades;
-            _wallBought = wallBought;
             _wallData.Initialize(upgradeIndex == -1 ? 0 : upgradeIndex);
             
             if (upgradeIndex == -1)
@@ -38,7 +37,7 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
                 OpenOrLoad(upgradeIndex);
         }
 
-        public void OpenOrLoad(int upgradeIndex)
+        private void OpenOrLoad(int upgradeIndex)
         {
             if (upgradeIndex > 0)
                 LoadWall();
@@ -71,8 +70,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
 
             UpdateButtonViewAfterUpgrade();
         }
-        
-        public void ShowBuyButton()
+
+        private void ShowBuyButton()
         {
             _wallBuyButton.gameObject.SetActive(true);
             _wallBuyButton.Initialize(

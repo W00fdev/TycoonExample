@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1617241515643168547}
   - component: {fileID: 77892253803576109}
   - component: {fileID: 871723935214716691}
+  - component: {fileID: 1472639168856111891}
   m_Layer: 11
   m_Name: Price Text
   m_TagString: Untagged
@@ -169,6 +170,20 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
+--- !u!114 &1472639168856111891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676089607239998829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22b3a9146614dc09e2639547c7ca22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _popupContainer: {fileID: 1617241515643168547}
+  _popupAnimationDuration: 0.25
 --- !u!1 &2351458995610192152
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +334,123 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _amountText: {fileID: 9056283985271542918}
+--- !u!1 &3181288392467196551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 389915421686060129}
+  - component: {fileID: 547031654433271939}
+  - component: {fileID: 8995269275425797656}
+  - component: {fileID: 37479848201709698}
+  m_Layer: 11
+  m_Name: Shower Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &389915421686060129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3181288392467196551}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 13.630001, y: 12.4, z: 15.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6352215930794125544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &547031654433271939
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3181288392467196551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8995269275425797656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3181288392467196551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480a3b5ed0f24cc7ada7694cc07e79de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3681956402163014068}
+        m_TargetAssemblyTypeName: _Project.Scripts.UI.Views.Spawners.UpgraderInfoView,
+          Assembly-CSharp
+        m_MethodName: ShowInZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _layer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &37479848201709698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3181288392467196551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2491853911bc4aad9d9b9705533e9787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionCompleted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3681956402163014068}
+        m_TargetAssemblyTypeName: _Project.Scripts.UI.Views.Spawners.UpgraderInfoView,
+          Assembly-CSharp
+        m_MethodName: HideInZone
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &5071902793517143992
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +489,7 @@ Transform:
   - {fileID: 1617241515643168547}
   - {fileID: 4294709438737271855}
   - {fileID: 2270874058809277361}
+  - {fileID: 389915421686060129}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1555795288177661391
@@ -371,7 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f895135ce042f4a045b57e4cae5dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnerIndex: 0
+  _dataSend: 0
   _eventChannel: {fileID: 11400000, guid: b4ef7c990de28dd498e9efc18417ddf3, type: 2}
 --- !u!114 &3681956402163014068
 MonoBehaviour:
@@ -385,6 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4592aba09f714814bd567e4eb568c32e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiPopup: {fileID: 1472639168856111891}
   _upgradePriceText: {fileID: 9056283985271542918}
 --- !u!114 &3063232046547026403
 MonoBehaviour:

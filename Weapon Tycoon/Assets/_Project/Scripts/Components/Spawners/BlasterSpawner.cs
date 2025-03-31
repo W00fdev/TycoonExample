@@ -70,15 +70,11 @@ namespace _Project.Scripts.Components.Spawners
             _spawnerData.SpawnerDataChanged += UpgradeSpawner;
         }
         
-        public virtual void Resolve()
-        {
-            SpawnerTimerAsync().Forget();
-        }
+        public virtual void Resolve() => SpawnerTimerAsync().Forget();
 
-        private void OnDestroy()
-        {
-            _spawnerData.SpawnerDataChanged -= UpgradeSpawner;
-        }
+        private void OnEnable() => _infoView.ShowAsync().Forget();
+
+        private void OnDestroy() => _spawnerData.SpawnerDataChanged -= UpgradeSpawner;
 
         private void UpgradeSpawner()
         {

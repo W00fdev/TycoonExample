@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace _Project.Scripts.UI.Views.BigBeautifulWall
 {
-    public class WallBuyerInfoView : MonoBehaviour
+    public class WallBuyerInfoView : PopupView
     {
         [SerializeField] private LangText _name;
         [SerializeField] private TMP_Text _regenText;

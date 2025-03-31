@@ -1,6 +1,8 @@
+using System;
 using _Project.Scripts.Components;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
+using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
 
@@ -32,7 +34,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
 
             _wallData.SpawnerDataChanged += UpgradeWall;
         }
-        
+
+        private void OnEnable() => _infoView.ShowAsync().Forget();
+
         private void UpgradeWall()
         {
             float yPrevScale = transform.localScale.y;

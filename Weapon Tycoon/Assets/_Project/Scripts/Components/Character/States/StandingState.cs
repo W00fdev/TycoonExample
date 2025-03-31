@@ -45,16 +45,16 @@ namespace _Project.Scripts.Components.Character.States
 
         private void HandleRotation()
         {
-            if (Input.GetMouseButton(0))
-            {
-                Quaternion look = Quaternion.LookRotation(-_camera.transform.right, Vector3.up);
-                //Quaternion rotation = Quaternion.Euler(0, forwardOnPlane.y, 0);
-                Vector3 euler = look.eulerAngles;
-                euler.x = 0f;
-                euler.z = 0f;
-                look = Quaternion.Euler(euler);
-                _controller.transform.rotation = Quaternion.Slerp(_controller.transform.rotation, look, 0.15f);
-            }
+            if (_inputReader.IsLeftMouseButton == false)
+                return;
+            
+            Quaternion look = Quaternion.LookRotation(-_camera.transform.right, Vector3.up);
+            //Quaternion rotation = Quaternion.Euler(0, forwardOnPlane.y, 0);
+            Vector3 euler = look.eulerAngles;
+            euler.x = 0f;
+            euler.z = 0f;
+            look = Quaternion.Euler(euler);
+            _controller.transform.rotation = Quaternion.Slerp(_controller.transform.rotation, look, 0.15f);
         }
 
         public void Exit()
