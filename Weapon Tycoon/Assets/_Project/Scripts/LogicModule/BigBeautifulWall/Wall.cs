@@ -21,6 +21,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         
         protected int _upgradeVisualLevel;
         private WallData _wallData;
+
+        public RestorableHealth Health => _health;
         
         public virtual void Initialize(WallData wallData)
         {
@@ -31,6 +33,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             
             _upgradeVisualLevel = _wallData.Index;
             UpdateVisuals();
+            
+            _health.Initialize(wallData.Health);
+            _health.UpgradeRegeneration(wallData.Regeneration);
 
             _wallData.SpawnerDataChanged += UpgradeWall;
         }

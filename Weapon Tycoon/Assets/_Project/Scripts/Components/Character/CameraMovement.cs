@@ -1,5 +1,7 @@
+using System;
 using _Project.Scripts.Infrastructure.ScriptableEvents;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components.Character
@@ -18,7 +20,7 @@ namespace _Project.Scripts.Components.Character
 
         [SerializeField] private LayerMask _allExceptPlayer;
         [SerializeField] private float _smoothingStep;
-        
+
         private float _mouseX;
         private float _mouseY;
         private float _offsetZ;

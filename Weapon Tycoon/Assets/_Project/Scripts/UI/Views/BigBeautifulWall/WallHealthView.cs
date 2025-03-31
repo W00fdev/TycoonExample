@@ -31,7 +31,7 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
 
         public void UpdateHealthbar(int health, int maxHealth)
         {
-            _healthText.text = "wall: " + health.ToHeaderMoneyFormat() + " / " + maxHealth.ToHeaderMoneyFormat();
+            _healthText.text = "wall: " + health + " / " + maxHealth;
             Tween.ScaleX(_healthBar, (float)health / maxHealth, 0.15f);
         }
 

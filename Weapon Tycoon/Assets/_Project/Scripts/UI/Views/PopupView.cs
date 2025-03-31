@@ -1,3 +1,4 @@
+using System;
 using _Project.Scripts.Infrastructure.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +8,9 @@ namespace _Project.Scripts.UI.Views
     public class PopupView : MonoBehaviour
     {
         [SerializeField] protected PopupDialog _uiPopup;
-        
+
+        private void Awake() => _uiPopup.HideInstant();
+
         public void ShowInZone()
         {
             if (gameObject.activeInHierarchy)

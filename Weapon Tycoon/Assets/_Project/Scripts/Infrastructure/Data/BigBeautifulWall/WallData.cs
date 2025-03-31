@@ -12,7 +12,7 @@ namespace _Project.Scripts.Infrastructure.Data.BigBeautifulWall
         private int _index;
 
         public int Regeneration => _config.Upgrades[_index].Regeneration;
-        public long Health => _config.Upgrades[_index].Health;
+        public int Health => _config.Upgrades[_index].Health;
         public long BuyPrice => _config.Upgrades[_index].BuyPrice;
 
         public long UpgradePrice => _index + 1 < UpgradesCount

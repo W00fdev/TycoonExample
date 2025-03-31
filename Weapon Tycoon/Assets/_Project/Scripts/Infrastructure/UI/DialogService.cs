@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using _Project.Scripts.Infrastructure.Loading;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace _Project.Scripts.Infrastructure.UI
 {
@@ -8,12 +10,16 @@ namespace _Project.Scripts.Infrastructure.UI
     {
         private readonly Dictionary<Type, IDialog> _dialogs;
 
+        [Inject] private StorageService _storageService;
+        
         public DialogService()
         {
+            /*var loadingCurtain = _storageService.GetPrefab() 
+            
             _dialogs = new()
             {
-
-            };
+                {typeof(LoadingCurtain), }
+            };*/
         }
 
         public void Register<TDialog>(TDialog dialog)

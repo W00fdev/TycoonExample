@@ -24,7 +24,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         
         [Inject] private PersistentProgress _progress;
 
-        private Action _wallBought;
+        public Wall Wall => _wall;
+        public event Action WallOpened;
         
         public void Initialize()
         {
@@ -57,7 +58,6 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
                 return;
             
             OpenWall();
-            _wallBought?.Invoke();
         }
         
         public void BuyUpgrade()
@@ -105,6 +105,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             
             _wall.gameObject.SetActive(true);
             _wall.Initialize(_wallData);
+            
+            WallOpened?.Invoke();
         }
     }
     

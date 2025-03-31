@@ -9,6 +9,7 @@ using UnityEngine.AddressableAssets;
 namespace _Project.Scripts.Infrastructure
 {
     // ReSharper disable once ClassNeverInstantiated.Global
+    // TODO: refactor
     public class StorageService
     {
         public async UniTask<PooledView> GetWeaponViewAsync(BlasterType type)
@@ -71,6 +72,12 @@ namespace _Project.Scripts.Infrastructure
             var result = await Addressables.LoadAssetAsync<GameObject>(type.ToString())
                 .Task.AsUniTask();
             return result.GetComponent<Enemy>();
+        }
+
+        public async UniTask<GameObject> GetPrefab(string name)
+        {
+            return await Addressables.LoadAssetAsync<GameObject>(name)
+                .Task.AsUniTask();
         }
     }
 }

@@ -10,7 +10,8 @@ namespace _Project.Scripts.Infrastructure.Data
         public List<int> SpawnerUpgrades = new();
         public List<int> TurretUpgrades = new();
         public int WallUpgrades = -1;
-
+        public int WallActualHealth = -1;
+        
         public long MoneyWallet;
         public long MoneyBank;
 
@@ -25,6 +26,7 @@ namespace _Project.Scripts.Infrastructure.Data
             WallUpgrades = data.WallUpgrades;
             MoneyWallet = data.MoneyWallet;
             MoneyBank = data.MoneyBank;
+            WallActualHealth = data.WallActualHealth;
         }
         
         public void UpdateSpawnerUpgrade(int index, int upgradeIndex)

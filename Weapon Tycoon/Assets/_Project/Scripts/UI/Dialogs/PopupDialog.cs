@@ -19,8 +19,6 @@ namespace _Project.Scripts.Infrastructure.UI
             if (_isPlaying)
                 return null;
 
-            Debug.Log("Showing async");
-            
             _isPlaying = true;
             gameObject.SetActive(true);
             
@@ -39,8 +37,6 @@ namespace _Project.Scripts.Infrastructure.UI
             if (_isPlaying)
                 return null;
          
-            Debug.Log("Hiding async");
-            
             _isPlaying = true;
             
             await _popupContainer

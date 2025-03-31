@@ -40054,6 +40054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wallUpgrader: {fileID: 1308518778}
   _wallHealthView: {fileID: 1606459432}
+  _wall: {fileID: 172093773}
 --- !u!1001 &1425659142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52535,7 +52536,7 @@ MonoBehaviour:
   _mainCamera: {fileID: 1876250148}
   _shootable:
     serializedVersion: 2
-    m_Bits: 32695
+    m_Bits: 30647
   _source: {fileID: 1863007295}
   _clip: {fileID: 8300000, guid: bd4f3453a5b042244b6199cc8bf208bd, type: 3}
   _type: 0
