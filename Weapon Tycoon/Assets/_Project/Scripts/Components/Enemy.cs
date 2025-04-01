@@ -6,6 +6,7 @@ using _Project.Scripts.Components.Enemies;
 using _Project.Scripts.Components.Enemies.States;
 using _Project.Scripts.Infrastructure.Data.Enemies;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
+using _Project.Scripts.Infrastructure.States;
 using _Project.Scripts.LogicModule.Views;
 using PrimeTween;
 using Unity.Behavior;
@@ -24,8 +25,8 @@ namespace _Project.Scripts.Components
         [SerializeField] private CurrencyEventChannel _addMoneychannel;
         [SerializeField] private Health _health;
         
-        private Dictionary<Type, IState> _states;
-        private IState _currentState;
+        private Dictionary<Type, ITickableState> _states;
+        private ITickableState _currentTickableState;
 
         private Transform _target;
 
@@ -35,12 +36,12 @@ namespace _Project.Scripts.Components
 
         public void Initialize(Transform target)
         {
-            if (_currentState == null)
+            if (_currentTickableState == null)
                 CreateStates();
 
             _target = target;
-            _currentState = _states[typeof(WalkingState)];
-            _currentState.Enter();
+            _currentTickableState = _states[typeof(WalkingTickableState)];
+            _currentTickableState.Enter();
         }
 
         private void Awake()
@@ -67,28 +68,28 @@ namespace _Project.Scripts.Components
             ViewReturner -= (_) => Reward();
         }
 
-        public void SwitchState<T>() where T : IState
+        public void SwitchState<T>() where T : ITickableState
         {
             var type = typeof(T);
             
-            _currentState?.Exit();
+            _currentTickableState?.Exit();
             _states.TryGetValue(type, out var state);
-            _currentState = state;
+            _currentTickableState = state;
             
             state?.Enter();
         }
 
         private void CreateStates()
         {
-            _states = new Dictionary<Type, IState>()
+            _states = new Dictionary<Type, ITickableState>()
             {
-                {typeof(WalkingState), new WalkingState(this, _config) },
-                {typeof(MeleeAttackState), new MeleeAttackState(this, _targetLayer, _config) },
-                {typeof(DyingState), new DyingState(this, ReturnToPool) },
+                {typeof(WalkingTickableState), new WalkingTickableState(this, _config) },
+                {typeof(MeleeAttackTickableState), new MeleeAttackTickableState(this, _targetLayer, _config) },
+                {typeof(DyingTickableState), new DyingTickableState(this, ReturnToPool) },
             };
         }
         
-        private void EnterDeathState() => SwitchState<DyingState>();
+        private void EnterDeathState() => SwitchState<DyingTickableState>();
 
         private void AnimateDamage() => Tween.PunchScale(_basicModel, Vector3.up * 0.1f, 0.1f);
 

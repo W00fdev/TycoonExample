@@ -4,9 +4,9 @@ using UnityEngine;
 namespace _Project.Scripts.Components.Character.States
 {
     [Serializable]
-    public class JumpingState : MovingState
+    public class JumpingTickableState : MovingTickableState
     {
-        public JumpingState(IStateMachineCharacter stateMachineCharacter, Camera mainCamera,
+        public JumpingTickableState(IStateMachineCharacter stateMachineCharacter, Camera mainCamera,
             MovementStats stats, AnimationParameters parameters)
             : base(stateMachineCharacter, mainCamera, stats, parameters)
         {
@@ -18,7 +18,7 @@ namespace _Project.Scripts.Components.Character.States
             StateMachineCharacter.Controller.Move(_velocityY * Time.deltaTime);
         }
 
-        public override void Update()
+        public override void Tick()
         {
             HandleMovement();
             HandleFalling();
@@ -27,9 +27,9 @@ namespace _Project.Scripts.Components.Character.States
                 return;
             
             if (_inputReader.Value == Vector3.zero)
-                StateMachineCharacter.SwitchState<StandingState>();
+                StateMachineCharacter.SwitchState<StandingTickableState>();
             else
-                StateMachineCharacter.SwitchState<MovingState>();
+                StateMachineCharacter.SwitchState<MovingTickableState>();
         }
 
         protected override void HandleFalling()

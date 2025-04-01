@@ -1,4 +1,5 @@
 using _Project.Scripts.Components.Character.States;
+using _Project.Scripts.Infrastructure.States;
 using UnityEngine;
 using UnityEngine.AI;
 

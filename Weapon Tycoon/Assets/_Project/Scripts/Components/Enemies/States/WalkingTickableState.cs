@@ -1,13 +1,14 @@
 using System.Threading;
 using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Data.Enemies;
+using _Project.Scripts.Infrastructure.States;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class WalkingState : IState
+    public class WalkingTickableState : ITickableState
     {
         private readonly IStateMachineEnemy _stateMachineEnemy;
         private readonly NavMeshAgent _agent;
@@ -21,7 +22,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private static readonly int WalkBooleanHash = Animator.StringToHash("Walk");
         private static readonly int SpeedMagnitude = Animator.StringToHash("SpeedMagnitude");
 
-        public WalkingState(IStateMachineEnemy stateMachineEnemy, EnemyConfig enemyConfig)
+        public WalkingTickableState(IStateMachineEnemy stateMachineEnemy, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             
@@ -55,7 +56,7 @@ namespace _Project.Scripts.Components.Enemies.States
             _animator.SetFloat(SpeedMagnitude, _enemyConfig.Data.Speed);
         }
 
-        public void Update()
+        public void Tick()
         {
         }
 
@@ -78,7 +79,7 @@ namespace _Project.Scripts.Components.Enemies.States
                       _agent.stoppingDistance)) continue;
                 
                 _agent.isStopped = true;
-                _stateMachineEnemy.SwitchState<MeleeAttackState>();
+                _stateMachineEnemy.SwitchState<MeleeAttackTickableState>();
             }
         }
     }

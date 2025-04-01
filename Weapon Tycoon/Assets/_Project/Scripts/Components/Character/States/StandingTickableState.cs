@@ -1,10 +1,11 @@
 using System;
+using _Project.Scripts.Infrastructure.States;
 using UnityEngine;
 
 namespace _Project.Scripts.Components.Character.States
 {
     [Serializable]
-    public class StandingState : IState
+    public class StandingTickableState : ITickableState
     {
         private readonly IStateMachineCharacter _stateMachineCharacter;
         private readonly InputReader _inputReader;
@@ -12,7 +13,7 @@ namespace _Project.Scripts.Components.Character.States
         private readonly AnimationParameters _parameters;
         private readonly Camera _camera;
         
-        public StandingState(IStateMachineCharacter stateMachineCharacter, AnimationParameters parameters, Camera camera)
+        public StandingTickableState(IStateMachineCharacter stateMachineCharacter, AnimationParameters parameters, Camera camera)
         {
             _stateMachineCharacter = stateMachineCharacter;
             _inputReader = stateMachineCharacter.InputReader;
@@ -29,16 +30,16 @@ namespace _Project.Scripts.Components.Character.States
             _stateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, 0f);
         }
 
-        public void Update()
+        public void Tick()
         {
             if (_inputReader.Value != Vector3.zero || _stateMachineCharacter.Controller.velocity.magnitude > 0.01f)
             {
-                _stateMachineCharacter.SwitchState<MovingState>();
+                _stateMachineCharacter.SwitchState<MovingTickableState>();
                 return;
             }
             
             if (_inputReader.IsJumping)
-                _stateMachineCharacter.SwitchState<JumpingState>();
+                _stateMachineCharacter.SwitchState<JumpingTickableState>();
 
             HandleRotation();
         }

@@ -1,13 +1,14 @@
 using System;
 using System.Threading;
 using _Project.Scripts.Components.Character;
+using _Project.Scripts.Infrastructure.States;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class DyingState : IState
+    public class DyingTickableState : ITickableState
     {
         private readonly Animator _animator;
         private readonly NavMeshAgent _agent;
@@ -19,7 +20,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private const float SecondsToDie = 2.6f;
         private static readonly int DeathTriggerHash = Animator.StringToHash("Death");
         
-        public DyingState(IStateMachineEnemy stateMachine, Action diedEvent)
+        public DyingTickableState(IStateMachineEnemy stateMachine, Action diedEvent)
         {
             _animator = stateMachine.Animator;
             _agent = stateMachine.Agent;
@@ -41,7 +42,7 @@ namespace _Project.Scripts.Components.Enemies.States
             DelayedDeath().Forget();
         }
 
-        public void Update()
+        public void Tick()
         {
         }
 

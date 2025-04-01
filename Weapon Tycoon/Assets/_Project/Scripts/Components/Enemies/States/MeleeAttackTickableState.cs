@@ -2,12 +2,13 @@ using System;
 using System.Threading;
 using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Data.Enemies;
+using _Project.Scripts.Infrastructure.States;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class MeleeAttackState : IState
+    public class MeleeAttackTickableState : ITickableState
     {
         private readonly IStateMachineEnemy _stateMachineEnemy;
         private readonly LayerMask _targetMask;
@@ -23,7 +24,7 @@ namespace _Project.Scripts.Components.Enemies.States
 
         private static readonly int AttackTriggerHash = Animator.StringToHash("Attack");
 
-        public MeleeAttackState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
+        public MeleeAttackTickableState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             _targetMask = targetMask;
@@ -52,7 +53,7 @@ namespace _Project.Scripts.Components.Enemies.States
                 return;
             }
                 
-            _stateMachineEnemy.SwitchState<WalkingState>();
+            _stateMachineEnemy.SwitchState<WalkingTickableState>();
         }
 
         private void StartAttacking()
@@ -66,7 +67,7 @@ namespace _Project.Scripts.Components.Enemies.States
             AttackTimer().Forget();
         }
 
-        public void Update()
+        public void Tick()
         {
         }
 
@@ -87,10 +88,10 @@ namespace _Project.Scripts.Components.Enemies.States
             }
             
             if (!_target)
-                _stateMachineEnemy.SwitchState<WalkingState>();
+                _stateMachineEnemy.SwitchState<WalkingTickableState>();
             
             if (_target.IsAlive == false)
-                _stateMachineEnemy.SwitchState<WalkingState>();
+                _stateMachineEnemy.SwitchState<WalkingTickableState>();
         }
     }
 }

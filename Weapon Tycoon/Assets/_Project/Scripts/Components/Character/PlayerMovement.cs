@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using _Project.Scripts.Components.Character.States;
+using _Project.Scripts.Infrastructure.States;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -39,9 +40,9 @@ namespace _Project.Scripts.Components.Character
         private Animator _animator;
         private CharacterController _controller;
 
-        private Dictionary<Type, IState> _movementStates;
+        private Dictionary<Type, ITickableState> _movementStates;
         private InputReader _inputReader;
-        private IState _currentState;
+        private ITickableState _currentTickableState;
 
         public Animator Animator => _animator;
         public CharacterController Controller => _controller;
@@ -53,32 +54,32 @@ namespace _Project.Scripts.Components.Character
             _controller = GetComponent<CharacterController>();
             
             _inputReader = new InputReader();
-            _currentState = new StandingState(this, _parameters, _mainCamera);
-            _movementStates = new Dictionary<Type, IState>()
+            _currentTickableState = new StandingTickableState(this, _parameters, _mainCamera);
+            _movementStates = new Dictionary<Type, ITickableState>()
             {
-                { typeof(StandingState), _currentState },
-                { typeof(MovingState), new MovingState(this, _mainCamera, _stats, _parameters) },
-                { typeof(JumpingState), new JumpingState(this, _mainCamera, _stats, _parameters) },
+                { typeof(StandingTickableState), _currentTickableState },
+                { typeof(MovingTickableState), new MovingTickableState(this, _mainCamera, _stats, _parameters) },
+                { typeof(JumpingTickableState), new JumpingTickableState(this, _mainCamera, _stats, _parameters) },
             };
         }
 
         private void Update()
         {
             _inputReader.Update();
-            _currentState.Update();
+            _currentTickableState.Tick();
         }
 
         public bool IsGrounded
             => Controller.isGrounded; /*|| Physics.CheckSphere(_groundCheck.position, 0.0001f, _groundLayer.value);*/
 
         public void SwitchState<T>()
-            where T : IState
+            where T : ITickableState
         {
             var type = typeof(T);
             
-            _currentState?.Exit();
+            _currentTickableState?.Exit();
             _movementStates.TryGetValue(type, out var state);
-            _currentState = state;
+            _currentTickableState = state;
             
             state?.Enter();
         }
