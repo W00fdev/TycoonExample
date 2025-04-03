@@ -1,7 +1,6 @@
 using _Project.Scripts.Infrastructure.Pools;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
-using Zenject;
 
 namespace _Project.Scripts.Infrastructure.States.GameState
 {

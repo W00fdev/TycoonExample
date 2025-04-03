@@ -1,6 +1,5 @@
 using System;
 using _Project.Scripts.Components.Buttons;
-using _Project.Scripts.Components.Spawners;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
 using _Project.Scripts.UI.Presenters;
@@ -8,7 +7,6 @@ using _Project.Scripts.UI.Views.BigBeautifulWall;
 using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.LogicModule.BigBeautifulWall

@@ -28,20 +28,30 @@ namespace _Project.Scripts.Components
         private Dictionary<Type, ITickableState> _states;
         private ITickableState _currentTickableState;
 
-        private Transform _target;
-
+        private EnemySceneReferences _sceneReferences;
+        private bool _isInitialized;
+        
         public Animator Animator => _animator;
         public NavMeshAgent Agent => _agent;
-        public Transform Target => _target;
+        public Transform Target => _sceneReferences.WallHealth.IsAlive 
+            ? _sceneReferences.WallTarget 
+            : _sceneReferences.FlagTarget;
 
-        public void Initialize(Transform target)
+        public bool IsInitialized => _isInitialized;
+
+        [Serializable]
+        public class EnemySceneReferences
         {
-            if (_currentTickableState == null)
-                CreateStates();
-
-            _target = target;
-            _currentTickableState = _states[typeof(WalkingTickableState)];
-            _currentTickableState.Enter();
+            public Health WallHealth;
+            public Transform WallTarget;
+            public Transform FlagTarget;
+        }
+        
+        public void Initialize(EnemySceneReferences sceneReferences)
+        {
+            _sceneReferences = sceneReferences;
+            
+            CreateStates();
         }
 
         private void Awake()
@@ -80,6 +90,12 @@ namespace _Project.Scripts.Components
             state?.Enter();
         }
 
+        public void StartStateMachine()
+        {
+            _currentTickableState = _states[typeof(WalkingTickableState)];
+            _currentTickableState.Enter();
+        }
+        
         private void CreateStates()
         {
             _states = new Dictionary<Type, ITickableState>()
@@ -89,7 +105,7 @@ namespace _Project.Scripts.Components
                 {typeof(DyingTickableState), new DyingTickableState(this, ReturnToPool) },
             };
         }
-        
+
         private void EnterDeathState() => SwitchState<DyingTickableState>();
 
         private void AnimateDamage() => Tween.PunchScale(_basicModel, Vector3.up * 0.1f, 0.1f);

@@ -13,11 +13,11 @@ namespace _Project.Scripts.Components.Enemies.States
         private readonly IStateMachineEnemy _stateMachineEnemy;
         private readonly LayerMask _targetMask;
         private readonly Animator _animator;
-        private readonly Collider[] _targetColliders;
+        private readonly RaycastHit[] _hits;
 
         private int _damage;
         private float _atkCooldown;
-        private Health _target;
+        private RestorableHealth _targetHealth;
         private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
@@ -28,12 +28,13 @@ namespace _Project.Scripts.Components.Enemies.States
         {
             _stateMachineEnemy = stateMachineEnemy;
             _targetMask = targetMask;
-            _targetColliders = new Collider[1];
+            _animator = _stateMachineEnemy.Animator;
+            _hits = new RaycastHit[1];
 
             UpdateConfig(enemyConfig);
         }
 
-        public void UpdateConfig(EnemyConfig enemyConfig)
+        private void UpdateConfig(EnemyConfig enemyConfig)
         {
             _enemyConfig = enemyConfig;
             
@@ -43,13 +44,16 @@ namespace _Project.Scripts.Components.Enemies.States
 
         public void Enter()
         {
-            if (Physics.OverlapSphereNonAlloc
-                    (_animator.transform.position, 1f, _targetColliders, _targetMask.value) > 0)
+            Debug.Log("Entering AttackState");
+            
+            if (Physics.BoxCastNonAlloc(
+                    _animator.transform.position, Vector3.one, _animator.transform.forward,
+                    _hits, Quaternion.identity, 1f, _targetMask.value) > 0)
             {
-                if (_targetColliders[0].TryGetComponent(out _target))
+                Debug.Log("Found overlap: " + _hits[0]);
+                if (_hits[0].collider.TryGetComponent(out _targetHealth))
                     StartAttacking();
-                        
-                //_stateMachineEnemy.SwitchState<WalkingState>();
+                
                 return;
             }
                 
@@ -58,6 +62,8 @@ namespace _Project.Scripts.Components.Enemies.States
 
         private void StartAttacking()
         {
+            Debug.Log("Start Attack");
+            
             _cts = new CancellationTokenSource();
 
             _linkedCts =
@@ -79,18 +85,17 @@ namespace _Project.Scripts.Components.Enemies.States
         async UniTaskVoid AttackTimer()
         {
             while (_linkedCts.IsCancellationRequested == false 
-                   && _target && _target.IsAlive)
+                   && _targetHealth && _targetHealth.IsAlive)
             {
                 _animator.SetTrigger(AttackTriggerHash);
-                _target.TakeDamage(_damage);
+                _targetHealth.TakeDamage(_damage);
                 
                 await UniTask.Delay(TimeSpan.FromSeconds(_atkCooldown), cancellationToken: _linkedCts.Token);
             }
             
-            if (!_target)
+            if (!_targetHealth)
                 _stateMachineEnemy.SwitchState<WalkingTickableState>();
-            
-            if (_target.IsAlive == false)
+            else if (_targetHealth.IsAlive == false)
                 _stateMachineEnemy.SwitchState<WalkingTickableState>();
         }
     }

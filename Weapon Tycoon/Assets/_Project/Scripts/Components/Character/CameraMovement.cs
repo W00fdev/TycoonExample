@@ -1,8 +1,5 @@
-using System;
 using _Project.Scripts.Infrastructure.ScriptableEvents;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components.Character
 {

@@ -14,6 +14,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
 
+        private Transform _prevTarget;
         private Transform _target;
         private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
@@ -42,6 +43,8 @@ namespace _Project.Scripts.Components.Enemies.States
         public void Enter()
         {
             _target = _stateMachineEnemy.Target;
+            _prevTarget = _target;
+            
             _agent.SetDestination(_target.position);
             _animator.SetBool(WalkBooleanHash, true);
             
@@ -73,6 +76,12 @@ namespace _Project.Scripts.Components.Enemies.States
             while (_linkedCts.IsCancellationRequested == false)
             {
                 await UniTask.DelayFrame(3, cancellationToken: _linkedCts.Token);
+                
+                _target = _stateMachineEnemy.Target;
+                if (_prevTarget != _target)
+                    _agent.SetDestination(_target.position);
+                    
+                _prevTarget = _target;
                 
                 if (!_agent.isStopped &&
                     !(Vector3.Distance(_agent.transform.position, _target.position) <=

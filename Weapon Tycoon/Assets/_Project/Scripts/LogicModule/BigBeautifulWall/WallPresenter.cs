@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
 using Cysharp.Threading.Tasks;
@@ -7,7 +6,7 @@ using Zenject;
 
 namespace _Project.Scripts.LogicModule.BigBeautifulWall
 {
-    public class WallController : MonoBehaviour
+    public class WallPresenter : MonoBehaviour
     {
         [SerializeField] private WallUpgrader _wallUpgrader;
         [SerializeField] private WallHealthView _wallHealthView;

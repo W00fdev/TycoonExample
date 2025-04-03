@@ -11,15 +11,15 @@ namespace _Project.Scripts.LogicModule
         [SerializeField] private CurrencyPipe _currencyPipe;
         
         [SerializeField] private TurretsController _turretsController;
-        [SerializeField] private WavesController _wavesController;
-        [SerializeField] private WallController _wallController;
+        [SerializeField] private WavesSpawner _wavesSpawner;
+        [SerializeField] private WallPresenter _wallPresenter;
         
         public void Initialize()
         {
             _turretsController.Initialize();
-            _wavesController.Initialize();
+            _wavesSpawner.StartSpawn();
             
-            _wallController.Initialize();
+            _wallPresenter.Initialize();
         }
     }
 }

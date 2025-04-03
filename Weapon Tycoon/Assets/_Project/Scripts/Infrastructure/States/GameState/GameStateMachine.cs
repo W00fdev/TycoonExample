@@ -20,8 +20,6 @@ namespace _Project.Scripts.Infrastructure.States.GameState
         
         public void Initialize()
         {
-            Debug.Log("State machine is initialized");
-            
             _states = new()
             {
                 { typeof(BootstrapState), _stateFactory.CreateState<BootstrapState>() },

@@ -9,6 +9,8 @@ namespace _Project.Scripts.Components
         [SerializeField] private int _regeneration;
         private int _maxHp;
 
+        private Coroutine _regenerationRoutine;
+
         public event Action<int, int> ChangedHealthEvent; 
         
         private readonly WaitForSeconds _waitForSeconds = new WaitForSeconds(1f);
@@ -19,7 +21,7 @@ namespace _Project.Scripts.Components
             _maxHp = hp;
             ChangedHealthEvent?.Invoke(_health, _maxHp);
 
-            StartCoroutine(Regeneration());
+            _regenerationRoutine = StartCoroutine(Regeneration());
         }
 
         public void UpgradeMaxHealth(int maxHealth)
@@ -34,13 +36,19 @@ namespace _Project.Scripts.Components
         {
             _health = _maxHp;
             ChangedHealthEvent?.Invoke(_health, _maxHp);
+            
+            _regenerationRoutine ??= StartCoroutine(Regeneration());
         }
 
         IEnumerator Regeneration()
         {
             while (true)
             {
-                if (!IsAlive) continue;
+                if (!IsAlive)
+                {
+                    _regenerationRoutine = null;
+                    yield break;
+                }
                 
                 yield return _waitForSeconds;
                 _health = Mathf.Clamp(_health + _regeneration, 0, _maxHp);

@@ -12,7 +12,7 @@ using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Bootstrappers
 {
-    public class SystemBootstrap : MonoBehaviour, IInitializable
+    public class SystemBootstrap : MonoBehaviour 
     {
         [SerializeField] private UIBootstrap _uiBootstrap;
         [SerializeField] private EconomyShop _economyShop;
@@ -33,14 +33,6 @@ namespace _Project.Scripts.Infrastructure.Bootstrappers
             _saveLoadService = saveLoadService;
             _progress = progress;
             _gameStateMachine = gameStateMachine;
-            
-            Debug.Log("System Bootstrap Constructed");
-        }
-        
-        public void Initialize()
-        {
-            Debug.Log("System Bootstrap Initializable");
-
         }
         
         private void Start()

@@ -6,6 +6,7 @@ using _Project.Scripts.LocalizationSystem;
 using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
+using PrimeTween;
 using UnityEngine;
 using Zenject;
 
@@ -19,7 +20,6 @@ namespace _Project.Scripts.Infrastructure.States.GameState
         private readonly PersistentProgress _progress;
         private readonly LoadingCurtainService _loadingCurtain;
         
-        [Inject]
         public BootstrapState(GameStateMachine stateSwitcher, ISaveLoadService saveLoadService,
             PersistentProgress progress, LoadingCurtainService loadingCurtain)
         {
@@ -33,6 +33,8 @@ namespace _Project.Scripts.Infrastructure.States.GameState
         {
             InitializeServices();
             CreateOrLoadData(OnProgressLoaded);
+
+            PrimeTweenConfig.warnEndValueEqualsCurrent = false;
         }
 
         public void Exit()
@@ -41,9 +43,6 @@ namespace _Project.Scripts.Infrastructure.States.GameState
         
         private void CreateOrLoadData(Action<PlayerData> onComplete)
         {
-            /*ISaveLoadService cacheSaveLoad = new CacheSaveLoad();
-            _saveLoadService = new CloudSaveLoad(cacheSaveLoad);*/
-            
             if (_saveLoadService.HasKey(Constants.PlayerDataKey))
                 _saveLoadService.Load<PlayerData>(Constants.PlayerDataKey, onComplete);
             else

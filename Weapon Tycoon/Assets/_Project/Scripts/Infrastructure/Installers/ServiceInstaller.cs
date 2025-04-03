@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Loading;
 using _Project.Scripts.Infrastructure.Pools;
@@ -7,7 +6,7 @@ using _Project.Scripts.Infrastructure.Storage;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Scripts.Infrastructure
+namespace _Project.Scripts.Infrastructure.Installers
 {
     public class ServiceInstaller : MonoInstaller
     {
@@ -19,18 +18,21 @@ namespace _Project.Scripts.Infrastructure
             Container.Bind<StorageService>().AsSingle();
             Container.Bind<PersistentProgress>().AsSingle();
 
-            Container.Bind<ObjectPoolService>()
+            Container
+                .Bind<ObjectPoolService>()
                 .AsSingle()
                 .WithArguments(_poolRoot);
 
-            Container.Bind<LoadingCurtainService>()
+            Container
+                .Bind<LoadingCurtainService>()
                 .FromComponentInNewPrefab(_loadingCurtain)
                 .AsSingle()
                 .NonLazy();
 
             ISaveLoadService cacheSaveLoaded = new CacheSaveLoad();
             ISaveLoadService cloudLoaded = new CloudSaveLoad(cacheSaveLoaded);
-            Container.Bind<ISaveLoadService>()
+            Container
+                .Bind<ISaveLoadService>()
                 .FromInstance(cloudLoaded)
                 .AsSingle()
                 .NonLazy();

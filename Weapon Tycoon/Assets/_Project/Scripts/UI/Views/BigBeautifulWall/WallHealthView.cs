@@ -2,7 +2,6 @@ using System;
 using _Project.Scripts.Infrastructure.ScriptableEvents;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.Infrastructure.UI;
-using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using TMPro;
@@ -21,6 +20,7 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
         [SerializeField] private EventChannel _stopCameraMovement;
         [SerializeField] private EventChannel _resumeCameraMovement;
 
+        private int _previousHealth;
         private bool _isAllowedToDamageVisual;
         private const float DelayBeforeDamageVisual = 2f;
 
@@ -31,8 +31,17 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
 
         public void UpdateHealthbar(int health, int maxHealth)
         {
+            if (health < _previousHealth)
+                ShowDamageAnimation().Forget();
+            else if (_previousHealth <= 0 && health > 0)
+                ShowAsync().Forget();
+            if (_previousHealth > 0 && health <= 0)
+                HideAsync().Forget();
+            
             _healthText.text = "wall: " + health + " / " + maxHealth;
             Tween.ScaleX(_healthBar, (float)health / maxHealth, 0.15f);
+
+            _previousHealth = health;
         }
 
         private void Update()
@@ -44,7 +53,7 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
         }
 
         // FIX ME: maybe convert to coroutine?
-        private async UniTaskVoid ShowDamageAnimation()
+        public async UniTaskVoid ShowDamageAnimation()
         {
             var vignetteTask = Tween.Alpha(_vignette, 0.65f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();
             var fillTask = Tween.Alpha(_redFill, 0.25f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();

@@ -1,4 +1,3 @@
-using System;
 using _Project.Scripts.Components;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
@@ -36,11 +35,26 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             
             _health.Initialize(wallData.Health);
             _health.UpgradeRegeneration(wallData.Regeneration);
+            _health.DamagedEvent += TakeDamage;
+            _health.DiedEvent += Dead;
 
             _wallData.SpawnerDataChanged += UpgradeWall;
         }
 
-        private void OnEnable() => _infoView.ShowAsync().Forget();
+        private void Dead()
+        {
+            _infoView.HideInstant();
+            Tween.ScaleY(transform, 0f, 0.5f, Ease.InBack)
+                .OnComplete(() => gameObject.SetActive(false));
+        }
+
+        private void OnEnable()
+        {
+            _infoView.ShowAsync().Forget();
+            Tween.ScaleY(transform, 1f, 0.5f, Ease.OutBack);
+        }
+
+        private void OnDestroy() => _health.DamagedEvent -= TakeDamage;
 
         private void UpgradeWall()
         {

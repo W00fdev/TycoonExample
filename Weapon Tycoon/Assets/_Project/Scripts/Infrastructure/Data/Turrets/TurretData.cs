@@ -1,5 +1,4 @@
 using System;
-using _Project.Scripts.Infrastructure.Data.Spawners;
 using UnityEngine;
 
 namespace _Project.Scripts.Infrastructure.Data.Turrets
