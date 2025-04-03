@@ -18,37 +18,51 @@ MonoBehaviour:
   - m_GUID: 2024c795522c4114ea3b45698bbb6950
     m_Address: LaserExplosionYellow
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ebd1acbee79ab245812d53442af9420
     m_Address: LaserYellow
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4c2ecd546ffb0bb4cb70b54f378b26b9
     m_Address: MoneyTextView
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cd3ff55d6b3b5e8458928ebcbd8dca2a
     m_Address: Box
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d075b60bc06ba3c4d82b4b5c3464b584
     m_Address: Enemy1
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d9ce3a56411c4e840a7d466317d4407c
     m_Address: LongBox
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8c145a97825add4e812fcdacb576c83
     m_Address: Projectile
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1384777afe89e454580d83bb9d164413, type: 2}

@@ -68,7 +68,8 @@ namespace _Project.Scripts.Components
             ViewReturner -= (_) => Reward();
         }
 
-        public void SwitchState<T>() where T : ITickableState
+        public void SwitchState<T>() 
+            where T : IState
         {
             var type = typeof(T);
             

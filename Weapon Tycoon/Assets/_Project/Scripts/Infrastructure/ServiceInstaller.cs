@@ -1,27 +1,39 @@
+using System;
 using _Project.Scripts.Infrastructure.Data;
-using _Project.Scripts.Infrastructure.Factories;
-using _Project.Scripts.Infrastructure.Factories.Accessors;
+using _Project.Scripts.Infrastructure.Loading;
+using _Project.Scripts.Infrastructure.Pools;
+using _Project.Scripts.Infrastructure.SaveLoad;
+using _Project.Scripts.Infrastructure.Storage;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure
 {
     public class ServiceInstaller : MonoInstaller
     {
+        [SerializeField] private Transform _poolRoot;
+        [SerializeField] private LoadingCurtainService _loadingCurtain;
+        
         public override void InstallBindings()
         {
             Container.Bind<StorageService>().AsSingle();
             Container.Bind<PersistentProgress>().AsSingle();
 
-            Container.Bind<PistolFactoryAccessor<PistolFactory>>().AsSingle();
-            Container.Bind<ShotgunFactoryAccessor<ShotgunFactory>>().AsSingle();
-            Container.Bind<RifleFactoryAccessor<RifleFactory>>().AsSingle();
-            Container.Bind<EnemyFactoryAccessor<EnemyFactory>>().AsSingle();
-            Container.Bind<BoxFactoryAccessor<BoxFactory>>().AsSingle();
-            Container.Bind<BoxFactoryAccessor<LongBoxFactory>>().AsSingle();
-            Container.Bind<ProjectileFactoryAccessor<ProjectileFactory>>().AsSingle();
-            Container.Bind<ProjectileFactoryAccessor<ExplosionFactory>>().AsSingle();
-            Container.Bind<ProjectileFactoryAccessor<DefaultProjectileFactory>>().AsSingle();
-            Container.Bind<MoneyTextFactoryAccessor>().AsSingle();
+            Container.Bind<ObjectPoolService>()
+                .AsSingle()
+                .WithArguments(_poolRoot);
+
+            Container.Bind<LoadingCurtainService>()
+                .FromComponentInNewPrefab(_loadingCurtain)
+                .AsSingle()
+                .NonLazy();
+
+            ISaveLoadService cacheSaveLoaded = new CacheSaveLoad();
+            ISaveLoadService cloudLoaded = new CloudSaveLoad(cacheSaveLoaded);
+            Container.Bind<ISaveLoadService>()
+                .FromInstance(cloudLoaded)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

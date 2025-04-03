@@ -1,30 +1,44 @@
 using System;
 using System.Collections.Generic;
-using _Project.Scripts.Components.Character;
+using JetBrains.Annotations;
+using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Infrastructure.States.GameState
 {
-    public class GameStateMachine : IStateSwitcher
+    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)] 
+    public class GameStateMachine : IStateSwitcher, IInitializable
     {
-        private readonly Dictionary<Type, IState> _movementStates;
+        private readonly StateFactory _stateFactory;
+        private Dictionary<Type, IState> _states;
         private IState _currentState;
 
-        public GameStateMachine()
+        public GameStateMachine(StateFactory stateFactory)
         {
-            _movementStates = new()
-            {
-                {typeof(BootstrapState), new BootstrapState(this)},
-                {typeof(AssetsLoadingState), new AssetsLoadingState(this)},
-                {typeof(GameplayState), new GameplayState(this)},
-            };
+            _stateFactory = stateFactory;
         }
         
-        public void SwitchState<T>() where T : ITickableState
+        public void Initialize()
+        {
+            Debug.Log("State machine is initialized");
+            
+            _states = new()
+            {
+                { typeof(BootstrapState), _stateFactory.CreateState<BootstrapState>() },
+                { typeof(AssetsLoadingState), _stateFactory.CreateState<AssetsLoadingState>() },
+                { typeof(GameplayState), _stateFactory.CreateState<GameplayState>() },
+            };
+            
+            SwitchState<BootstrapState>();
+        }
+
+        public void SwitchState<T>()
+            where T : IState
         {
             var type = typeof(T);
-            
+
             _currentState?.Exit();
-            _currentState = _movementStates[type];
+            _currentState = _states[type];
             _currentState?.Enter();
         }
     }

@@ -73,7 +73,7 @@ namespace _Project.Scripts.Components.Character
             => Controller.isGrounded; /*|| Physics.CheckSphere(_groundCheck.position, 0.0001f, _groundLayer.value);*/
 
         public void SwitchState<T>()
-            where T : ITickableState
+            where T : IState
         {
             var type = typeof(T);
             

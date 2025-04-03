@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Spawners;
-using _Project.Scripts.Infrastructure.Factories;
+using _Project.Scripts.Infrastructure.Pools;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.LogicModule.Views;
-using _Project.Scripts.UI.Views;
 using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Components.Spawners
 {
@@ -46,10 +47,12 @@ namespace _Project.Scripts.Components.Spawners
         [ShowInInspector, ReadOnly] private List<PooledView> _movableBoxes;
         [ShowInInspector, ReadOnly] private List<PooledView> _movableBlasters;
         [SerializeField, ReadOnly] private float _speedInPercents;
-        
-        protected BlasterFactory _blasterFactory;
-        protected BoxFactory _boxFactory;
-        protected MoneyTextFactory _moneyTextFactory;
+
+        [Inject] protected PersistentProgress _progress;
+        [Inject] protected ObjectPoolService _poolService;
+
+        protected Func<PooledView> _boxFactoryMethod;
+        protected Func<PooledView> _blasterFactoryMethod;
         
         private SpawnerData _spawnerData;
         
@@ -134,7 +137,7 @@ namespace _Project.Scripts.Components.Spawners
 
         private void SpawnBox()
         {
-            var box = _boxFactory.Next();
+            var box = _boxFactoryMethod.Invoke();
             box.transform.SetPositionAndRotation(_boxSpawnPoint.position, Quaternion.Euler(_defaultBoxRotation));
             _movableBoxes.Add(box);
 
@@ -148,8 +151,8 @@ namespace _Project.Scripts.Components.Spawners
             box.ViewReturner -= SpawnWeapon;
             
             _particles.Play();
-            
-            var blaster = _blasterFactory.Next();
+
+            var blaster = _blasterFactoryMethod.Invoke();
             blaster.transform.SetPositionAndRotation(_blasterSpawnPoint.position, Quaternion.Euler(_defaultWeaponRotation));
             blaster.ViewReturner += ConsumeWeapon;
             
@@ -173,7 +176,7 @@ namespace _Project.Scripts.Components.Spawners
 
         private void SpawnText()
         {
-            var moneyText = _moneyTextFactory.Next();
+            var moneyText = _poolService.Next(ObjectPoolService.EconomyType.MoneyTextView);
             moneyText.transform.position = _moneyTextSpawnPoint.position;
             ((MoneyTextView)moneyText).SetText($"+{_spawnerData.ProductPrice.ToHeaderMoneyFormat()}");
             ((MoneyTextView)moneyText).PlayTextAnimation();

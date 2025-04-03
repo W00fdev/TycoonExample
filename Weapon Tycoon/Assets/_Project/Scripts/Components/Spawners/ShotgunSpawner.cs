@@ -1,20 +1,11 @@
-﻿using _Project.Scripts.Infrastructure.Data;
-using _Project.Scripts.Infrastructure.Data.Spawners;
-using _Project.Scripts.Infrastructure.Factories;
-using _Project.Scripts.Infrastructure.Factories.Accessors;
-using Zenject;
+﻿using _Project.Scripts.Infrastructure.Data.Spawners;
+using _Project.Scripts.Infrastructure.Pools;
 
 namespace _Project.Scripts.Components.Spawners
 {
     public class ShotgunSpawner : BlasterSpawner
     {
         private const int SpawnerIndex = 1;
-        
-        [Inject] private PersistentProgress _progress;
-        
-        [Inject] private ShotgunFactoryAccessor<ShotgunFactory> _shotgunFactoryAccessor;
-        [Inject] private BoxFactoryAccessor<BoxFactory> _boxFactoryAccessor;
-        [Inject] private MoneyTextFactoryAccessor _moneyTextFactoryAccessor;
 
         public override void Initialize(SpawnerData spawnerData)
         {
@@ -29,10 +20,9 @@ namespace _Project.Scripts.Components.Spawners
 
         public override void Resolve()
         {
-            _blasterFactory = _shotgunFactoryAccessor.ShotgunFactory;
-            _boxFactory = _boxFactoryAccessor.BoxFactory;
-            _moneyTextFactory = _moneyTextFactoryAccessor.MoneyTextFactory;
-            
+            _blasterFactoryMethod = () => _poolService.Next(ObjectPoolService.SpawnerType.Shotgun1View);
+            _boxFactoryMethod = () => _poolService.Next(ObjectPoolService.EconomyType.Box);
+
             base.Resolve();
         }
     }

@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using _Project.Scripts.Infrastructure.Data.Turrets;
-using _Project.Scripts.Infrastructure.Factories;
-using _Project.Scripts.Infrastructure.Factories.Accessors;
+using _Project.Scripts.Infrastructure.Pools;
 using _Project.Scripts.LogicModule.Views;
 using _Project.Scripts.UI.Views.Turrets;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Components.Turrets
@@ -41,8 +38,6 @@ namespace _Project.Scripts.Components.Turrets
 
         protected int _upgradeVisualLevel;
         
-        private ProjectileFactory _projectileFactory;
-        private ExplosionFactory _explosionFactory;
         private WaitForSeconds _awaiter;
         private TurretData _data;
         private Health _target;
@@ -51,18 +46,14 @@ namespace _Project.Scripts.Components.Turrets
         private bool _gunPointChanger;
 
         private const int MaxColliders = 10;
-        
-        [Inject] private ProjectileFactoryAccessor<ProjectileFactory> _projectileFactoryAccessor;
-        [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
+
+        [Inject] private ObjectPoolService _poolService;
         
         public virtual void Initialize(TurretData turretData)
         {
             _colliders = new Collider[MaxColliders];
             _data = turretData;
 
-            _projectileFactory = _projectileFactoryAccessor.Factory;
-            _explosionFactory = _explosionFactoryAccessor.Factory;
-            
             _infoView.Initialize(_turretNameKey);
             _infoView.UpdateInfo(_data.RPM.ToString(), _data.Damage.ToString());
             
@@ -163,7 +154,7 @@ namespace _Project.Scripts.Components.Turrets
 
         private PooledView CreateLaser(Vector3 spawnPosition)
         {
-            var bullet = _projectileFactory.Next();
+            var bullet = _poolService.Next(ObjectPoolService.DefenceType.LaserYellow);
             bullet.transform.position = spawnPosition;
             _audioSource.PlayOneShot(_fireClip);
             return bullet;
@@ -171,7 +162,7 @@ namespace _Project.Scripts.Components.Turrets
 
         private void MakeExplosion(Vector3 position)
         {
-            var explosion = _explosionFactory.Next();
+            var explosion = _poolService.Next(ObjectPoolService.DefenceType.LaserExplosionYellow);
             explosion.transform.position = position;
             _audioSource.PlayOneShot(_explosionClip);
         }

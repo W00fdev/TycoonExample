@@ -20,24 +20,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7461d4a6a09920940ba16f71637c4e4f
     m_Address: Shotgun1View
     m_ReadOnly: 0
     m_SerializedLabels:
     - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d6034b7db301bce41aa9f0094138ccfa
     m_Address: Rifle1View
     m_ReadOnly: 0
     m_SerializedLabels:
     - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db98806780b6af5418c14b83079a2558
     m_Address: Blasters/Sniper_1_View
     m_ReadOnly: 0
     m_SerializedLabels:
     - Level1
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1384777afe89e454580d83bb9d164413, type: 2}

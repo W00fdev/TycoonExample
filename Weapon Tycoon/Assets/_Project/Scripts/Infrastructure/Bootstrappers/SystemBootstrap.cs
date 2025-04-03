@@ -1,78 +1,57 @@
 ﻿using System;
 using _Project.Scripts.Infrastructure.Data;
+using _Project.Scripts.Infrastructure.Loading;
 using _Project.Scripts.Infrastructure.SaveLoad;
-using _Project.Scripts.LocalizationSystem;
+using _Project.Scripts.Infrastructure.States;
+using _Project.Scripts.Infrastructure.States.GameState;
+using _Project.Scripts.LogicModule;
 using _Project.Scripts.Utils;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Scripts.Infrastructure.Bootstrappers
 {
-    public class SystemBootstrap : MonoBehaviour
+    public class SystemBootstrap : MonoBehaviour, IInitializable
     {
-        [FormerlySerializedAs("_battleBootstrap")] [SerializeField] private GameBootstrap _gameBootstrap;
         [SerializeField] private UIBootstrap _uiBootstrap;
-        [SerializeField] private GameObject _loadingFader;
-        
-        private const int AwaitSeconds = 3;
-        private ISaveLoadService _saveLoadService;
-        
-        [Inject] private PersistentProgress _progress;
-        
-        private void Awake()
-        {
-            _loadingFader.SetActive(true);
-            InitializeServices();
-        }
+        [SerializeField] private EconomyShop _economyShop;
+        [SerializeField] private DefenseShop _defenseShop;
 
+        private const int AwaitSeconds = 3;
+
+        private LoadingCurtainService _curtainService;
+        private ISaveLoadService _saveLoadService;
+        private PersistentProgress _progress;
+        private GameStateMachine _gameStateMachine;
+        
+        [Inject]
+        private void Construct(LoadingCurtainService curtainService, ISaveLoadService saveLoadService,
+            PersistentProgress progress, GameStateMachine gameStateMachine)
+        {
+            _curtainService = curtainService;
+            _saveLoadService = saveLoadService;
+            _progress = progress;
+            _gameStateMachine = gameStateMachine;
+            
+            Debug.Log("System Bootstrap Constructed");
+        }
+        
+        public void Initialize()
+        {
+            Debug.Log("System Bootstrap Initializable");
+
+        }
+        
         private void Start()
         {
-            CreateOrLoadData(
-                (data) =>
-                {
-                    OnDataLoaded(data);
-                    InitializeInstallers();
-                });
-        }
+            _curtainService.ShowInstant();
+            Debug.Log("System Bootstrap Started");
 
-        private void InitializeServices()
-        {
-            var localizationLoader = new LocalizationLoader();
-            Localization localizationService = new Localization(localizationLoader);
-            LanguageDetector languageDetector = new LanguageDetector(localizationService);
-            languageDetector.DetectSystemLanguage();
-            
-            localizationLoader.Load();
-        }
-
-        private void CreateOrLoadData(Action<PlayerData> onComplete)
-        {
-            ISaveLoadService cacheSaveLoad = new CacheSaveLoad();
-            _saveLoadService = new CloudSaveLoad(cacheSaveLoad);
-            
-            if (_saveLoadService.HasKey(Constants.PlayerDataKey))
-                _saveLoadService.Load<PlayerData>(Constants.PlayerDataKey, onComplete);
-            else
-                onComplete?.Invoke(new PlayerData());
-        }
-
-        private void OnDataLoaded(PlayerData data)
-        {
-            _progress.Data = data;
-            Debug.Log("Data: " + JsonUtility.ToJson(data));
-            _loadingFader.SetActive(false);
-
+            //_gameStateMachine.SwitchState<BootstrapState>();
             TimerProgressSave().Forget();
         }
-
-        private void InitializeInstallers()
-        {
-            _uiBootstrap.Initialize();
-            _gameBootstrap.Initialize().Forget();
-        }
-
+        
         async UniTaskVoid TimerProgressSave()
         {
             try

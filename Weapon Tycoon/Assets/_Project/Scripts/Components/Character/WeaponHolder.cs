@@ -1,15 +1,11 @@
 using System;
-using System.Collections;
 using _Project.Scripts.Data;
-using _Project.Scripts.Infrastructure.Factories;
-using _Project.Scripts.Infrastructure.Factories.Accessors;
+using _Project.Scripts.Infrastructure.Pools;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -44,8 +40,6 @@ namespace _Project.Scripts.Components.Character
 
         [SerializeField, ReadOnly] private BlasterType _type;
 
-        private DefaultProjectileFactory _projectileFactory;
-        private ExplosionFactory _explosionFactory;
         private int _damage;
         private float _cooldown;
         private float _spread;
@@ -56,16 +50,10 @@ namespace _Project.Scripts.Components.Character
 
         private readonly Vector3 _strength = new Vector3(0.05f, 0.1f, 0.5f);
         
-        [Inject] private ProjectileFactoryAccessor<DefaultProjectileFactory> _projectileFactoryAccessor;
-        [Inject] private ProjectileFactoryAccessor<ExplosionFactory> _explosionFactoryAccessor;
-
-        private IEnumerator Start()
+        [Inject] private ObjectPoolService _poolService; 
+        
+        private void Start()
         {
-            while (_projectileFactoryAccessor.Factory == null || _explosionFactoryAccessor.Factory == null)
-                yield return null;
-
-            _projectileFactory = _projectileFactoryAccessor.Factory;
-            _explosionFactory = _explosionFactoryAccessor.Factory;
             _initialized = true;
             _allowedFire = true;
 
@@ -143,7 +131,7 @@ namespace _Project.Scripts.Components.Character
 
         private async UniTaskVoid Fire(RaycastHit hitInfo)
         {
-            var bullet = _projectileFactory.Next();
+            var bullet = _poolService.Next(ObjectPoolService.DefenceType.Projectile);
             bullet.transform.position = _gunPoint.position;
                 
             // add distance-time scaling 
@@ -163,7 +151,7 @@ namespace _Project.Scripts.Components.Character
 
         private void MakeExplosion(Vector3 position)
         {
-            var explosion = _explosionFactory.Next();
+            var explosion = _poolService.Next(ObjectPoolService.DefenceType.LaserExplosionYellow);
             explosion.transform.position = position;
             _source.PlayOneShot(_clip);
         }
