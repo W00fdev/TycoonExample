@@ -22,8 +22,8 @@ namespace _Project.Scripts.Components.Enemies.States
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
         
-        // No animation events (reflection is slow)
-        private const float AttackAnimationTiming = 0.4f;
+        // No animation events (reflection is too slow)
+        private const float AttackAnimationTiming = 0.9f;
 
         private static readonly int AttackTriggerHash = Animator.StringToHash("Attack");
 
@@ -65,13 +65,11 @@ namespace _Project.Scripts.Components.Enemies.States
 
         private void StartAttacking()
         {
-            Debug.Log("Start Attack");
-            
             _cts = new CancellationTokenSource();
 
             _linkedCts =
                 CancellationTokenSource.CreateLinkedTokenSource(_cts.Token,
-                    _animator.gameObject.GetCancellationTokenOnDestroy());
+                    _animator.GetCancellationTokenOnDestroy());
             
             AttackTimer().Forget();
         }

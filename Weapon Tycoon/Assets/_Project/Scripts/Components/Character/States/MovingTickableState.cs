@@ -9,6 +9,8 @@ namespace _Project.Scripts.Components.Character.States
     {
         protected readonly ICharacterStateMachine CharacterStateMachine;
         protected readonly InputReader _inputReader;
+        protected readonly CharacterController _controller;
+        protected readonly Animator _animator;
         private readonly Camera _mainCamera;
         
         protected readonly AnimationParameters _parameters;
@@ -19,6 +21,8 @@ namespace _Project.Scripts.Components.Character.States
             MovementStats stats, AnimationParameters parameters, InputReader inputReader)
         {
             CharacterStateMachine = characterStateMachine;
+            _controller = CharacterStateMachine.Controller;
+            _animator = CharacterStateMachine.Animator;
             _inputReader = inputReader;
             _mainCamera = mainCamera;
 
@@ -36,13 +40,13 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
             
-            if (_inputReader.Value == Vector3.zero && CharacterStateMachine.Controller.velocity.magnitude < 0.001f)
+            if (_inputReader.Value == Vector3.zero && _controller.velocity.magnitude < 0.001f)
             {
                 CharacterStateMachine.SwitchState<StandingTickableState>();
                 return;
             }
 
-            if (_inputReader.IsJumping && CharacterStateMachine.IsGrounded)
+            if (_inputReader.IsJumping && _controller.isGrounded)
                 CharacterStateMachine.SwitchState<JumpingTickableState>();
         }
 
@@ -57,19 +61,12 @@ namespace _Project.Scripts.Components.Character.States
             forward = forward.normalized * (_inputReader.Value.z * Time.deltaTime);
             right = right.normalized * (_inputReader.Value.x * Time.deltaTime);
             
-            //float angle = Mathf.Atan2(-forward.z - right.z, forward.x + right.x) * Mathf.Rad2Deg;
-            //var forwardOnPlane = Vector3.Project(_mainCamera.transform.forward, Vector3.forward);
             Quaternion look = Quaternion.LookRotation(-_mainCamera.transform.right, Vector3.up);
-            //Quaternion rotation = Quaternion.Euler(0, forwardOnPlane.y, 0);
-            Vector3 euler = look.eulerAngles;
-            euler.x = 0f;
-            euler.z = 0f;
+            Vector3 euler = Vector3.up * look.eulerAngles.y;
             look = Quaternion.Euler(euler);
             
-            var controller = CharacterStateMachine.Controller;
-            Debug.DrawLine(controller.transform.position, controller.transform.position + _mainCamera.transform.forward, Color.red);
-            controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, look, 0.15f);
-            controller.Move((right + forward) * _stats.Speed);
+            _controller.transform.rotation = Quaternion.Slerp(_controller.transform.rotation, look, 0.15f);
+            _controller.Move((right + forward) * _stats.Speed);
             
             SetAnimationVelocityXZ(_inputReader.Value.x, _inputReader.Value.z);
         }
@@ -77,11 +74,9 @@ namespace _Project.Scripts.Components.Character.States
         protected virtual void HandleFalling()
         {
             _velocityY += _stats.GravityForce * (_stats.GravityForce.magnitude * 0.5f * Time.deltaTime);
-
-            var controller = CharacterStateMachine.Controller;
-            controller.Move(_velocityY * Time.deltaTime);
+            _controller.Move(_velocityY * Time.deltaTime);
             
-            if (CharacterStateMachine.IsGrounded)
+            if (_controller.isGrounded)
             {
                 ResetAnimationVelocityY();
                 _velocityY = _stats.GravityForce;
@@ -90,14 +85,14 @@ namespace _Project.Scripts.Components.Character.States
 
         private void SetAnimationVelocityXZ(float xMagnitude, float zMagnitude)
         {
-            CharacterStateMachine.Animator.SetFloat(_parameters.VelocityX, xMagnitude);
-            CharacterStateMachine.Animator.SetFloat(_parameters.VelocityZ, zMagnitude);
+            _animator.SetFloat(_parameters.VelocityX, xMagnitude);
+            _animator.SetFloat(_parameters.VelocityZ, zMagnitude);
             
             // sqrt(x^2 + y^2) ~= (x+y) * sqrt(2)
-            CharacterStateMachine.Animator.SetFloat(_parameters.MagnitudeXZ, (Math.Abs(xMagnitude) + Math.Abs(zMagnitude)) * 0.7f);
+            _animator.SetFloat(_parameters.MagnitudeXZ, (Math.Abs(xMagnitude) + Math.Abs(zMagnitude)) * 0.7f);
         }
 
-        private void ResetAnimationVelocityY() => CharacterStateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
+        private void ResetAnimationVelocityY() => _animator.SetFloat(_parameters.HashVelocityY, 0f);
 
         public void Exit()
         {

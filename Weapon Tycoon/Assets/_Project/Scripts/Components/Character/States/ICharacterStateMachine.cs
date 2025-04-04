@@ -7,6 +7,5 @@ namespace _Project.Scripts.Components.Character.States
     {
         public Animator Animator { get; }
         public CharacterController Controller { get; }
-        public bool IsGrounded { get; }
     }
 }

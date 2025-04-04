@@ -168,18 +168,14 @@ namespace _Project.Scripts.Components.Spawners
             SpawnText();
         }
 
-        private void RewardMoney()
-        {
-            _currencyEventChannel.Invoke(_spawnerData.ProductPrice);
-            //EventBus.BankIncome.Invoke(_spawnerData.ProductPrice);
-        }
+        private void RewardMoney() => _currencyEventChannel.Invoke(_spawnerData.ProductPrice);
 
         private void SpawnText()
         {
-            var moneyText = _poolService.Next(ObjectPoolService.EconomyType.MoneyTextView);
-            moneyText.transform.position = _moneyTextSpawnPoint.position;
-            ((MoneyTextView)moneyText).SetText($"+{_spawnerData.ProductPrice.ToHeaderMoneyFormat()}");
-            ((MoneyTextView)moneyText).PlayTextAnimation();
+            var moneyText = _poolService.Next(ObjectPoolService.EconomyType.MoneyTextView) as MoneyTextView;
+            moneyText!.transform.position = _moneyTextSpawnPoint.position;
+            moneyText.SetText($"+{_spawnerData.ProductPrice.ToHeaderMoneyFormat()}");
+            moneyText.PlayTextAnimation();
         }
 
         async UniTaskVoid SpawnerTimerAsync()

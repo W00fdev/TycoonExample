@@ -37,7 +37,7 @@ namespace _Project.Scripts.Components.Enemies.States
 
             _linkedCts =
                 CancellationTokenSource.CreateLinkedTokenSource(_cts.Token,
-                    _animator.gameObject.GetCancellationTokenOnDestroy());
+                    _animator.GetCancellationTokenOnDestroy());
             
             DelayedDeath().Forget();
         }

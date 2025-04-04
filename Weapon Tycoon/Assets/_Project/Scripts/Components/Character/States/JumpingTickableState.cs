@@ -15,7 +15,7 @@ namespace _Project.Scripts.Components.Character.States
         public override void Enter()
         {
             _velocityY = _stats.JumpForce;
-            CharacterStateMachine.Controller.Move(_velocityY * Time.deltaTime);
+            _controller.Move(_velocityY * Time.deltaTime);
         }
 
         public override void Tick()
@@ -23,7 +23,7 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
 
-            if (!CharacterStateMachine.IsGrounded) 
+            if (!_controller.isGrounded) 
                 return;
             
             if (_inputReader.Value == Vector3.zero)
@@ -36,8 +36,8 @@ namespace _Project.Scripts.Components.Character.States
         {
             base.HandleFalling();
             
-            if (CharacterStateMachine.IsGrounded == false)
-                CharacterStateMachine.Animator.SetFloat(_parameters.HashVelocityY, _velocityY.magnitude);
+            if (_controller.isGrounded == false)
+                _animator.SetFloat(_parameters.HashVelocityY, _velocityY.magnitude);
         }
     }
 }

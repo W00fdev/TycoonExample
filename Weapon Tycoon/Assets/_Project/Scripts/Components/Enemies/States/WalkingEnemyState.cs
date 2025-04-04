@@ -52,7 +52,7 @@ namespace _Project.Scripts.Components.Enemies.States
 
             _linkedCts =
                 CancellationTokenSource.CreateLinkedTokenSource(_cts.Token,
-                    _agent.gameObject.GetCancellationTokenOnDestroy());
+                    _agent.GetCancellationTokenOnDestroy());
             
             OptimizedChecker().Forget();
             

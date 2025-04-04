@@ -69,9 +69,6 @@ namespace _Project.Scripts.Components.Character
 
         public void Tick() => _currentTickableState.Tick();
 
-        public bool IsGrounded
-            => Controller.isGrounded; /*|| Physics.CheckSphere(_groundCheck.position, 0.0001f, _groundLayer.value);*/
-
         public void SwitchState<T>()
             where T : IState
         {
