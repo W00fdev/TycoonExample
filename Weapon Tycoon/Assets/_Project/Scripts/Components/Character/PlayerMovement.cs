@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Project.Scripts.Components.Character.States;
 using _Project.Scripts.Infrastructure.States;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Zenject;
 
 namespace _Project.Scripts.Components.Character
 {
@@ -29,7 +29,7 @@ namespace _Project.Scripts.Components.Character
         public int HashVelocityY=> Animator.StringToHash(VelocityY);
     }
     
-    public class PlayerMovement : MonoBehaviour, IStateMachineCharacter
+    public class PlayerMovement : MonoBehaviour, IInitializable, ITickable, ICharacterStateMachine
     {
         [SerializeField] private AnimationParameters _parameters;
         [SerializeField] private MovementStats _stats;
@@ -46,28 +46,28 @@ namespace _Project.Scripts.Components.Character
 
         public Animator Animator => _animator;
         public CharacterController Controller => _controller;
-        public InputReader InputReader => _inputReader;
+
+        [Inject]
+        public void Construct(InputReader inputReader)
+        {
+            _inputReader = inputReader;
+        }
         
-        private void Awake()
+        public void Initialize()
         {
             _animator = GetComponentInChildren<Animator>();
             _controller = GetComponent<CharacterController>();
-            
-            _inputReader = new InputReader();
-            _currentTickableState = new StandingTickableState(this, _parameters, _mainCamera);
+
+            _currentTickableState = new StandingTickableState(this, _parameters, _inputReader, _mainCamera);
             _movementStates = new Dictionary<Type, ITickableState>()
             {
                 { typeof(StandingTickableState), _currentTickableState },
-                { typeof(MovingTickableState), new MovingTickableState(this, _mainCamera, _stats, _parameters) },
-                { typeof(JumpingTickableState), new JumpingTickableState(this, _mainCamera, _stats, _parameters) },
+                { typeof(MovingTickableState), new MovingTickableState(this, _mainCamera, _stats, _parameters, _inputReader) },
+                { typeof(JumpingTickableState), new JumpingTickableState(this, _mainCamera, _stats, _parameters, _inputReader) },
             };
         }
 
-        private void Update()
-        {
-            _inputReader.Update();
-            _currentTickableState.Tick();
-        }
+        public void Tick() => _currentTickableState.Tick();
 
         public bool IsGrounded
             => Controller.isGrounded; /*|| Physics.CheckSphere(_groundCheck.position, 0.0001f, _groundLayer.value);*/

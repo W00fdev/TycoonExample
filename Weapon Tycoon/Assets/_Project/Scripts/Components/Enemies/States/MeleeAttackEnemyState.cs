@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class MeleeAttackTickableState : ITickableState
+    public class MeleeAttackEnemyState : ITickableState
     {
         private readonly IStateMachineEnemy _stateMachineEnemy;
         private readonly LayerMask _targetMask;
@@ -21,10 +21,13 @@ namespace _Project.Scripts.Components.Enemies.States
         private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
+        
+        // No animation events (reflection is slow)
+        private const float AttackAnimationTiming = 0.4f;
 
         private static readonly int AttackTriggerHash = Animator.StringToHash("Attack");
 
-        public MeleeAttackTickableState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
+        public MeleeAttackEnemyState(IStateMachineEnemy stateMachineEnemy, LayerMask targetMask, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             _targetMask = targetMask;
@@ -57,7 +60,7 @@ namespace _Project.Scripts.Components.Enemies.States
                 return;
             }
                 
-            _stateMachineEnemy.SwitchState<WalkingTickableState>();
+            _stateMachineEnemy.SwitchState<WalkingEnemyState>();
         }
 
         private void StartAttacking()
@@ -79,7 +82,7 @@ namespace _Project.Scripts.Components.Enemies.States
 
         public void Exit()
         {
-            _linkedCts.Cancel();
+            _linkedCts?.Cancel();
         }
         
         async UniTaskVoid AttackTimer()
@@ -88,15 +91,17 @@ namespace _Project.Scripts.Components.Enemies.States
                    && _targetHealth && _targetHealth.IsAlive)
             {
                 _animator.SetTrigger(AttackTriggerHash);
-                _targetHealth.TakeDamage(_damage);
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(_atkCooldown), cancellationToken: _linkedCts.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(AttackAnimationTiming), cancellationToken: _linkedCts.Token);
+                _targetHealth.TakeDamage(_damage);
+
+                await UniTask.Delay(TimeSpan.FromSeconds(_atkCooldown - AttackAnimationTiming), cancellationToken: _linkedCts.Token);
             }
             
             if (!_targetHealth)
-                _stateMachineEnemy.SwitchState<WalkingTickableState>();
+                _stateMachineEnemy.SwitchState<WalkingEnemyState>();
             else if (_targetHealth.IsAlive == false)
-                _stateMachineEnemy.SwitchState<WalkingTickableState>();
+                _stateMachineEnemy.SwitchState<WalkingEnemyState>();
         }
     }
 }

@@ -92,7 +92,7 @@ namespace _Project.Scripts.Components
 
         public void StartStateMachine()
         {
-            _currentTickableState = _states[typeof(WalkingTickableState)];
+            _currentTickableState = _states[typeof(WalkingEnemyState)];
             _currentTickableState.Enter();
         }
         
@@ -100,13 +100,13 @@ namespace _Project.Scripts.Components
         {
             _states = new Dictionary<Type, ITickableState>()
             {
-                {typeof(WalkingTickableState), new WalkingTickableState(this, _config) },
-                {typeof(MeleeAttackTickableState), new MeleeAttackTickableState(this, _targetLayer, _config) },
-                {typeof(DyingTickableState), new DyingTickableState(this, ReturnToPool) },
+                {typeof(WalkingEnemyState), new WalkingEnemyState(this, _config) },
+                {typeof(MeleeAttackEnemyState), new MeleeAttackEnemyState(this, _targetLayer, _config) },
+                {typeof(DyingEnemyState), new DyingEnemyState(this, ReturnToPool) },
             };
         }
 
-        private void EnterDeathState() => SwitchState<DyingTickableState>();
+        private void EnterDeathState() => SwitchState<DyingEnemyState>();
 
         private void AnimateDamage() => Tween.PunchScale(_basicModel, Vector3.up * 0.1f, 0.1f);
 

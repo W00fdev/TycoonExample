@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class WalkingTickableState : ITickableState
+    public class WalkingEnemyState : ITickableState
     {
         private readonly IStateMachineEnemy _stateMachineEnemy;
         private readonly NavMeshAgent _agent;
@@ -23,7 +23,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private static readonly int WalkBooleanHash = Animator.StringToHash("Walk");
         private static readonly int SpeedMagnitude = Animator.StringToHash("SpeedMagnitude");
 
-        public WalkingTickableState(IStateMachineEnemy stateMachineEnemy, EnemyConfig enemyConfig)
+        public WalkingEnemyState(IStateMachineEnemy stateMachineEnemy, EnemyConfig enemyConfig)
         {
             _stateMachineEnemy = stateMachineEnemy;
             
@@ -88,7 +88,7 @@ namespace _Project.Scripts.Components.Enemies.States
                       _agent.stoppingDistance)) continue;
                 
                 _agent.isStopped = true;
-                _stateMachineEnemy.SwitchState<MeleeAttackTickableState>();
+                _stateMachineEnemy.SwitchState<MeleeAttackEnemyState>();
             }
         }
     }

@@ -1,10 +1,12 @@
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Scripts.Components.Character
 {
-    public class InputReader
+    // No interface by RAP (repeat abstraction principle)
+    public class InputReader : ITickable
     {
-        private Vector3 _input;
+        private Vector3 _input = Vector3.zero;
         private bool _isJumping;
 
         public Vector3 Value => _input;
@@ -12,7 +14,7 @@ namespace _Project.Scripts.Components.Character
 
         public bool IsLeftMouseButton => Input.GetMouseButton(0);
         
-        public void Update()
+        public void Tick()
         {
             _input.x = Input.GetAxisRaw("Horizontal");
             _input.y = 0f;

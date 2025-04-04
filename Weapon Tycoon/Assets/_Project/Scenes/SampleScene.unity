@@ -2578,6 +2578,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a67943d80eaa2e2499f29af7a9701484, type: 3}
   m_PrefabInstance: {fileID: 1559261126}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &107508775 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5370331281334021290, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
+  m_PrefabInstance: {fileID: 1084870591412318680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &109428842
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28681,7 +28686,7 @@ MonoBehaviour:
   _currencyPipe: {fileID: 1480677069}
   _turretsController: {fileID: 1719287250}
   _wavesSpawner: {fileID: 476071174}
-  _wallController: {fileID: 1425252506}
+  _wallPresenter: {fileID: 1425252506}
 --- !u!1001 &1045157091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42013,6 +42018,8 @@ MonoBehaviour:
     WallHealth: {fileID: 172093772}
     WallTarget: {fileID: 1990799286}
     FlagTarget: {fileID: 543450653684139952}
+  _weaponHolder: {fileID: 1863007296}
+  _playerMovement: {fileID: 1863007293}
 --- !u!1 &1480502425
 GameObject:
   m_ObjectHideFlags: 0
@@ -49965,6 +49972,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fd500fe7715bf9b43a84def16c3354a9, type: 3}
   m_PrefabInstance: {fileID: 1801870253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1801883717 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9153542533594117894, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
+  m_PrefabInstance: {fileID: 2636076784349023508}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1802066995
 PrefabInstance:
@@ -60146,6 +60158,14 @@ PrefabInstance:
       propertyPath: _spawnerName
       value: Rifle 1 Factory
       objectReference: {fileID: 0}
+    - target: {fileID: 3681283139549007039, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
+      propertyPath: _popupContainer
+      value: 
+      objectReference: {fileID: 107508775}
+    - target: {fileID: 3681283139549007039, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
+      propertyPath: _popupAnimationDuration
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6136062359215735447, guid: 90c48dd730ad87940a92aecaeda12ee8, type: 3}
       propertyPath: m_Name
       value: Spawner_0_2
@@ -61429,6 +61449,14 @@ PrefabInstance:
     - target: {fileID: 3455710644389797405, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454679898572716633, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
+      propertyPath: _popupContainer
+      value: 
+      objectReference: {fileID: 1801883717}
+    - target: {fileID: 7454679898572716633, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
+      propertyPath: _popupAnimationDuration
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7766633828729480045, guid: 5b0bdd560dd5108468dee28e3c91183d, type: 3}
       propertyPath: m_AnchorMax.y

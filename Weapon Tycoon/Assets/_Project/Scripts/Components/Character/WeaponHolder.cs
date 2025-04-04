@@ -21,7 +21,7 @@ namespace _Project.Scripts.Components.Character
         public float Spread;
     }
     
-    public class WeaponHolder : MonoBehaviour
+    public class WeaponHolder : MonoBehaviour, IInitializable
     {
         [Header("Impact animations")]
         [SerializeField] private Transform _ikTarget;
@@ -50,15 +50,24 @@ namespace _Project.Scripts.Components.Character
 
         private readonly Vector3 _strength = new Vector3(0.05f, 0.1f, 0.5f);
         
-        [Inject] private ObjectPoolService _poolService; 
+        private ObjectPoolService _poolService;
+
+        [Inject]
+        public void Construct(ObjectPoolService poolService)
+        {
+            _poolService = poolService;
+        }
+        
+        public void Initialize()
+        {
+            UpdateFromConfig();
+            
+            _initialized = true;
+            _allowedFire = true;
+        }
         
         private void Start()
         {
-            _initialized = true;
-            _allowedFire = true;
-
-            UpdateFromConfig();
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }

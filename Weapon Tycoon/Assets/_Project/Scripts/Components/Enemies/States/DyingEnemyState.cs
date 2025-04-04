@@ -8,7 +8,7 @@ using UnityEngine.AI;
 
 namespace _Project.Scripts.Components.Enemies.States
 {
-    public class DyingTickableState : ITickableState
+    public class DyingEnemyState : ITickableState
     {
         private readonly Animator _animator;
         private readonly NavMeshAgent _agent;
@@ -20,7 +20,7 @@ namespace _Project.Scripts.Components.Enemies.States
         private const float SecondsToDie = 2.6f;
         private static readonly int DeathTriggerHash = Animator.StringToHash("Death");
         
-        public DyingTickableState(IStateMachineEnemy stateMachine, Action diedEvent)
+        public DyingEnemyState(IStateMachineEnemy stateMachine, Action diedEvent)
         {
             _animator = stateMachine.Animator;
             _agent = stateMachine.Agent;

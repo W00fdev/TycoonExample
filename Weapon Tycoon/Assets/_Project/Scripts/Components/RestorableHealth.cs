@@ -20,7 +20,7 @@ namespace _Project.Scripts.Components
             base.Initialize(hp);
             _maxHp = hp;
             ChangedHealthEvent?.Invoke(_health, _maxHp);
-
+            
             _regenerationRoutine = StartCoroutine(Regeneration());
         }
 
@@ -40,6 +40,18 @@ namespace _Project.Scripts.Components
             _regenerationRoutine ??= StartCoroutine(Regeneration());
         }
 
+        private void OnEnable()
+        {
+            DamagedEvent += UpdateChangedHealth;
+        }
+        
+        private void OnDisable()
+        {
+            DamagedEvent -= UpdateChangedHealth;
+        }
+
+        private void UpdateChangedHealth() => ChangedHealthEvent?.Invoke(_health, _maxHp);
+        
         IEnumerator Regeneration()
         {
             while (true)

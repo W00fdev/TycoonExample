@@ -7,7 +7,7 @@ namespace _Project.Scripts.Components.Character.States
     [Serializable]
     public class MovingTickableState : ITickableState
     {
-        protected readonly IStateMachineCharacter StateMachineCharacter;
+        protected readonly ICharacterStateMachine CharacterStateMachine;
         protected readonly InputReader _inputReader;
         private readonly Camera _mainCamera;
         
@@ -15,11 +15,11 @@ namespace _Project.Scripts.Components.Character.States
         protected readonly MovementStats _stats;
         protected Vector3 _velocityY;
 
-        public MovingTickableState(IStateMachineCharacter stateMachineCharacter, Camera mainCamera,
-            MovementStats stats, AnimationParameters parameters)
+        public MovingTickableState(ICharacterStateMachine characterStateMachine, Camera mainCamera,
+            MovementStats stats, AnimationParameters parameters, InputReader inputReader)
         {
-            StateMachineCharacter = stateMachineCharacter;
-            _inputReader = StateMachineCharacter.InputReader;
+            CharacterStateMachine = characterStateMachine;
+            _inputReader = inputReader;
             _mainCamera = mainCamera;
 
             _velocityY = Vector3.zero;
@@ -36,14 +36,14 @@ namespace _Project.Scripts.Components.Character.States
             HandleMovement();
             HandleFalling();
             
-            if (_inputReader.Value == Vector3.zero && StateMachineCharacter.Controller.velocity.magnitude < 0.001f)
+            if (_inputReader.Value == Vector3.zero && CharacterStateMachine.Controller.velocity.magnitude < 0.001f)
             {
-                StateMachineCharacter.SwitchState<StandingTickableState>();
+                CharacterStateMachine.SwitchState<StandingTickableState>();
                 return;
             }
 
-            if (_inputReader.IsJumping && StateMachineCharacter.IsGrounded)
-                StateMachineCharacter.SwitchState<JumpingTickableState>();
+            if (_inputReader.IsJumping && CharacterStateMachine.IsGrounded)
+                CharacterStateMachine.SwitchState<JumpingTickableState>();
         }
 
         protected void HandleMovement()
@@ -66,7 +66,7 @@ namespace _Project.Scripts.Components.Character.States
             euler.z = 0f;
             look = Quaternion.Euler(euler);
             
-            var controller = StateMachineCharacter.Controller;
+            var controller = CharacterStateMachine.Controller;
             Debug.DrawLine(controller.transform.position, controller.transform.position + _mainCamera.transform.forward, Color.red);
             controller.transform.rotation = Quaternion.Slerp(controller.transform.rotation, look, 0.15f);
             controller.Move((right + forward) * _stats.Speed);
@@ -78,10 +78,10 @@ namespace _Project.Scripts.Components.Character.States
         {
             _velocityY += _stats.GravityForce * (_stats.GravityForce.magnitude * 0.5f * Time.deltaTime);
 
-            var controller = StateMachineCharacter.Controller;
+            var controller = CharacterStateMachine.Controller;
             controller.Move(_velocityY * Time.deltaTime);
             
-            if (StateMachineCharacter.IsGrounded)
+            if (CharacterStateMachine.IsGrounded)
             {
                 ResetAnimationVelocityY();
                 _velocityY = _stats.GravityForce;
@@ -90,14 +90,14 @@ namespace _Project.Scripts.Components.Character.States
 
         private void SetAnimationVelocityXZ(float xMagnitude, float zMagnitude)
         {
-            StateMachineCharacter.Animator.SetFloat(_parameters.VelocityX, xMagnitude);
-            StateMachineCharacter.Animator.SetFloat(_parameters.VelocityZ, zMagnitude);
+            CharacterStateMachine.Animator.SetFloat(_parameters.VelocityX, xMagnitude);
+            CharacterStateMachine.Animator.SetFloat(_parameters.VelocityZ, zMagnitude);
             
             // sqrt(x^2 + y^2) ~= (x+y) * sqrt(2)
-            StateMachineCharacter.Animator.SetFloat(_parameters.MagnitudeXZ, (Math.Abs(xMagnitude) + Math.Abs(zMagnitude)) * 0.7f);
+            CharacterStateMachine.Animator.SetFloat(_parameters.MagnitudeXZ, (Math.Abs(xMagnitude) + Math.Abs(zMagnitude)) * 0.7f);
         }
 
-        private void ResetAnimationVelocityY() => StateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, 0f);
+        private void ResetAnimationVelocityY() => CharacterStateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
 
         public void Exit()
         {

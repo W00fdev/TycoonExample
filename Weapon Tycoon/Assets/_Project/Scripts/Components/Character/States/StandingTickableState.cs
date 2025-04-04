@@ -7,39 +7,39 @@ namespace _Project.Scripts.Components.Character.States
     [Serializable]
     public class StandingTickableState : ITickableState
     {
-        private readonly IStateMachineCharacter _stateMachineCharacter;
+        private readonly ICharacterStateMachine _characterStateMachine;
         private readonly InputReader _inputReader;
         private readonly CharacterController _controller;
         private readonly AnimationParameters _parameters;
         private readonly Camera _camera;
         
-        public StandingTickableState(IStateMachineCharacter stateMachineCharacter, AnimationParameters parameters, Camera camera)
+        public StandingTickableState(ICharacterStateMachine characterStateMachine, AnimationParameters parameters, InputReader inputReader, Camera camera)
         {
-            _stateMachineCharacter = stateMachineCharacter;
-            _inputReader = stateMachineCharacter.InputReader;
-            _controller = _stateMachineCharacter.Controller;
+            _characterStateMachine = characterStateMachine;
+            _inputReader = inputReader;
+            _controller = _characterStateMachine.Controller;
             _parameters = parameters;
             _camera = camera;
         }
         
         public void Enter()
         {
-            _stateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityX, 0f);
-            _stateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityZ, 0f);
-            _stateMachineCharacter.Animator.SetFloat(_parameters.HashMagnitudeXZ, 0f);
-            _stateMachineCharacter.Animator.SetFloat(_parameters.HashVelocityY, 0f);
+            _characterStateMachine.Animator.SetFloat(_parameters.HashVelocityX, 0f);
+            _characterStateMachine.Animator.SetFloat(_parameters.HashVelocityZ, 0f);
+            _characterStateMachine.Animator.SetFloat(_parameters.HashMagnitudeXZ, 0f);
+            _characterStateMachine.Animator.SetFloat(_parameters.HashVelocityY, 0f);
         }
 
         public void Tick()
         {
-            if (_inputReader.Value != Vector3.zero || _stateMachineCharacter.Controller.velocity.magnitude > 0.01f)
+            if (_inputReader.Value != Vector3.zero || _characterStateMachine.Controller.velocity.magnitude > 0.01f)
             {
-                _stateMachineCharacter.SwitchState<MovingTickableState>();
+                _characterStateMachine.SwitchState<MovingTickableState>();
                 return;
             }
             
             if (_inputReader.IsJumping)
-                _stateMachineCharacter.SwitchState<JumpingTickableState>();
+                _characterStateMachine.SwitchState<JumpingTickableState>();
 
             HandleRotation();
         }

@@ -1,3 +1,4 @@
+using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Loading;
 using _Project.Scripts.Infrastructure.Pools;
@@ -34,6 +35,11 @@ namespace _Project.Scripts.Infrastructure.Installers
             Container
                 .Bind<ISaveLoadService>()
                 .FromInstance(cloudLoaded)
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .BindInterfacesAndSelfTo<InputReader>()
                 .AsSingle()
                 .NonLazy();
         }

@@ -1,4 +1,5 @@
 using _Project.Scripts.Components;
+using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Bootstrappers;
 using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.States.GameState;
@@ -15,12 +16,32 @@ namespace _Project.Scripts.Infrastructure.Installers
         [SerializeField] private DefenseShop _defenseShop;
 
         [SerializeField] private Enemy.EnemySceneReferences _enemySceneReferences;
-    
+        [SerializeField] private WeaponHolder _weaponHolder;
+        [SerializeField] private PlayerMovement _playerMovement;
+        
+        
         public override void InstallBindings()
         {
             InstallSceneReferences();
             InstallGameStateMachine();
             InstallSceneFactories();
+            InstallPlayer();
+        }
+
+        private void InstallPlayer()
+        {
+            // Bind all except IStateMachineCharacter
+            Container
+                .Bind(typeof(IInitializable), typeof(ITickable))
+                .FromInstance(_playerMovement)
+                .AsSingle()
+                .NonLazy();
+            
+            Container
+                .BindInterfacesTo<WeaponHolder>()
+                .FromInstance(_weaponHolder)
+                .AsSingle()
+                .NonLazy();
         }
 
         private void InstallSceneFactories()
