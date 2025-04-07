@@ -1,9 +1,7 @@
-using _Project.Scripts.Infrastructure.UI;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-namespace _Project.Scripts.UI.Views.Spawners
+namespace _Project.Scripts.UI.Views
 {
     public class UpgraderInfoView : PopupView
     {

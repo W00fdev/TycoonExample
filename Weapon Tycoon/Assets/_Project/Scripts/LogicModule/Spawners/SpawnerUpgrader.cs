@@ -8,6 +8,7 @@ using _Project.Scripts.Utils;
 using UnityEngine;
 using Zenject;
 using System;
+using _Project.Scripts.UI.Views;
 
 namespace _Project.Scripts.LogicModule.Spawners
 {
@@ -79,7 +80,7 @@ namespace _Project.Scripts.LogicModule.Spawners
         private void UpdateButtonViewAfterUpgrade()
         {
             if (_spawnerData.IsUpgradeExist() == false)
-                _upgradeButton.GetComponent<ButtonSender>().DisableButton();
+                _upgradeButton.GetComponent<IntButtonSender>().DisableButton();
             else
                 _upgradeButton.SetPriceInfo(_spawnerData.UpgradePrice.ToHeaderMoneyFormat());
         }

@@ -3,11 +3,10 @@ using _Project.Scripts.Components.Buttons;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
 using _Project.Scripts.UI.Presenters;
+using _Project.Scripts.UI.Views;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
-using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.Utils;
 using UnityEngine;
-using Zenject;
 
 namespace _Project.Scripts.LogicModule.BigBeautifulWall
 {
@@ -20,8 +19,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private Wall _wall;
         [SerializeField] private string _wallKeyName;
-        
+
         private PersistentProgress _progress;
+        private long _repairPrice;
 
         public Wall Wall => _wall;
         public event Action WallOpened;
@@ -60,6 +60,14 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             
             OpenWall();
         }
+
+        public void BuyRepair()
+        {
+            if (_currencyPipe.TrySpendCash(_wallData.RepairPrice) == false)
+                return;
+            
+            _wall.Health.Repair();
+        }
         
         public void BuyUpgrade()
         {
@@ -87,7 +95,7 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         private void UpdateButtonViewAfterUpgrade()
         {
             if (_wallData.IsUpgradeExist() == false)
-                _upgradeButton.GetComponent<ButtonSender>().DisableButton();
+                _upgradeButton.GetComponent<IntButtonSender>().DisableButton();
             else
                 _upgradeButton.SetPriceInfo(_wallData.UpgradePrice.ToHeaderMoneyFormat());
         }

@@ -32,6 +32,8 @@ namespace _Project.Scripts.LogicModule
             _turretsController.Initialize(_progress);
             _wavesSpawner.Initialize(_enemyFactory);
             _wallPresenter.Initialize(_progress);
+
+            _wavesSpawner.StartSpawn();
         }
     }
 }

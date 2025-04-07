@@ -16,12 +16,16 @@ MonoBehaviour:
   - Regeneration: 0
     Health: 10
     BuyPrice: 0
+    RepairPrice: 25
   - Regeneration: 0
     Health: 15
     BuyPrice: 50
+    RepairPrice: 52
   - Regeneration: 0
     Health: 20
     BuyPrice: 100
+    RepairPrice: 100
   - Regeneration: 1
     Health: 25
     BuyPrice: 250
+    RepairPrice: 250

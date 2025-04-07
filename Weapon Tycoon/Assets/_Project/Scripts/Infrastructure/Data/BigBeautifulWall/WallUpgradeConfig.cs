@@ -15,6 +15,7 @@ namespace _Project.Scripts.Infrastructure.Data.BigBeautifulWall
             public int Regeneration;
             public int Health;
             public long BuyPrice;
+            public long RepairPrice;
         }
     }
 }

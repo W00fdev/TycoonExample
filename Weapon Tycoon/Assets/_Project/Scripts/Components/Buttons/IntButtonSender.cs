@@ -1,14 +1,12 @@
-using _Project.Scripts.Infrastructure.ScriptableEvents;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using UnityEngine;
 
 namespace _Project.Scripts.Components.Buttons
 {
-    public class ButtonSender : BaseButtonSender<EventChannel, Empty>
+    public class IntButtonSender : BaseButtonSender<IntEventChannel, int>
     {
-        [SerializeField] private EventChannel _eventChannel;
-
-        private Empty _nullObject;
+        [SerializeField] private int _dataSend;
+        [SerializeField] private IntEventChannel _eventChannel;
         
         // Context Invocation
         public void Send()
@@ -16,7 +14,7 @@ namespace _Project.Scripts.Components.Buttons
             if (_isDisabled)
                 return;
               
-            _eventChannel.Invoke(_nullObject);
+            _eventChannel.Invoke(_dataSend);
         }
     }
 }

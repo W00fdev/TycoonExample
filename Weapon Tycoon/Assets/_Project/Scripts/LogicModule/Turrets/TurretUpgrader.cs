@@ -4,6 +4,7 @@ using _Project.Scripts.Components.Turrets;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.Turrets;
 using _Project.Scripts.UI.Presenters;
+using _Project.Scripts.UI.Views;
 using _Project.Scripts.UI.Views.Spawners;
 using _Project.Scripts.UI.Views.Turrets;
 using _Project.Scripts.Utils;
@@ -81,7 +82,7 @@ namespace _Project.Scripts.LogicModule.Turrets
         private void UpdateButtonViewAfterUpgrade()
         {
             if (_turretData.IsUpgradeExist() == false)
-                _upgradeButton.GetComponent<ButtonSender>().DisableButton();
+                _upgradeButton.GetComponent<IntButtonSender>().DisableButton();
             else
                 _upgradeButton.SetPriceInfo(_turretData.UpgradePrice.ToHeaderMoneyFormat());
         }
