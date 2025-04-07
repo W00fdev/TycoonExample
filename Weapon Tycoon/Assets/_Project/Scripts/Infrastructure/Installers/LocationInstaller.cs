@@ -1,5 +1,6 @@
 using _Project.Scripts.Components;
 using _Project.Scripts.Components.Character;
+using _Project.Scripts.Data;
 using _Project.Scripts.Infrastructure.Bootstrappers;
 using _Project.Scripts.Infrastructure.Factories;
 using _Project.Scripts.Infrastructure.States.GameState;
@@ -15,10 +16,11 @@ namespace _Project.Scripts.Infrastructure.Installers
         [SerializeField] private EconomyShop _economyShop;
         [SerializeField] private DefenseShop _defenseShop;
 
-        [SerializeField] private Enemy.EnemySceneReferences _enemySceneReferences;
+        //[SerializeField] private Enemy.EnemySceneReferences _enemySceneReferences;
         [SerializeField] private WeaponHolder _weaponHolder;
         [SerializeField] private PlayerMovement _playerMovement;
         
+        [SerializeField] private Enemy.EnemySceneReferences _enemySceneReferences;
         
         public override void InstallBindings()
         {

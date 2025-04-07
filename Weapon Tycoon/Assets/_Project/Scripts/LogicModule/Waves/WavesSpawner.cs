@@ -23,8 +23,7 @@ namespace _Project.Scripts.LogicModule.Waves
         // waveconfig : enemyconfig[] wavedata
         private readonly WaitForSeconds _waiter = new WaitForSeconds(1f);
 
-        [Inject]
-        private void Construct(EnemyFactory enemyFactory)
+        public void Initialize(EnemyFactory enemyFactory)
         {
             _enemyFactory = enemyFactory;
         }

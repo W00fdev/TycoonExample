@@ -1,5 +1,5 @@
-using _Project.Scripts.Components.Character.States;
 using _Project.Scripts.Infrastructure.States;
+using _Project.Scripts.LogicModule;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +10,6 @@ namespace _Project.Scripts.Components.Enemies
         public Animator Animator { get; }
         public NavMeshAgent Agent { get; }
         
-        public Transform Target { get; }
+        public VolumePivot Target { get; }
     }
 }

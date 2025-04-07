@@ -10,10 +10,12 @@ namespace _Project.Scripts.LogicModule.Turrets
         [SerializeField] private TurretUpgrader[] _upgraders;
         private int _turretLevel;
 
-        [Inject] private PersistentProgress _progress;
+        private PersistentProgress _progress;
     
-        public void Initialize()
+        public void Initialize(PersistentProgress progress)
         {
+            _progress = progress;
+            
             var data = _progress.Data;
             int openTurretsCount = data.TurretUpgrades.Count;
             if (openTurretsCount < _upgraders.Length)

@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using _Project.Scripts.Components.Character;
 using _Project.Scripts.Components.Enemies;
 using _Project.Scripts.Components.Enemies.States;
+using _Project.Scripts.Data;
 using _Project.Scripts.Infrastructure.Data.Enemies;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.Infrastructure.States;
+using _Project.Scripts.LogicModule;
 using _Project.Scripts.LogicModule.Views;
 using PrimeTween;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components
 {
@@ -33,9 +36,9 @@ namespace _Project.Scripts.Components
         
         public Animator Animator => _animator;
         public NavMeshAgent Agent => _agent;
-        public Transform Target => _sceneReferences.WallHealth.IsAlive 
-            ? _sceneReferences.WallTarget 
-            : _sceneReferences.FlagTarget;
+        public VolumePivot Target => _sceneReferences.WallHealth.IsAlive 
+            ? _sceneReferences.WallPivot 
+            : _sceneReferences.FlagPivot;
 
         public bool IsInitialized => _isInitialized;
 
@@ -43,11 +46,11 @@ namespace _Project.Scripts.Components
         public class EnemySceneReferences
         {
             public Health WallHealth;
-            public Transform WallTarget;
-            public Transform FlagTarget;
+            public VolumePivot WallPivot;
+            public VolumePivot FlagPivot;
         }
         
-        public void Initialize(EnemySceneReferences sceneReferences)
+        public void Initialize(Enemy.EnemySceneReferences sceneReferences)
         {
             _sceneReferences = sceneReferences;
             

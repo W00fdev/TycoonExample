@@ -14,5 +14,8 @@ namespace _Project.Scripts.UI.Views.Spawners
 
         public void EnableSelf()
             => gameObject.SetActive(true);
+        
+        public void DisableSelf()
+            => gameObject.SetActive(false);
     }
 }

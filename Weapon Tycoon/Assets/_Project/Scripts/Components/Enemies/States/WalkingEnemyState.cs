@@ -2,6 +2,7 @@ using System.Threading;
 using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Data.Enemies;
 using _Project.Scripts.Infrastructure.States;
+using _Project.Scripts.LogicModule;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,8 +15,8 @@ namespace _Project.Scripts.Components.Enemies.States
         private readonly NavMeshAgent _agent;
         private readonly Animator _animator;
 
-        private Transform _prevTarget;
-        private Transform _target;
+        private VolumePivot _prevTarget;
+        private VolumePivot _target;
         private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
@@ -45,7 +46,7 @@ namespace _Project.Scripts.Components.Enemies.States
             _target = _stateMachineEnemy.Target;
             _prevTarget = _target;
             
-            _agent.SetDestination(_target.position);
+            _agent.SetDestination(_target.RandomInsideVolume());
             _animator.SetBool(WalkBooleanHash, true);
             
             _cts = new CancellationTokenSource();
@@ -79,12 +80,12 @@ namespace _Project.Scripts.Components.Enemies.States
                 
                 _target = _stateMachineEnemy.Target;
                 if (_prevTarget != _target)
-                    _agent.SetDestination(_target.position);
+                    _agent.SetDestination(_target.RandomInsideVolume());
                     
                 _prevTarget = _target;
                 
                 if (!_agent.isStopped &&
-                    !(Vector3.Distance(_agent.transform.position, _target.position) <=
+                    !(Vector3.Distance(_agent.transform.position, _agent.destination) <=
                       _agent.stoppingDistance)) continue;
                 
                 _agent.isStopped = true;

@@ -16,17 +16,20 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         [SerializeField] private WallData _wallData;
         [SerializeField] private WallBuyerInfoView _wallBuyButton;
         [SerializeField] private UpgraderInfoView _upgradeButton;
+        [SerializeField] private RepairInfoView _repairButton;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private Wall _wall;
         [SerializeField] private string _wallKeyName;
         
-        [Inject] private PersistentProgress _progress;
+        private PersistentProgress _progress;
 
         public Wall Wall => _wall;
         public event Action WallOpened;
         
-        public void Initialize()
+        public void Initialize(PersistentProgress progress)
         {
+            _progress = progress;
+            
             int upgradeIndex = _progress.Data.WallUpgrades;
             _wallData.Initialize(upgradeIndex == -1 ? 0 : upgradeIndex);
             
@@ -104,9 +107,31 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             _wall.gameObject.SetActive(true);
             _wall.Initialize(_wallData);
             
+            _wall.Health.ChangedHealthEvent += ChangeButtonsVisibility;
             WallOpened?.Invoke();
         }
+
+        private void ChangeButtonsVisibility(int health, int maxHealth)
+        {
+            if (health == maxHealth)
+            {
+                _repairButton.DisableSelf();
+            }
+            else
+            {
+                _repairButton.EnableSelf();
+                
+                if (health == 0)
+                    _upgradeButton.DisableSelf();
+                else
+                    _upgradeButton.EnableSelf();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_wall != null && _wall.Health != null)
+                _wall.Health.ChangedHealthEvent -= ChangeButtonsVisibility;
+        }
     }
-    
-    
 }

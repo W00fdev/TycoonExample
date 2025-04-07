@@ -12,16 +12,18 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         [SerializeField] private WallHealthView _wallHealthView;
         [SerializeField] private Wall _wall;
 
-        [Inject] private PersistentProgress _progress;
+        private PersistentProgress _progress;
         
-        public void Initialize()
+        public void Initialize(PersistentProgress progress)
         {
+            _progress = progress;
+            
             _wallHealthView.HideInstant();
 
             _wall.Health.ChangedHealthEvent += OnWallHealthChanged;
 
             _wallUpgrader.WallOpened += ShowWallHealthbar;
-            _wallUpgrader.Initialize();
+            _wallUpgrader.Initialize(_progress);
         }
 
         private void OnDestroy() => _wallUpgrader.Wall.Health.ChangedHealthEvent -= _wallHealthView.UpdateHealthbar;

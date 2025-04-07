@@ -1,4 +1,5 @@
 using _Project.Scripts.Components;
+using _Project.Scripts.Data;
 using _Project.Scripts.Infrastructure.Pools;
 using JetBrains.Annotations;
 using UnityEngine;
