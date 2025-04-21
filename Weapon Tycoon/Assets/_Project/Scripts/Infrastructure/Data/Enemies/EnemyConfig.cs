@@ -18,5 +18,10 @@ namespace _Project.Scripts.Infrastructure.Data.Enemies
             public int Health;
             public long Reward;
         }
+
+        public const float MaxSpeed = 7;
+        public const float MinCooldown = 0.5f;
+        public const float MaxDamage = 100;
+        public const float MaxHealth = 10000;
     }
 }
