@@ -15,7 +15,7 @@ namespace _Project.Scripts.LogicModule
         public void Initialize()
         {
             _spawnersController.Initialize();
-
+            
         }
     }
 }

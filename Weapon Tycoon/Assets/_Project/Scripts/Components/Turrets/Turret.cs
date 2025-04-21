@@ -40,7 +40,7 @@ namespace _Project.Scripts.Components.Turrets
         
         private WaitForSeconds _awaiter;
         private TurretData _data;
-        private Health _target;
+        private HealthComponent _target;
         private Collider[] _colliders;
         private float _gunAnimDuration;
         private bool _gunPointChanger;
@@ -99,7 +99,7 @@ namespace _Project.Scripts.Components.Turrets
             _turretHead.rotation = Quaternion.RotateTowards(_turretHead.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
 
-        private bool TryFindTarget(out Health enemy)
+        private bool TryFindTarget(out HealthComponent enemy)
         {
             Physics.OverlapSphereNonAlloc(transform.position, _sensorZoneRadius, _colliders, _enemyLayer.value);
 
@@ -108,7 +108,7 @@ namespace _Project.Scripts.Components.Turrets
             for (int i = 0; i < _colliders.Length; i++)
             {
                 if (!_colliders[i]) continue;
-                if (_colliders[i].TryGetComponent(out Health aliveEnemy))
+                if (_colliders[i].TryGetComponent(out HealthComponent aliveEnemy))
                 {
                     if (aliveEnemy.IsAlive == false)
                         continue;

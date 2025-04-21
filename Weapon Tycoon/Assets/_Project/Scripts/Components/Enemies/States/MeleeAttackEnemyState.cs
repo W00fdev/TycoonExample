@@ -1,9 +1,10 @@
 using System;
 using System.Threading;
-using _Project.Scripts.Components.Character;
 using _Project.Scripts.Infrastructure.Data.Enemies;
 using _Project.Scripts.Infrastructure.States;
+using _Project.Scripts.LogicModule.BigBeautifulWall;
 using Cysharp.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace _Project.Scripts.Components.Enemies.States
@@ -17,10 +18,11 @@ namespace _Project.Scripts.Components.Enemies.States
 
         private int _damage;
         private float _atkCooldown;
-        private RestorableHealth _targetHealth;
         private EnemyConfig _enemyConfig;
         private CancellationTokenSource _cts;
         private CancellationTokenSource _linkedCts;
+        
+        [CanBeNull] private RestorableHealth _targetHealth;
         
         // No animation events (reflection is too slow)
         private const float AttackAnimationTiming = 0.9f;
@@ -54,8 +56,11 @@ namespace _Project.Scripts.Components.Enemies.States
                     _hits, Quaternion.identity, 1f, _targetMask.value) > 0)
             {
                 Debug.Log("Found overlap: " + _hits[0]);
-                if (_hits[0].collider.TryGetComponent(out _targetHealth))
+                if (_hits[0].collider.TryGetComponent(out Wall wall))
+                {
+                    _targetHealth = wall.Health;
                     StartAttacking();
+                }
                 
                 return;
             }
@@ -86,7 +91,7 @@ namespace _Project.Scripts.Components.Enemies.States
         async UniTaskVoid AttackTimer()
         {
             while (_linkedCts.IsCancellationRequested == false 
-                   && _targetHealth && _targetHealth.IsAlive)
+                   && _targetHealth is { IsAlive: true })
             {
                 _animator.SetTrigger(AttackTriggerHash);
                 
@@ -96,7 +101,7 @@ namespace _Project.Scripts.Components.Enemies.States
                 await UniTask.Delay(TimeSpan.FromSeconds(_atkCooldown - AttackAnimationTiming), cancellationToken: _linkedCts.Token);
             }
             
-            if (!_targetHealth)
+            if (_targetHealth == null)
                 _stateMachineEnemy.SwitchState<WalkingEnemyState>();
             else if (_targetHealth.IsAlive == false)
                 _stateMachineEnemy.SwitchState<WalkingEnemyState>();

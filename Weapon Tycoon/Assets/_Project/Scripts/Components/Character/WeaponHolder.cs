@@ -21,7 +21,7 @@ namespace _Project.Scripts.Components.Character
         public float Spread;
     }
     
-    public class WeaponHolder : MonoBehaviour, IInitializable
+    public class WeaponHolder : MonoBehaviour
     {
         [Header("Impact animations")]
         [SerializeField] private Transform _ikTarget;
@@ -145,7 +145,7 @@ namespace _Project.Scripts.Components.Character
                 
             // add distance-time scaling 
 
-            Health target = null;
+            HealthComponent target = null;
             if (hitInfo.collider.CompareTag("Enemy"))
                 hitInfo.collider.TryGetComponent(out target);
             

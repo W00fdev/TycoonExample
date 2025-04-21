@@ -1,5 +1,6 @@
 using _Project.Scripts.Infrastructure.UI;
 using _Project.Scripts.LocalizationSystem;
+using _Project.Scripts.UI.Dialogs;
 using TMPro;
 using UnityEngine;
 

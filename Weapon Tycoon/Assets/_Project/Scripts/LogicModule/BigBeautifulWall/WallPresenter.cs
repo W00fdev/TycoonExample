@@ -2,7 +2,6 @@ using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.UI.Views.BigBeautifulWall;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace _Project.Scripts.LogicModule.BigBeautifulWall
 {
@@ -19,11 +18,10 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             _progress = progress;
             
             _wallHealthView.HideInstant();
-
-            _wall.Health.ChangedHealthEvent += OnWallHealthChanged;
-
+            
             _wallUpgrader.WallOpened += ShowWallHealthbar;
             _wallUpgrader.Initialize(_progress);
+            _wallUpgrader.LoadWall();
         }
 
         private void OnDestroy() => _wallUpgrader.Wall.Health.ChangedHealthEvent -= _wallHealthView.UpdateHealthbar;
@@ -32,12 +30,16 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         {
             _wallHealthView.UpdateHealthbar(hp, maxHp);
             _progress.Data.WallActualHealth = hp;
+            
+            Debug.Log("Health saved: " + _progress.Data.WallActualHealth);
         }
         
         private void ShowWallHealthbar()
         {
             _wallUpgrader.WallOpened -= ShowWallHealthbar;
             _wallHealthView.ShowAsync().Forget();
+            
+            _wall.Health.ChangedHealthEvent += OnWallHealthChanged;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace _Project.Scripts.Infrastructure.Installers
                 .NonLazy();
             
             Container
-                .BindInterfacesTo<WeaponHolder>()
+                .Bind<WeaponHolder>()
                 .FromInstance(_weaponHolder)
                 .AsSingle()
                 .NonLazy();

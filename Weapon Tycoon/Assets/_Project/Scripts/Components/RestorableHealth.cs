@@ -4,54 +4,70 @@ using UnityEngine;
 
 namespace _Project.Scripts.Components
 {
-    public class RestorableHealth : Health
+    public sealed class RestorableHealth : IDamageable, IRestorable
     {
-        [SerializeField] private int _regeneration;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly HealthComponent _health;
+        private int _regeneration;
         private int _maxHp;
 
         private Coroutine _regenerationRoutine;
 
-        public event Action<int, int> ChangedHealthEvent; 
+        public bool IsAlive => _health.IsAlive;
         
-        private readonly WaitForSeconds _waitForSeconds = new WaitForSeconds(1f);
-        
-        public override void Initialize(int hp)
+        public event Action<int, int> ChangedHealthEvent;
+
+        private static readonly WaitForSeconds RegenerationCooldown = new WaitForSeconds(1f);
+
+        public RestorableHealth(ICoroutineRunner coroutineRunner, HealthComponent health, 
+            int maxHp, int regeneration)
         {
-            base.Initialize(hp);
-            _maxHp = hp;
-            ChangedHealthEvent?.Invoke(_health, _maxHp);
-            
-            _regenerationRoutine = StartCoroutine(Regeneration());
+            _coroutineRunner = coroutineRunner;
+            _health = health;
+            _maxHp = maxHp;
+            _regeneration = regeneration;
+
+            _regenerationRoutine = _coroutineRunner.StartCoroutine(Regeneration());
         }
 
-        public void UpgradeMaxHealth(int maxHealth)
+        public void TakeDamage(int damage)
+        {
+            if (IsAlive == false)
+                return;
+            
+            _health.TakeDamage(damage);
+            OnChangedHealth();
+        }
+
+        public void Restore(int amount)
+        {
+            if (_health.Health >= _maxHp)
+                return;
+
+            _health.Restore(Mathf.Clamp(amount, 0, _maxHp - _health.Health));
+            OnChangedHealth();
+        }
+
+        public void UpgradeMaxHealth(int maxHealth, bool notify = true)
         {
             _maxHp = maxHealth;
-            ChangedHealthEvent?.Invoke(_health, _maxHp);
+            if (notify)
+                OnChangedHealth();
         }
 
-        public void UpgradeRegeneration(int regeneration) => _regeneration = regeneration;
+        public void UpgradeRegeneration(int regeneration)
+        {
+            _regeneration = regeneration;
+        }
 
         public void Repair()
         {
-            _health = _maxHp;
-            ChangedHealthEvent?.Invoke(_health, _maxHp);
-            
-            _regenerationRoutine ??= StartCoroutine(Regeneration());
+            Restore(_maxHp);
+            _regenerationRoutine ??= _coroutineRunner.StartCoroutine(Regeneration());
         }
 
-        private void OnEnable()
-        {
-            DamagedEvent += UpdateChangedHealth;
-        }
-        
-        private void OnDisable()
-        {
-            DamagedEvent -= UpdateChangedHealth;
-        }
+        private void OnChangedHealth() => ChangedHealthEvent?.Invoke(_health.Health, _maxHp);
 
-        private void UpdateChangedHealth() => ChangedHealthEvent?.Invoke(_health, _maxHp);
-        
         IEnumerator Regeneration()
         {
             while (true)
@@ -61,11 +77,9 @@ namespace _Project.Scripts.Components
                     _regenerationRoutine = null;
                     yield break;
                 }
-                
-                yield return _waitForSeconds;
-                _health = Mathf.Clamp(_health + _regeneration, 0, _maxHp);
-                
-                ChangedHealthEvent?.Invoke(_health, _maxHp);
+
+                yield return RegenerationCooldown;
+                Restore(_regeneration);
             }
         }
     }

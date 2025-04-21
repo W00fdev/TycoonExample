@@ -1,7 +1,8 @@
 using System;
+using System.Threading;
 using _Project.Scripts.Infrastructure.ScriptableEvents;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
-using _Project.Scripts.Infrastructure.UI;
+using _Project.Scripts.UI.Dialogs;
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using TMPro;
@@ -20,9 +21,15 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
         [SerializeField] private EventChannel _stopCameraMovement;
         [SerializeField] private EventChannel _resumeCameraMovement;
 
+        private CancellationTokenSource _cts;
+        private CancellationTokenSource _linkedCts;
+        
         private int _previousHealth;
         private bool _isAllowedToDamageVisual;
         private const float DelayBeforeDamageVisual = 2f;
+        private const float NonZeroOffset = 0.0001f;
+        
+        public bool IsPlaying => _isPlaying;
 
         private void Awake()
         {
@@ -31,19 +38,29 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
 
         public void UpdateHealthbar(int health, int maxHealth)
         {
-            if (health < _previousHealth)
-                ShowDamageAnimation().Forget();
-            else if (_previousHealth <= 0 && health > 0)
-                ShowAsync().Forget();
+            if (_isPlaying)
+                InterruptAnimation();
+            
             if (_previousHealth > 0 && health <= 0)
+            {
                 HideAsync().Forget();
+            }
+            else if (health < _previousHealth)
+            {
+                ShowDamageAnimation().Forget();
+            }
+            else if (_previousHealth <= 0 && health > 0)
+            {
+                ShowAsync().Forget();
+            }
             
             _healthText.text = "wall: " + health + " / " + maxHealth;
-            Tween.ScaleX(_healthBar, (float)health / maxHealth, 0.15f);
+            Tween.ScaleX(_healthBar, health / (maxHealth + NonZeroOffset), 0.15f);
 
             _previousHealth = health;
         }
 
+#if UNITY_EDITOR
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.B) && _isAllowedToDamageVisual)
@@ -51,13 +68,19 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
                 ShowDamageAnimation().Forget();
             }
         }
+#endif
 
         // FIX ME: maybe convert to coroutine?
         public async UniTaskVoid ShowDamageAnimation()
         {
+            if (_isPlaying)
+                return;
+
+            _isPlaying = true;
+            
             var vignetteTask = Tween.Alpha(_vignette, 0.65f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();
             var fillTask = Tween.Alpha(_redFill, 0.25f, 0.1f, Ease.Linear).ToYieldInstruction().ToUniTask();
-            var shakeTask = Tween.ShakeLocalPosition(_mainCamera, Vector3.one * 0.35f, 0.1f).ToYieldInstruction()
+            var shakeTask = Tween.ShakeLocalPosition(_mainCamera, Vector3.one * 0.15f, 0.1f).ToYieldInstruction()
                 .ToUniTask();
 
             _stopCameraMovement.Invoke(new Empty());
@@ -65,7 +88,7 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
             _isAllowedToDamageVisual = false;
 
             await UniTask.WhenAll(vignetteTask, fillTask, shakeTask)
-                .AttachExternalCancellation(this.GetCancellationTokenOnDestroy());
+                .AttachExternalCancellation(GetCancellationToken());
 
             _resumeCameraMovement.Invoke(new Empty());
 
@@ -73,9 +96,23 @@ namespace _Project.Scripts.UI.Views.BigBeautifulWall
             Tween.Alpha(_redFill, 0f, 0.01f, Ease.Linear);
 
             await UniTask.Delay(TimeSpan.FromSeconds(DelayBeforeDamageVisual),
-                cancellationToken: this.GetCancellationTokenOnDestroy());
+                cancellationToken: GetCancellationToken());
 
             _isAllowedToDamageVisual = true;
+            _isPlaying = false;
+        }
+
+        private void InterruptAnimation()
+        {
+            _linkedCts.Cancel();
+            _isPlaying = false;
+        }
+
+        protected override CancellationToken GetCancellationToken()
+        {
+            _cts = new CancellationTokenSource();
+            _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, base.GetCancellationToken());
+            return _linkedCts.Token;
         }
     }
 }

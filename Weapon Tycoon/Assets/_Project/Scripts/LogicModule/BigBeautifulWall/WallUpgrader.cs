@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Animations;
 using _Project.Scripts.Components.Buttons;
 using _Project.Scripts.Infrastructure.Data;
 using _Project.Scripts.Infrastructure.Data.BigBeautifulWall;
@@ -15,7 +16,9 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         [SerializeField] private WallData _wallData;
         [SerializeField] private WallBuyerInfoView _wallBuyButton;
         [SerializeField] private UpgraderInfoView _upgradeButton;
+        [SerializeField] private ButtonAnimation _upgradeButtonAnimation;
         [SerializeField] private RepairInfoView _repairButton;
+        [SerializeField] private ButtonAnimation _repairButtonAnimation;
         [SerializeField] private CurrencyPipe _currencyPipe;
         [SerializeField] private Wall _wall;
         [SerializeField] private string _wallKeyName;
@@ -36,20 +39,15 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
             if (upgradeIndex == -1)
                 ShowBuyButton();
             else
-                OpenOrLoad(upgradeIndex);
-        }
-
-        private void OpenOrLoad(int upgradeIndex)
-        {
-            if (upgradeIndex > 0)
-                LoadWall();
-            else
                 OpenWall();
         }
-
-        private void LoadWall()
+        
+        public void LoadWall()
         {
-            OpenWall();
+            if (_wall.IsInitialized == false || _progress.Data.WallUpgrades < 0)
+                return; 
+            
+            _wall.LoadData(_wallData, _progress.Data);
             UpdateButtonViewAfterUpgrade();
         }
 
@@ -65,8 +63,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         {
             if (_currencyPipe.TrySpendCash(_wallData.RepairPrice) == false)
                 return;
-            
-            _wall.Health.Repair();
+
+            _wall.Repair();
         }
         
         public void BuyUpgrade()
@@ -98,6 +96,8 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
                 _upgradeButton.GetComponent<IntButtonSender>().DisableButton();
             else
                 _upgradeButton.SetPriceInfo(_wallData.UpgradePrice.ToHeaderMoneyFormat());
+            
+            _repairButton.SetPriceInfo(_wallData.RepairPrice.ToHeaderMoneyFormat());
         }
 
         private void EnableUpgraderButton()
@@ -123,16 +123,22 @@ namespace _Project.Scripts.LogicModule.BigBeautifulWall
         {
             if (health == maxHealth)
             {
-                _repairButton.DisableSelf();
+                _repairButtonAnimation.SetOnReleaseCallback(_repairButton.DisableSelf);
+                _repairButtonAnimation.ReleaseButton();
             }
             else
             {
                 _repairButton.EnableSelf();
-                
+
                 if (health == 0)
-                    _upgradeButton.DisableSelf();
-                else
+                {
+                    _upgradeButtonAnimation.SetOnReleaseCallback(_upgradeButton.DisableSelf);
+                    _upgradeButtonAnimation.ReleaseButton();
+                }
+                else if (_wallData.IsUpgradeExist())
+                {
                     _upgradeButton.EnableSelf();
+                }
             }
         }
 

@@ -30,7 +30,11 @@ namespace _Project.Scripts.Animations
         {
             var tween = Tween.LocalPosition(_pushButton, _startLocalPosition, _duration, _easeType);
             if (_onRelease != null)
-                tween.OnComplete(_onRelease);
+                tween.OnComplete( () =>
+                {
+                    _onRelease?.Invoke();
+                    _onRelease = null;
+                });
         }
 
         [Button("Set current local position")]

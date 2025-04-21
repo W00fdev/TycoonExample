@@ -1,20 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using _Project.Scripts.Components.Character;
 using _Project.Scripts.Components.Enemies;
 using _Project.Scripts.Components.Enemies.States;
-using _Project.Scripts.Data;
 using _Project.Scripts.Infrastructure.Data.Enemies;
 using _Project.Scripts.Infrastructure.ScriptableEvents.Channels;
 using _Project.Scripts.Infrastructure.States;
 using _Project.Scripts.LogicModule;
 using _Project.Scripts.LogicModule.Views;
 using PrimeTween;
-using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Components
 {
@@ -25,8 +20,8 @@ namespace _Project.Scripts.Components
         [SerializeField] private Animator _animator;
         [SerializeField] private LayerMask _targetLayer;
         [SerializeField] private EnemyConfig _config;
-        [SerializeField] private CurrencyEventChannel _addMoneychannel;
-        [SerializeField] private Health _health;
+        [SerializeField] private CurrencyEventChannel _addMoneyChannel;
+        [SerializeField] private HealthComponent _healthComponent;
         
         private Dictionary<Type, ITickableState> _states;
         private ITickableState _currentTickableState;
@@ -36,7 +31,7 @@ namespace _Project.Scripts.Components
         
         public Animator Animator => _animator;
         public NavMeshAgent Agent => _agent;
-        public VolumePivot Target => _sceneReferences.WallHealth.IsAlive 
+        public VolumePivot Target => _sceneReferences.WallHealthComponent.IsAlive 
             ? _sceneReferences.WallPivot 
             : _sceneReferences.FlagPivot;
 
@@ -45,12 +40,12 @@ namespace _Project.Scripts.Components
         [Serializable]
         public class EnemySceneReferences
         {
-            public Health WallHealth;
+            public HealthComponent WallHealthComponent;
             public VolumePivot WallPivot;
             public VolumePivot FlagPivot;
         }
         
-        public void Initialize(Enemy.EnemySceneReferences sceneReferences)
+        public void Initialize(EnemySceneReferences sceneReferences)
         {
             _sceneReferences = sceneReferences;
             
@@ -64,16 +59,16 @@ namespace _Project.Scripts.Components
 
         private void OnEnable()
         {
-            _health.Initialize(_config.Data.Health);
+            _healthComponent.Initialize(_config.Data.Health);
             
-            _health.DamagedEvent += AnimateDamage;
-            _health.DiedEvent += EnterDeathState;
+            _healthComponent.DamagedEvent += AnimateDamage;
+            _healthComponent.DiedEvent += EnterDeathState;
         }
 
         private void OnDisable()
         {
-            _health.DamagedEvent -= AnimateDamage;
-            _health.DiedEvent -= EnterDeathState;
+            _healthComponent.DamagedEvent -= AnimateDamage;
+            _healthComponent.DiedEvent -= EnterDeathState;
         }
 
         private void OnDestroy()
@@ -113,6 +108,6 @@ namespace _Project.Scripts.Components
 
         private void AnimateDamage() => Tween.PunchScale(_basicModel, Vector3.up * 0.1f, 0.1f);
 
-        private void Reward() => _addMoneychannel.Invoke(_config.Data.Reward);
+        private void Reward() => _addMoneyChannel.Invoke(_config.Data.Reward);
     }
 }

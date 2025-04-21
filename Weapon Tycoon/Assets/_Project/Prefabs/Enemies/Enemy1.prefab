@@ -545,8 +545,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   _config: {fileID: 11400000, guid: 85b22c4c26a30ac439d7f9682bc7110d, type: 2}
-  _addMoneychannel: {fileID: 11400000, guid: 04bdd4f9a6e59084c898eef0cfe29c8f, type: 2}
-  _health: {fileID: 640360608012423610}
+  _addMoneyChannel: {fileID: 11400000, guid: 04bdd4f9a6e59084c898eef0cfe29c8f, type: 2}
+  _healthComponent: {fileID: 640360608012423610}
 --- !u!65 &2274645102635190535
 BoxCollider:
   m_ObjectHideFlags: 0

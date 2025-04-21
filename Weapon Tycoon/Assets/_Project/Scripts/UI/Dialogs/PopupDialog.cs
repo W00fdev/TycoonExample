@@ -1,15 +1,17 @@
+using System.Threading;
+using _Project.Scripts.Infrastructure.UI;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Project.Scripts.Infrastructure.UI
+namespace _Project.Scripts.UI.Dialogs
 {
     public class PopupDialog : MonoBehaviour, IDialog
     {
         [SerializeField] protected Transform _popupContainer;
         [SerializeField] protected float _popupAnimationDuration;
         
-        private bool _isPlaying;
+        protected bool _isPlaying;
         
         protected readonly Vector3 _originalScale = Vector3.one;
         protected readonly Vector3 _hidedScale = Vector3.one * 0.01f;
@@ -26,7 +28,7 @@ namespace _Project.Scripts.Infrastructure.UI
                 .DOScale(_originalScale, _popupAnimationDuration)
                 .From(_hidedScale)
                 .SetEase(Ease.OutBack)
-                .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+                .ToUniTask(cancellationToken: GetCancellationToken());
 
             _isPlaying = false;
             return this;
@@ -43,7 +45,7 @@ namespace _Project.Scripts.Infrastructure.UI
                 .DOScale(_hidedScale, _popupAnimationDuration)
                 .From(_originalScale)
                 .SetEase(Ease.InBack)
-                .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+                .ToUniTask(cancellationToken: GetCancellationToken());
             
             _isPlaying = false;
             gameObject.SetActive(false);
@@ -55,7 +57,8 @@ namespace _Project.Scripts.Infrastructure.UI
         {
             _popupContainer.localScale = _originalScale;
             gameObject.SetActive(true);
-
+            _isPlaying = false;
+            
             return this;
         }
 
@@ -63,8 +66,12 @@ namespace _Project.Scripts.Infrastructure.UI
         {
             gameObject.SetActive(false);
             _popupContainer.localScale = _hidedScale;
+            _isPlaying = false;
             
             return this;
         }
+
+        protected virtual CancellationToken GetCancellationToken()
+            => this.GetCancellationTokenOnDestroy();
     }
 }

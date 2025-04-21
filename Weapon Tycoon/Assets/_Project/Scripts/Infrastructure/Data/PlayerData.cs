@@ -26,6 +26,7 @@ namespace _Project.Scripts.Infrastructure.Data
             WallUpgrades = data.WallUpgrades;
             MoneyWallet = data.MoneyWallet;
             MoneyBank = data.MoneyBank;
+            
             WallActualHealth = data.WallActualHealth;
         }
         
