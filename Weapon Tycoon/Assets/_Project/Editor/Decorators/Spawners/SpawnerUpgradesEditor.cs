@@ -1,7 +1,7 @@
 using _Project.Scripts.Infrastructure.Data.Spawners;
 using UnityEditor;
 
-namespace _Project.Editor
+namespace _Project.Editor.Decorators.Spawners
 {
     [CustomEditor(typeof(SpawnerUpgradeConfig))]
     public class SpawnerUpgradesEditor : UnityEditor.Editor

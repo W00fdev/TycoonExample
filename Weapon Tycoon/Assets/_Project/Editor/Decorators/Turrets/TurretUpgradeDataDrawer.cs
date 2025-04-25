@@ -1,38 +1,29 @@
-using System;
-using _Project.Scripts.Infrastructure.Data.Spawners;
+using _Project.Scripts.Infrastructure.Data.Turrets;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Editor
+namespace _Project.Editor.Decorators.Turrets
 {
-    [CustomPropertyDrawer(typeof(SpawnerUpgradeConfig.UpgradeData))]
-    public sealed class SpawnerUpgradeDataDrawer : UnityEditor.PropertyDrawer
+    [CustomPropertyDrawer(typeof(TurretUpgradeConfig.TurretStat))]
+    public class TurretUpgradeDataDrawer : UnityEditor.PropertyDrawer
     {
-        private SerializedProperty _speed;
-        private SerializedProperty _productPrice;
+        private SerializedProperty _damage;
+        private SerializedProperty _rpm;
         private SerializedProperty _buyPrice;
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);
-            //base.OnGUI(position, property, label);
 
-            _speed = property.FindPropertyRelative("Speed");
-            _productPrice = property.FindPropertyRelative("ProductPrice");
+            _damage = property.FindPropertyRelative("Damage");
+            _rpm = property.FindPropertyRelative("RPM");
             _buyPrice = property.FindPropertyRelative("BuyPrice");
-            
-            /*Rect foldOutBox = new Rect(position.min.x, position.min.y,
-                position.size.x, EditorGUIUtility.singleLineHeight);
-            property.isExpanded = EditorGUI.Foldout(foldOutBox, property.isExpanded, label);*/
 
-            //if (property.isExpanded)
-            {
-                EditorGUILayout.BeginHorizontal();
-                DrawProperty(position, _speed, string.Empty, 0);
-                DrawProperty(position, _productPrice, string.Empty, 1);
-                DrawProperty(position, _buyPrice, string.Empty, 2);
-                EditorGUILayout.EndHorizontal();
-            }
+            EditorGUILayout.BeginHorizontal();
+            DrawProperty(position, _damage, string.Empty, 0);
+            DrawProperty(position, _rpm, string.Empty, 1);
+            DrawProperty(position, _buyPrice, string.Empty, 2);
+            EditorGUILayout.EndHorizontal();
             
             EditorGUI.EndProperty();
         }

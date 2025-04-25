@@ -2,19 +2,17 @@ using _Project.Scripts.Infrastructure.Data.Enemies;
 using UnityEditor;
 using UnityEngine;
 
-namespace _Project.Editor
+namespace _Project.Editor.Decorators
 {
     [CustomEditor(typeof(EnemyConfig))]
     public class EnemyConfigEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            var enemyConfig = (EnemyConfig)target;
-            EditorGUILayout.LabelField(target.name.ToUpper(), EditorStyles.boldLabel);
-            EditorGUILayout.Space(10);
             base.OnInspectorGUI();
 
             EditorGUILayout.Space(10);
+            var enemyConfig = (EnemyConfig)target;
             DrawDifficultyProgressBar(enemyConfig);
         }
         
